@@ -38,37 +38,6 @@ Set.prototype.next_round = function() {
     return this;
 };
 
-function Countdown(steps, interval, start_func, inter_func, after_func) {
-    this.steps      = steps;
-    this.interval   = interval;
-    this.start_func = start_func;
-    this.inter_func = inter_func;
-    this.after_func = after_func;
-}
-
-Countdown.prototype.start = function() {
-    var timer = window.setInterval(step, this.interval);
-    var step = 0;
-    this.start_func();
-    
-    function step() {
-        this.inter_func(++step);
-        if (step == this.steps) {
-            window.clearInterval(timer);
-            after_func();
-        }
-    }
-}
-
-var test_set = {
-    "title": "Hang on straight arms",
-    "left":  1,
-    "right": 1,
-    "hold":  7,
-    "break": 3,
-    "reps":  5,
-};
-
 var ss = new Set(test_set);
 
 function doRep(set, next) {
@@ -93,16 +62,48 @@ function finish() {
 
 //doRep(ss, finish);
 
-var cd = new Countdown(
-    3,
+
+var makeCountdown = function (steps, interval, inter_func, after_func) {
+    var count, timer;
+    
+    function step() {
+        inter_func(++count);
+        if (count == steps) {
+            window.clearInterval(timer);
+            after_func();
+        }
+    }
+    
+    return {
+        start: function() {
+            count = 0;
+            timer = window.setInterval(step, interval);
+        },
+        pause: function() {
+            window.clearInterval(timer);
+        },
+        resume: function() {
+            timer = window.setInterval(step, interval);
+        }
+    }
+}
+
+var counter_div = document.getElementById("counter");
+var pbar = document.getElementById("pbar");
+
+pbar.max = 8;
+pbar.value = 0;
+
+var cd = makeCountdown(
+    8,
     500,
-    function() {
-        console.log("starte countdown");
-    },
     function(step) {
         console.log("step " + step);
+        counter_div.textContent = step;
+        pbar.value = step;
     },
     finish
 );
 
 cd.start();
+
