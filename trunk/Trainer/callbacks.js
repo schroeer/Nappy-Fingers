@@ -63,7 +63,7 @@ function finish() {
 //doRep(ss, finish);
 
 
-var makeCountdown = function (steps, interval, inter_func, after_func) {
+var makeCounter = function (steps, interval, inter_func, after_func) {
     var count, timer;
     
     function step() {
@@ -94,7 +94,7 @@ var pbar = document.getElementById("pbar");
 pbar.max = 8;
 pbar.value = 0;
 
-var cd = makeCountdown(
+var cd = makeCounter(
     8,
     500,
     function(step) {
@@ -106,4 +106,5 @@ var cd = makeCountdown(
 );
 
 cd.start();
+
 

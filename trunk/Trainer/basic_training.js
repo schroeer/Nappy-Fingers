@@ -4,6 +4,6 @@ var test_set = {
     "right": 1,
     "hold":  7,
     "break": 3,
-    "reps":  5,
+    "reps":  3,
 };
 
