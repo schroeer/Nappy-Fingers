@@ -20,7 +20,7 @@ var training1 = {
             "hold":         3,
             "break":        2,
             "reps":         3,
-            "pause":        20,
+            "pause":        10,
         },
         {
             "title":        "Hang",
@@ -30,7 +30,7 @@ var training1 = {
             "hold":         7,
             "break":        3,
             "reps":         3,
-            "pause":        20,
+            "pause":        0,
         }
     ]
 };
