@@ -58,11 +58,11 @@ function doSet(set) {
     for (var i = 0; i < set.reps; i++) {
         let rep = i;
         sequence = sequence.then(function() {
-            console.log(`rep ${rep}: hold`);
+            console.log(`rep ${rep+1}: hold`);
             return hold_counter.start();
         });
         sequence = sequence.then(function() {
-            console.log(`rep ${rep}: break`);
+            console.log(`rep ${rep+1}: break`);
             return break_counter.start();
         });
     }
