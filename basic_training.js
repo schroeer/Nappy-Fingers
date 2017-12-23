@@ -23,8 +23,8 @@ var training1 = {
             "pause":        10,
         },
         {
-            "title":        "Hang",
-            "description":  "Hang on straight arms",
+            "title":        "Pull up 2x and stay",
+            "description":  "Pull up twice and stay in locked position",
             "left":         5,
             "right":        25,
             "hold":         7,
