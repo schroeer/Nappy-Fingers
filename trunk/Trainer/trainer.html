@@ -17,7 +17,7 @@
             margin: 0;
             padding: 0.5em 1ex;
             width: 100%;
-            background-color: #7fccff;
+            background-color: #fc6b41;
             text-align: center;
             font-size: 2em;
             font-weight: normal;
@@ -54,7 +54,22 @@
             background-color: blue;
         }
         
-        img#board_img {
+        .board_outer_container {
+            width: 100%;
+            padding: 1em 2%;
+        }
+        .board_inner_container {
+            position: relative;
+            width: 96%;
+        }
+        #board_img {
+            width: 100%;
+        }
+        img.overlay_img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.4;
             width: 100%;
         }
     </style>
@@ -62,7 +77,15 @@
 
   <body>
     <h1>Hangboard Trainer</h1>
-    <img id="board_img" src="beastmaker1000.jpg" alt=""/>
+    <div class="board_outer_container">
+        <div class="board_inner_container">
+            <img id="board_img" src="images/bm1000.png" alt=""/>
+            <img id="overlay_left" class="overlay_img" src="images/bm1000_01.png" alt=""/>
+            <img id="overlay_right" class="overlay_img" src="images/bm1000_25.png" alt=""/>
+        </div>
+    </div>
+    <div id="set_title"></div>
+    <div id="set_description"></div>
     <div id="counter">&nbsp;</div>
     <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
     <progress id="pause_pbar" max="7" value="0"></progress>
