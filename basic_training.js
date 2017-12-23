@@ -16,7 +16,7 @@ var training1 = {
             "title":        "Warm up",
             "description":  "Hang on straight arms",
             "left":         1,
-            "right":        1,
+            "right":        21,
             "hold":         3,
             "break":        2,
             "reps":         3,
@@ -25,8 +25,8 @@ var training1 = {
         {
             "title":        "Hang",
             "description":  "Hang on straight arms",
-            "left":         2,
-            "right":        2,
+            "left":         5,
+            "right":        25,
             "hold":         7,
             "break":        3,
             "reps":         3,
@@ -38,122 +38,99 @@ var training1 = {
 var board1 = {
     "id":    "bm1000",
     "name":  "Beastmaker 1000",
-    "image": "beastmaker1000.jpg",
-    "holds": [
-        {
-            "id":   1,
+    "image": "beastmaker1000.png",
+    "holds": {
+        "1":    {
             "name": "jug",
-            "image": "bm1000_01.jpg"
+            "image": "bm1000_01.png"
         },
-        {
-            "id":   2,
+        "2":    {
             "name": "hard sloper",
-            "image": "bm1000_02.jpg"
+            "image": "bm1000_02.png"
         },
-        {
-            "id":   3,
+        "3":    {
             "name": "easy sloper",
-            "image": "bm1000_03.jpg"
+            "image": "bm1000_03.png"
         },
-        {
-            "id":   4,
+        "4":    {
             "name": "hard four finger pocket",
-            "image": "bm1000_04.jpg"
+            "image": "bm1000_04.png"
         },
-        {
-            "id":   5,
+        "5":    {
             "name": "easy four finger pocket",
-            "image": "bm1000_05.jpg"
+            "image": "bm1000_05.png"
         },
-        {
-            "id":   6,
+        "6":    {
             "name": "medium four finger pocket",
-            "image": "bm1000_06.jpg"
+            "image": "bm1000_06.png"
         },
-        {
-            "id":   7,
+        "7":    {
             "name": "easy two finger pocket",
-            "image": "bm1000_07.jpg"
+            "image": "bm1000_07.png"
         },
-        {
-            "id":   8,
+        "8":    {
             "name": "hard two finger pocket",
-            "image": "bm1000_08.jpg"
+            "image": "bm1000_08.png"
         },
-        {
-            "id":   9,
+        "9":    {
             "name": "easy three finger pocket",
-            "image": "bm1000_09.jpg"
+            "image": "bm1000_09.png"
         },
-        {
-            "id":   10,
+        "10":   {
             "name": "hard three finger pocket",
-            "image": "bm1000_10.jpg"
+            "image": "bm1000_10.png"
         },
-        {
-            "id":   11,
+        "11":   {
             "name": "medium three finger pocket",
-            "image": "bm1000_11.jpg"
+            "image": "bm1000_11.png"
         },
-        {
-            "id":   21,
+        "21":   {
             "name": "jug",
-            "image": "bm1000_21.jpg"
+            "image": "bm1000_21.png"
         },
-        {
-            "id":   22,
+        "22":   {
             "name": "hard sloper",
-            "image": "bm1000_22.jpg"
+            "image": "bm1000_22.png"
         },
-        {
-            "id":   23,
+        "23":   {
             "name": "easy sloper",
-            "image": "bm1000_23.jpg"
+            "image": "bm1000_23.png"
         },
-        {
-            "id":   24,
+        "24":   {
             "name": "hard four finger pocket",
-            "image": "bm1000_24.jpg"
+            "image": "bm1000_24.png"
         },
-        {
-            "id":   25,
+        "25":   {
             "name": "easy four finger pocket",
-            "image": "bm1000_25.jpg"
+            "image": "bm1000_25.png"
         },
-        {
-            "id":   26,
+        "26":   {
             "name": "medium four finger pocket",
-            "image": "bm1000_26.jpg"
+            "image": "bm1000_26.png"
         },
-        {
-            "id":   27,
+        "27":   {
             "name": "easy two finger pocket",
-            "image": "bm1000_27.jpg"
+            "image": "bm1000_27.png"
         },
-        {
-            "id":   28,
+        "28":   {
             "name": "hard two finger pocket",
-            "image": "bm1000_28.jpg"
+            "image": "bm1000_28.png"
         },
-        {
-            "id":   29,
+        "29":   {
             "name": "easy three finger pocket",
-            "image": "bm1000_29.jpg"
+            "image": "bm1000_29.png"
         },
-        {
-            "id":   30,
+        "30":   {
             "name": "hard three finger pocket",
-            "image": "bm1000_30.jpg"
+            "image": "bm1000_30.png"
         },
-        {
-            "id":   31,
+        "31":   {
             "name": "medium three finger pocket",
-            "image": "bm1000_31.jpg"
+            "image": "bm1000_31.png"
         },
-        {
-            "id":   40,
+        "40":   {
             "name": "central pocket",
-            "image": "bm1000_40.jpg"
+            "image": "bm1000_40.png"
         }
-    ]
+    }
 };

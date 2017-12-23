@@ -36,6 +36,13 @@ var counter_div = document.getElementById("counter");
 var hold_pbar = document.getElementById("hold_pbar");
 var break_pbar = document.getElementById("break_pbar");
 
+var set_title_div = document.getElementById("set_title");
+var set_description_div = document.getElementById("set_description");
+
+var overlay_left_img = document.getElementById("overlay_left");
+var overlay_right_img = document.getElementById("overlay_right");
+
+var board = board1; // muss gesucht werden
 
 async function runSet(set) {
     var hold_counter = makeCounter(
@@ -54,6 +61,12 @@ async function runSet(set) {
             break_pbar.value = step;
         }
     );
+    
+    set_title_div.textContent = set.title;
+    set_description_div.textContent = set.description;
+    
+    overlay_left_img.src = "images/" + board.holds[set.left].image;
+    overlay_right_img.src = "images/" + board.holds[set.right].image;
     
     hold_pbar.max = set.hold;
     hold_pbar.style.width = 100 * set.hold / (set.hold + set.break) + "%";
@@ -98,4 +111,4 @@ async function runTraining(training) {
     }
 }
 
-runTraining(training1);
+//runTraining(training1);
