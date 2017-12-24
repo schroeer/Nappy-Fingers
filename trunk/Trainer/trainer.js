@@ -1,3 +1,5 @@
+// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r basic_training.js images index.html test1.js trainer.html trainer.js daimlerstr.de:stella/www/trainer/
+
 var counter_div = document.getElementById("counter");
 var hold_pbar = document.getElementById("hold_pbar");
 var break_pbar = document.getElementById("break_pbar");
@@ -28,14 +30,32 @@ function selectVoice() {
     }
 }
 
+function Sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+}
+
+Sound.prototype.play = function(){
+    this.sound.play();
+}
+Sound.prototype.stop = function(){
+    this.sound.pause();
+}
+
 var counter = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
     
     function step() {
-        cb(++count);
-        if (count == steps) {
+        if (++count == steps) {
             window.clearInterval(timer);
             resolve();
+        }
+        else {
+            cb(count);
         }
     }
     
@@ -99,9 +119,10 @@ async function runSet(set) {
             1000,
             function(step) {
                 counter_div.textContent = set.hold - step;
-                hold_pbar.value = step;
+                hold_pbar.value = step + 1;
             }
         );
+        finish_sound.play();
 
         console.log(`rep ${rep+1}: break`);
         await counter.start(
@@ -109,7 +130,7 @@ async function runSet(set) {
             1000,
             function(step) {
                 counter_div.textContent = set.break - step;
-                break_pbar.value = step;
+                break_pbar.value = step + 1;
             }
         );
     }
@@ -152,7 +173,7 @@ async function runTraining(training) {
             1000,
             function(step) {
                 counter_div.textContent = set.pause - step;
-                pause_pbar.value = step;
+                pause_pbar.value = step + 1;
                 
                 if (set.pause - 15 == step) {
                     console.log(`Speaking "${utter_set_desc.text}"`);
@@ -164,12 +185,18 @@ async function runTraining(training) {
                     overlay_left_img.src = "images/" + board.holds[set.left].image;
                     overlay_right_img.src = "images/" + board.holds[set.right].image;
                 }
+                if (set.pause - 5 <= step) {
+                    tick_sound.play();
+                }
             }
         );
 
         await runSet(set);
     }
 }
+
+var finish_sound = new Sound("images/bell.mp3");
+var tick_sound = new Sound("images/countdown.mp3");
 
 selectVoice();
 if (speechSynthesis.onvoiceschanged !== undefined) {

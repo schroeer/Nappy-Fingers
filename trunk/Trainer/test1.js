@@ -44,7 +44,7 @@ function selectVoice() {
 function speak(){
     if(inputTxt.value !== ''){
         var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
-//        utterThis.voice = voice;
+        utterThis.voice = voice;
         utterThis.lang = 'en-US';
         synth.speak(utterThis);
     }
