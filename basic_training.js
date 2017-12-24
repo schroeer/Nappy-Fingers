@@ -20,7 +20,7 @@ var training1 = {
             "hold":         3,
             "break":        2,
             "reps":         3,
-            "pause":        10,
+            "pause":        20,
         },
         {
             "title":        "Pull up 2x and stay",
@@ -30,7 +30,7 @@ var training1 = {
             "hold":         7,
             "break":        3,
             "reps":         3,
-            "pause":        0,
+            "pause":        20,
         }
     ]
 };
