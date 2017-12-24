@@ -15,10 +15,6 @@ var board = board1; // muss gesucht werden
 var synth = window.speechSynthesis;
 var voice;
 
-var utter_go = new SpeechSynthesisUtterance("Go!");
-//        utter_go.voice = voice;
-utter_go.lang = 'en-US';
-
 function selectVoice() {
     var voices = synth.getVoices();
     for (var i = 0; i < voices.length ; i++) {
@@ -78,17 +74,10 @@ pause_button.addEventListener("click", counter.pause);
 
 async function runSet(set) {
     
-    var utter_desc = new SpeechSynthesisUtterance(set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + " times.");
-    //        utter_desc.voice = voice;
-    utter_desc.lang = 'en-US';
-    synth.speak(utter_desc);
+    var utter_go = new SpeechSynthesisUtterance("Go!");
+    utter_go.voice = voice;
+    utter_go.lang = 'en-US';
 
-    set_title_div.textContent = set.title;
-    set_description_div.textContent = set.description;
-    
-    overlay_left_img.src = "images/" + board.holds[set.left].image;
-    overlay_right_img.src = "images/" + board.holds[set.right].image;
-    
     pause_pbar.style.display = "none";
     hold_pbar.style.display = "inline-block";
     break_pbar.style.display = "inline-block";
@@ -130,31 +119,61 @@ async function runSet(set) {
 
 async function runTraining(training) {
     for (var i in training.sets) {
-
-        await runSet(training.sets[i]);
-        
-        if (training.sets[i].pause > 0) {
-            pause_pbar.max = training.sets[i].pause;
-            pause_pbar.style.display = "inline-block";
-            hold_pbar.style.display = "none";
-            break_pbar.style.display = "none";
-
-            console.log(`pause ${training.sets[i].pause} seconds`);
-            await counter.start(
-                training.sets[i].pause,
-                1000,
-                function(step) {
-                    counter_div.textContent = training.sets[i].pause - step;
-                    pause_pbar.value = step;
-                }
-            );
+        var set = training.sets[i];
+        if (set.pause < 15) {
+            set.pause = 15;
         }
+        var utter_set_desc = new SpeechSynthesisUtterance("Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + " times.");
+        utter_set_desc.voice = voice;
+        utter_set_desc.lang = 'en-US';
+
+        if (i > 0) {
+            var utter_pause = new SpeechSynthesisUtterance("Pause for " + set.pause + " seconds.");
+            utter_pause.voice = voice;
+            utter_pause.lang = 'en-US';
+            console.log(`Speaking "${utter_pause.text}"`);
+            synth.speak(utter_pause);
+        }
+
+        set_title_div.textContent = "Pause";
+        set_description_div.textContent = "Pause for " + set.pause + " seconds";
+        
+        overlay_left_img.src = "";
+        overlay_right_img.src = "";
+
+        pause_pbar.max = set.pause;
+        pause_pbar.style.display = "inline-block";
+        hold_pbar.style.display = "none";
+        break_pbar.style.display = "none";
+
+        console.log(`pause ${set.pause} seconds`);
+        await counter.start(
+            set.pause,
+            1000,
+            function(step) {
+                counter_div.textContent = set.pause - step;
+                pause_pbar.value = step;
+                
+                if (set.pause - 15 == step) {
+                    console.log(`Speaking "${utter_set_desc.text}"`);
+                    synth.speak(utter_set_desc);
+
+                    set_title_div.textContent = set.title;
+                    set_description_div.textContent = set.description;
+                    
+                    overlay_left_img.src = "images/" + board.holds[set.left].image;
+                    overlay_right_img.src = "images/" + board.holds[set.right].image;
+                }
+            }
+        );
+
+        await runSet(set);
     }
 }
 
 selectVoice();
 if (speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = selectVoice;
+    speechSynthesis.onvoiceschanged = selectVoice;
 }
 
 runTraining(training1);
