@@ -12,7 +12,7 @@ var overlay_right_img = document.getElementById("overlay_right");
 
 var pause_button = document.getElementsByName("pause")[0];
 
-var board = board1; // muss gesucht werden
+var board = boards[0]; // muss gesucht werden
 
 var synth = window.speechSynthesis;
 var voice;
@@ -203,4 +203,98 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = selectVoice;
 }
 
-runTraining(training1);
+function fillTrainingSelect(board) {
+    var training_select = document.getElementsByName('training_select')[0];
+    while (training_select.firstChild) {
+        training_select.removeChild(training_select.firstChild);
+    }
+    var first = true;
+    for (var num in trainings) {
+        var training = trainings[num];
+        if (training.board == board) {
+            var opt = document.createElement('option');
+            opt.setAttribute('value', num);
+            if (first) {
+                opt.setAttribute('selected', 'selected');
+                showTrainingDetails(num);
+                first = false;
+            }
+            var content = document.createTextNode(training.title);
+            opt.appendChild(content);
+            training_select.appendChild(opt);
+        }
+    }
+}
+
+function showTrainingDetails(num) {
+    var training_details = document.getElementById('training_details');
+    while (training_details.firstChild) {
+        training_details.removeChild(training_details.firstChild);
+    }
+    var training = trainings[num];
+
+    var h2 = document.createElement('h2');
+    h2.setAttribute('class', 'training_title');
+    var content = document.createTextNode(training.title);
+    h2.appendChild(content);
+    training_details.appendChild(h2);
+
+    var p = document.createElement('p');
+    p.setAttribute('class', 'training_description');
+    content = document.createTextNode(training.description);
+    p.appendChild(content);
+    training_details.appendChild(p);
+    
+    for (var set of training.sets) {
+        var div = document.createElement('p');
+        div.setAttribute('class', 'training_set');
+        training_details.appendChild(div);
+        
+        var h3 = document.createElement('h3');
+        h3.setAttribute('class', 'set_title');
+        var content = document.createTextNode(set.title);
+        h3.appendChild(content);
+        div.appendChild(h3);
+
+        var p = document.createElement('p');
+        p.setAttribute('class', 'set_description');
+        content = document.createTextNode(set.description);
+        p.appendChild(content);
+        div.appendChild(p);
+
+        p = document.createElement('p');
+        p.setAttribute('class', 'set_details');
+        content = document.createTextNode('Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds.");
+        p.appendChild(content);
+        div.appendChild(p);
+    }
+}
+
+var board_select = document.getElementsByName('board_select')[0];
+var training_select = document.getElementsByName('training_select')[0];
+var first = true;
+for (var board of boards) {
+    var opt = document.createElement('option');
+    opt.setAttribute('value', board.id);
+    if (first) {
+        opt.setAttribute('selected', 'selected');
+        first = false;
+    }
+    var content = document.createTextNode(board.name);
+    opt.appendChild(content);
+    board_select.appendChild(opt);
+}
+board_select.onchange = function(event) {
+    var selected_board = board_select.options[board_select.selectedIndex].value;
+    console.log("selected: " + selected_board);
+    fillTrainingSelect(selected_board);
+}
+training_select.onchange = function(event) {
+    var selected_training = training_select.options[training_select.selectedIndex].value;
+    console.log("selected: " + selected_training);
+    showTrainingDetails(selected_training);
+}
+fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
+
+
+//runTraining(trainings[1]);
