@@ -2,42 +2,38 @@
 
 "use strict";
 
+var SYNTH = window.speechSynthesis;
+var VOICE;
+
 var counter_div = document.getElementById("counter");
 var hold_pbar = document.getElementById("hold_pbar");
 var break_pbar = document.getElementById("break_pbar");
 
-var set_title_div = document.getElementById("set_title");
-var set_description_div = document.getElementById("set_description");
-
-var pause_button = document.getElementsByName("pause")[0];
-
-var synth = window.speechSynthesis;
-var voice;
-
 function selectVoice() {
-    var voices = synth.getVoices();
+    var voices = SYNTH.getVoices();
     for (var i = 0; i < voices.length ; i++) {
         if (voices[i].lang.startsWith('en')) {
-            voice = voices[i];
+            VOICE = voices[i];
             break;
         }
     }
-    if (voice) {
-        console.log('selected voice: ' + voice.name);
+    if (VOICE) {
+        console.log('selected VOICE: ' + VOICE.name);
     }
 }
+
 function ticSound() {
     soundEffect(
-        523.25,       //frequency
-        0.05,         //attack
-        0.2,          //decay
+        400,       //frequency
+        0.02,         //attack
+        0.02,          //decay
         "sine",       //waveform
         10,            //volume
-        0.8,          //pan
+        0,          //pan
         0,            //wait before playing
-        600,          //pitch bend amount
-        true,         //reverse
-        100,          //random pitch range
+        1,          //pitch bend amount
+        false,         //reverse
+        0,          //random pitch range
         0,            //dissonance
         undefined,    //echo: [delay, feedback, filter]
         undefined     //reverb: [duration, decay, reverse?]
@@ -67,7 +63,7 @@ var counter = (function () {
     }
     
     return {
-        start: function(_steps, _interval, _cb) {
+        start: function start(_steps, _interval, _cb) {
             steps = _steps;
             interval = _interval;
             cb = _cb;
@@ -80,11 +76,11 @@ var counter = (function () {
                 cb(0);
             });
         },
-        stop: function() {
+        stop: function stop() {
             window.clearInterval(timer);
             reject("counter aborted");
         },
-        pause: function() {
+        pause: function pause() {
             if (paused) {
                 timer = window.setInterval(step, interval);
                 paused = false;
@@ -100,7 +96,7 @@ var counter = (function () {
 async function runSet(set) {
     
     var utter_go = new SpeechSynthesisUtterance("Go!");
-    utter_go.voice = voice;
+    utter_go.VOICE = VOICE;
     utter_go.lang = 'en-US';
 
     pause_pbar.style.display = "none";
@@ -118,11 +114,11 @@ async function runSet(set) {
         break_pbar.value = 0;
         
         console.log(`rep ${rep+1}: hold`);
-        synth.speak(utter_go);
+        SYNTH.speak(utter_go);
         await counter.start(
             set.hold,
             1000,
-            function(step) {
+            function hangCountdownStep(step) {
                 counter_div.textContent = set.hold - step;
                 hold_pbar.value = step + 1;
             }
@@ -133,7 +129,7 @@ async function runSet(set) {
         await counter.start(
             set.break,
             1000,
-            function(step) {
+            function breakCountdownStep(step) {
                 counter_div.textContent = set.break - step;
                 break_pbar.value = step + 1;
             }
@@ -146,21 +142,24 @@ async function runSet(set) {
 async function runTraining(board_id, training) {
     var board = getBoard(board_id);
 
+    var set_title_div = document.getElementById("set_title");
+    var set_description_div = document.getElementById("set_description");
+
     for (var i in training.sets) {
         var set = training.sets[i];
         if (set.pause < 15) {
             set.pause = 15;
         }
         var utter_set_desc = new SpeechSynthesisUtterance("Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + " times.");
-        utter_set_desc.voice = voice;
+        utter_set_desc.VOICE = VOICE;
         utter_set_desc.lang = 'en-US';
 
         if (i > 0) {
             var utter_pause = new SpeechSynthesisUtterance("Pause for " + set.pause + " seconds.");
-            utter_pause.voice = voice;
+            utter_pause.VOICE = VOICE;
             utter_pause.lang = 'en-US';
             console.log(`Speaking "${utter_pause.text}"`);
-            synth.speak(utter_pause);
+            SYNTH.speak(utter_pause);
         }
 
         set_title_div.textContent = "Pause";
@@ -179,13 +178,13 @@ async function runTraining(board_id, training) {
         await counter.start(
             set.pause,
             1000,
-            async function(step) {
+            async function pauseCountdownStep(step) {
                 counter_div.textContent = set.pause - step;
                 pause_pbar.value = step + 1;
                 
                 if (set.pause - 15 == step) {
                     console.log(`Speaking "${utter_set_desc.text}"`);
-                    synth.speak(utter_set_desc);
+                    SYNTH.speak(utter_set_desc);
 
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
@@ -299,47 +298,55 @@ function showTrainingDetails(board_id, training_num) {
     }
 }
 
-pause_button.addEventListener("click", counter.pause);
+function init() {
 
-var start_button = document.getElementsByName('start')[0];
 
-start_button.addEventListener("click", function() {
-    var selected_board = board_select.options[board_select.selectedIndex].value;
-    var selected_training = training_select.options[training_select.selectedIndex].value;
-    document.getElementById("selector_content").style.display = "none";
-    document.getElementById("run_content").style.display = "block";
-    runTraining(selected_board, trainings[selected_training]);
-});
+    var pause_button = document.getElementsByName("pause")[0];
 
-selectVoice();
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = selectVoice;
-}
 
-var board_select = document.getElementsByName('board_select')[0];
-var training_select = document.getElementsByName('training_select')[0];
-var first = true;
-for (var board of boards) {
-    var opt = document.createElement('option');
-    opt.setAttribute('value', board.id);
-    if (first) {
-        opt.setAttribute('selected', 'selected');
-        first = false;
+    pause_button.addEventListener("click", counter.pause);
+
+    var start_button = document.getElementsByName('start')[0];
+
+    start_button.addEventListener("click", function startTraining() {
+        var selected_board = board_select.options[board_select.selectedIndex].value;
+        var selected_training = training_select.options[training_select.selectedIndex].value;
+        document.getElementById("selector_content").style.display = "none";
+        document.getElementById("run_content").style.display = "block";
+        runTraining(selected_board, trainings[selected_training]);
+    });
+
+    selectVoice();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = selectVoice;
     }
-    var content = document.createTextNode(board.name);
-    opt.appendChild(content);
-    board_select.appendChild(opt);
-}
-board_select.onchange = function(event) {
-    var selected_board = board_select.options[board_select.selectedIndex].value;
-    console.log("selected: " + selected_board);
-    fillTrainingSelect(selected_board);
-}
-training_select.onchange = function(event) {
-    var selected_board = board_select.options[board_select.selectedIndex].value;
-    var selected_training = training_select.options[training_select.selectedIndex].value;
-    console.log("selected: " + selected_training);
-    showTrainingDetails(selected_board, selected_training);
-}
-fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
 
+    var board_select = document.getElementsByName('board_select')[0];
+    var training_select = document.getElementsByName('training_select')[0];
+    var first = true;
+    for (var board of boards) {
+        var opt = document.createElement('option');
+        opt.setAttribute('value', board.id);
+        if (first) {
+            opt.setAttribute('selected', 'selected');
+            first = false;
+        }
+        var content = document.createTextNode(board.name);
+        opt.appendChild(content);
+        board_select.appendChild(opt);
+    }
+    board_select.onchange = function(event) {
+        var selected_board = board_select.options[board_select.selectedIndex].value;
+        console.log("selected: " + selected_board);
+        fillTrainingSelect(selected_board);
+    }
+    training_select.onchange = function(event) {
+        var selected_board = board_select.options[board_select.selectedIndex].value;
+        var selected_training = training_select.options[training_select.selectedIndex].value;
+        console.log("selected: " + selected_training);
+        showTrainingDetails(selected_board, selected_training);
+    }
+    fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
+}
+
+init();
