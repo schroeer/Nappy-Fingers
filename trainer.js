@@ -1,4 +1,4 @@
-// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r basic_training.js images index.html test1.js trainer.html trainer.js daimlerstr.de:stella/www/trainer/
+// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r basic_training.js sound.js images index.html trainer.js daimlerstr.de:stella/www/trainer/
 
 "use strict";
 
