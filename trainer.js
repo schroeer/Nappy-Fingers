@@ -7,9 +7,6 @@ var break_pbar = document.getElementById("break_pbar");
 var set_title_div = document.getElementById("set_title");
 var set_description_div = document.getElementById("set_description");
 
-var overlay_left_img = document.getElementById("overlay_left");
-var overlay_right_img = document.getElementById("overlay_right");
-
 var pause_button = document.getElementsByName("pause")[0];
 
 var board = boards[0]; // muss gesucht werden
@@ -159,8 +156,9 @@ async function runTraining(training) {
         set_title_div.textContent = "Pause";
         set_description_div.textContent = "Pause for " + set.pause + " seconds";
         
-        overlay_left_img.src = "";
-        overlay_right_img.src = "";
+        document.querySelectorAll("img.overlay_img").forEach(function(element) {
+            element.src = "";
+        });
 
         pause_pbar.max = set.pause;
         pause_pbar.style.display = "inline-block";
@@ -182,8 +180,8 @@ async function runTraining(training) {
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
                     
-                    overlay_left_img.src = "images/" + board.holds[set.left].image;
-                    overlay_right_img.src = "images/" + board.holds[set.right].image;
+                    document.querySelector("img.overlay_left").src = "images/" + board.holds[set.left].image;
+                    document.querySelector("img.overlay_right").src = "images/" + board.holds[set.right].image;
                 }
                 if (set.pause - 5 <= step) {
                     tick_sound.play();
@@ -203,20 +201,20 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = selectVoice;
 }
 
-function fillTrainingSelect(board) {
+function fillTrainingSelect(board_id) {
     var training_select = document.getElementsByName('training_select')[0];
     while (training_select.firstChild) {
         training_select.removeChild(training_select.firstChild);
     }
     var first = true;
-    for (var num in trainings) {
-        var training = trainings[num];
-        if (training.board == board) {
+    for (var training_num in trainings) {
+        var training = trainings[training_num];
+        if (training.board == board_id) {
             var opt = document.createElement('option');
-            opt.setAttribute('value', num);
+            opt.setAttribute('value', training_num);
             if (first) {
                 opt.setAttribute('selected', 'selected');
-                showTrainingDetails(num);
+                showTrainingDetails(board_id, training_num);
                 first = false;
             }
             var content = document.createTextNode(training.title);
@@ -226,12 +224,20 @@ function fillTrainingSelect(board) {
     }
 }
 
-function showTrainingDetails(num) {
+function getBoard(board_id) {
+    for (var board of boards) {
+        if (board.id == board_id) {
+            return board;
+        }
+    }
+}    
+
+function showTrainingDetails(board_id, training_num) {
     var training_details = document.getElementById('training_details');
     while (training_details.firstChild) {
         training_details.removeChild(training_details.firstChild);
     }
-    var training = trainings[num];
+    var training = trainings[training_num];
 
     var h2 = document.createElement('h2');
     h2.setAttribute('class', 'training_title');
@@ -245,8 +251,10 @@ function showTrainingDetails(num) {
     p.appendChild(content);
     training_details.appendChild(p);
     
+    var board = getBoard(board_id);
+    
     for (var set of training.sets) {
-        var div = document.createElement('p');
+        var div = document.createElement('div');
         div.setAttribute('class', 'training_set');
         training_details.appendChild(div);
         
@@ -256,15 +264,34 @@ function showTrainingDetails(num) {
         h3.appendChild(content);
         div.appendChild(h3);
 
+        var outer = document.createElement('div');
+        outer.setAttribute('class', 'board_small_container');
+        var img1 = document.createElement('img');
+        img1.setAttribute('class', 'board_img');
+        img1.setAttribute('src', "images/" + board.image);
+        img1.setAttribute('alt', "");
+        outer.appendChild(img1);
+        var img2 = document.createElement('img');
+        img2.setAttribute('class', 'overlay_img overlay_left');
+        img2.setAttribute('src', "images/" + board.holds[set.left].image);
+        img2.setAttribute('alt', "");
+        outer.appendChild(img2);
+        var img3 = document.createElement('img');
+        img3.setAttribute('class', 'overlay_img overlay_right');
+        img3.setAttribute('src', "images/" + board.holds[set.right].image);
+        img3.setAttribute('alt', "");
+        outer.appendChild(img3);
+        div.appendChild(outer);
+
         var p = document.createElement('p');
         p.setAttribute('class', 'set_description');
         content = document.createTextNode(set.description);
         p.appendChild(content);
         div.appendChild(p);
-
+        
         p = document.createElement('p');
         p.setAttribute('class', 'set_details');
-        content = document.createTextNode('Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds.");
+        content = document.createTextNode('Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds. Repeat " + set.reps + " times.");
         p.appendChild(content);
         div.appendChild(p);
     }
@@ -290,9 +317,10 @@ board_select.onchange = function(event) {
     fillTrainingSelect(selected_board);
 }
 training_select.onchange = function(event) {
+    var selected_board = board_select.options[board_select.selectedIndex].value;
     var selected_training = training_select.options[training_select.selectedIndex].value;
     console.log("selected: " + selected_training);
-    showTrainingDetails(selected_training);
+    showTrainingDetails(selected_board, selected_training);
 }
 fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
 
