@@ -1,5 +1,7 @@
 // pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r basic_training.js images index.html test1.js trainer.html trainer.js daimlerstr.de:stella/www/trainer/
 
+"use strict";
+
 var counter_div = document.getElementById("counter");
 var hold_pbar = document.getElementById("hold_pbar");
 var break_pbar = document.getElementById("break_pbar");
@@ -8,8 +10,6 @@ var set_title_div = document.getElementById("set_title");
 var set_description_div = document.getElementById("set_description");
 
 var pause_button = document.getElementsByName("pause")[0];
-
-var board = boards[0]; // muss gesucht werden
 
 var synth = window.speechSynthesis;
 var voice;
@@ -26,21 +26,31 @@ function selectVoice() {
         console.log('selected voice: ' + voice.name);
     }
 }
-
-function Sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
+function ticSound() {
+    soundEffect(
+        523.25,       //frequency
+        0.05,         //attack
+        0.2,          //decay
+        "sine",       //waveform
+        10,            //volume
+        0.8,          //pan
+        0,            //wait before playing
+        600,          //pitch bend amount
+        true,         //reverse
+        100,          //random pitch range
+        0,            //dissonance
+        undefined,    //echo: [delay, feedback, filter]
+        undefined     //reverb: [duration, decay, reverse?]
+    );
 }
 
-Sound.prototype.play = function(){
-    this.sound.play();
-}
-Sound.prototype.stop = function(){
-    this.sound.pause();
+function completedSound() {
+    //D
+    soundEffect(587.33, 0, 0.2, "square", 1, 0, 0);
+    //A
+    soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
+    //High D
+    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
 }
 
 var counter = (function () {
@@ -87,8 +97,6 @@ var counter = (function () {
     }
 })();
 
-pause_button.addEventListener("click", counter.pause);
-
 async function runSet(set) {
     
     var utter_go = new SpeechSynthesisUtterance("Go!");
@@ -119,7 +127,7 @@ async function runSet(set) {
                 hold_pbar.value = step + 1;
             }
         );
-        finish_sound.play();
+        await completedSound();
 
         console.log(`rep ${rep+1}: break`);
         await counter.start(
@@ -135,7 +143,9 @@ async function runSet(set) {
     console.log("done");
 }
 
-async function runTraining(training) {
+async function runTraining(board_id, training) {
+    var board = getBoard(board_id);
+
     for (var i in training.sets) {
         var set = training.sets[i];
         if (set.pause < 15) {
@@ -156,7 +166,7 @@ async function runTraining(training) {
         set_title_div.textContent = "Pause";
         set_description_div.textContent = "Pause for " + set.pause + " seconds";
         
-        document.querySelectorAll("img.overlay_img").forEach(function(element) {
+        document.querySelectorAll("#run_content .overlay_img").forEach(function(element) {
             element.src = "";
         });
 
@@ -169,7 +179,7 @@ async function runTraining(training) {
         await counter.start(
             set.pause,
             1000,
-            function(step) {
+            async function(step) {
                 counter_div.textContent = set.pause - step;
                 pause_pbar.value = step + 1;
                 
@@ -180,25 +190,17 @@ async function runTraining(training) {
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
                     
-                    document.querySelector("img.overlay_left").src = "images/" + board.holds[set.left].image;
-                    document.querySelector("img.overlay_right").src = "images/" + board.holds[set.right].image;
+                    document.querySelector("#run_content .overlay_left").src = "images/" + board.holds[set.left].image;
+                    document.querySelector("#run_content .overlay_right").src = "images/" + board.holds[set.right].image;
                 }
                 if (set.pause - 5 <= step) {
-                    tick_sound.play();
+                    await ticSound();
                 }
             }
         );
 
         await runSet(set);
     }
-}
-
-var finish_sound = new Sound("images/bell.mp3");
-var tick_sound = new Sound("images/countdown.mp3");
-
-selectVoice();
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = selectVoice;
 }
 
 function fillTrainingSelect(board_id) {
@@ -297,6 +299,23 @@ function showTrainingDetails(board_id, training_num) {
     }
 }
 
+pause_button.addEventListener("click", counter.pause);
+
+var start_button = document.getElementsByName('start')[0];
+
+start_button.addEventListener("click", function() {
+    var selected_board = board_select.options[board_select.selectedIndex].value;
+    var selected_training = training_select.options[training_select.selectedIndex].value;
+    document.getElementById("selector_content").style.display = "none";
+    document.getElementById("run_content").style.display = "block";
+    runTraining(selected_board, trainings[selected_training]);
+});
+
+selectVoice();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = selectVoice;
+}
+
 var board_select = document.getElementsByName('board_select')[0];
 var training_select = document.getElementsByName('training_select')[0];
 var first = true;
@@ -324,5 +343,3 @@ training_select.onchange = function(event) {
 }
 fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
 
-
-//runTraining(trainings[1]);

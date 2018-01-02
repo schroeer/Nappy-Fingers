@@ -18,6 +18,7 @@
             padding: 0.5em 0;
             display: block;
             background-color: #9bcdff;
+            border-radius: 4px;
             text-align: center;
             font-size: 2em;
             font-weight: bold;
@@ -66,7 +67,8 @@
         }
         
         .board_outer_container {
-            padding: 1ex;
+            margin: 1ex 0;
+            padding: 0;
         }
         .board_inner_container {
             position: relative;
@@ -144,7 +146,7 @@
         <div class="board_outer_container">
             <div class="board_inner_container">
                 <img class="board_img" src="images/bm1000.png" alt=""/>
-                <img class="overlay_img overlay_left" src="" alt=""/>
+                <img class="overlay_img overlay_left" src="images/bm1000_02.png" alt=""/>
                 <img class="overlay_img overlay_right" src="" alt=""/>
             </div>
         </div>
@@ -156,6 +158,7 @@
         <button name="pause">Pause</button>
     </div>
     <script src="basic_training.js"></script>
+    <script src="sound.js"></script>
     <script src="trainer.js"></script>
   </body>
 </html>

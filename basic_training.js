@@ -97,21 +97,6 @@ var boards = [
                 "image": "bm1000_40.png"
             }
         }
-    },
-    {
-        "id":    "testboard",
-        "name":  "Testboard",
-        "image": "bm.png",
-        "holds": {
-            "1":    {
-                "name": "erster Griff",
-                "image": "bm1000_01.png"
-            },
-            "2":    {
-                "name": "zweiter Griff",
-                "image": "bm1000_02.png"
-            }
-        }
     }
 ];
 
@@ -129,7 +114,7 @@ var trainings = [
                 "hold":         7,
                 "break":        4,
                 "reps":         7,
-                "pause":        20,
+                "pause":        15,
             },
             {
                 "title":        "Pull up 2x and hang",
