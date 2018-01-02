@@ -2,7 +2,7 @@ var boards = [
     {
         "id":    "bm1000",
         "name":  "Beastmaker 1000",
-        "image": "beastmaker1000.png",
+        "image": "bm1000.png",
         "holds": {
             "1":    {
                 "name": "jug",
@@ -101,7 +101,7 @@ var boards = [
     {
         "id":    "testboard",
         "name":  "Testboard",
-        "image": "beastmaker1000.png",
+        "image": "bm.png",
         "holds": {
             "1":    {
                 "name": "erster Griff",
@@ -117,8 +117,8 @@ var boards = [
 
 var trainings = [
     {
-        "title":        "Example training",
-        "description":  "A simple example training with two sets of exercises",
+        "title":        "Little Boy",
+        "description":  "Lots of hanging on good holds",
         "board":        "bm1000",
         "sets":         [
             {
@@ -126,20 +126,80 @@ var trainings = [
                 "description":  "Hang on straight arms",
                 "left":         1,
                 "right":        21,
-                "hold":         3,
-                "break":        2,
-                "reps":         3,
-                "pause":        15,
+                "hold":         7,
+                "break":        4,
+                "reps":         7,
+                "pause":        20,
             },
             {
-                "title":        "Pull up 2x and stay",
-                "description":  "Pull up twice and stay in locked position",
+                "title":        "Pull up 2x and hang",
+                "description":  "Pull up twice, then hang on straight arms",
+                "left":         1,
+                "right":        21,
+                "hold":         10,
+                "break":        10,
+                "reps":         3,
+                "pause":        120,
+            },
+            {
+                "title":        "4 fingers hang",
+                "description":  "Hang on straight arms",
+                "left":         5,
+                "right":        25,
+                "hold":         6,
+                "break":        4,
+                "reps":         4,
+                "pause":        90,
+            },
+            {
+                "title":        "3 fingers right side",
+                "description":  "Pull up once and stay in locked position",
+                "left":         1,
+                "right":        29,
+                "hold":         4,
+                "break":        7,
+                "reps":         4,
+                "pause":        120,
+            },
+            {
+                "title":        "3 fingers left side",
+                "description":  "Pull up once and stay in locked position",
+                "left":         9,
+                "right":        21,
+                "hold":         4,
+                "break":        7,
+                "reps":         4,
+                "pause":        120,
+            },
+            {
+                "title":        "4 fingers pull up",
+                "description":  "Pull up once, then hang on straight arms",
+                "left":         5,
+                "right":        25,
+                "hold":         5,
+                "break":        4,
+                "reps":         5,
+                "pause":        120,
+            },
+            {
+                "title":        "4 fingers hang",
+                "description":  "Hang on straight arms",
                 "left":         5,
                 "right":        25,
                 "hold":         7,
-                "break":        3,
-                "reps":         3,
-                "pause":        20,
+                "break":        4,
+                "reps":         7,
+                "pause":        120,
+            },
+            {
+                "title":        "Jug hang",
+                "description":  "Hang on straight arms",
+                "left":         1,
+                "right":        21,
+                "hold":         7,
+                "break":        4,
+                "reps":         7,
+                "pause":        120,
             }
         ]
     },
