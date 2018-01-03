@@ -103,7 +103,7 @@ var boards = [
 var trainings = [
     {
         "title":        "Little Boy",
-        "description":  "Lots of hanging on good holds",
+        "description":  "Much hanging on good holds",
         "board":        "bm1000",
         "sets":         [
             {
@@ -127,7 +127,7 @@ var trainings = [
                 "pause":        120,
             },
             {
-                "title":        "4 fingers hang",
+                "title":        "Four fingers hang",
                 "description":  "Hang on straight arms",
                 "left":         5,
                 "right":        25,
@@ -137,7 +137,7 @@ var trainings = [
                 "pause":        90,
             },
             {
-                "title":        "3 fingers right side",
+                "title":        "Three fingers right side",
                 "description":  "Pull up once and stay in locked position",
                 "left":         1,
                 "right":        29,
@@ -147,7 +147,7 @@ var trainings = [
                 "pause":        120,
             },
             {
-                "title":        "3 fingers left side",
+                "title":        "Three fingers left side",
                 "description":  "Pull up once and stay in locked position",
                 "left":         9,
                 "right":        21,
@@ -157,7 +157,7 @@ var trainings = [
                 "pause":        120,
             },
             {
-                "title":        "4 fingers pull up",
+                "title":        "Four fingers pull up",
                 "description":  "Pull up once, then hang on straight arms",
                 "left":         5,
                 "right":        25,
@@ -167,7 +167,7 @@ var trainings = [
                 "pause":        120,
             },
             {
-                "title":        "4 fingers hang",
+                "title":        "Four fingers hang",
                 "description":  "Hang on straight arms",
                 "left":         5,
                 "right":        25,
@@ -194,7 +194,7 @@ var trainings = [
         "board":        "bm1000",
         "sets":         [
             {
-                "title":        "4 fingers jug",
+                "title":        "Four fingers jug",
                 "description":  "Hang",
                 "left":         1,
                 "right":        21,
@@ -204,7 +204,7 @@ var trainings = [
                 "pause":        16,
             },
             {
-                "title":        "open 3 fingers",
+                "title":        "Open three fingers",
                 "description":  "Hang",
                 "left":         9,
                 "right":        29,
@@ -214,7 +214,7 @@ var trainings = [
                 "pause":        140,
             },
             {
-                "title":        "4 fingers half-crimp",
+                "title":        "Four fingers half-crimp",
                 "description":  "Hang",
                 "left":         6,
                 "right":        26,
@@ -224,7 +224,7 @@ var trainings = [
                 "pause":        140,
             },
             {
-                "title":        "4 fingers sloper",
+                "title":        "Four fingers sloper",
                 "description":  "Hang",
                 "left":         3,
                 "right":        23,
