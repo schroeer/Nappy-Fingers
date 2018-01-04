@@ -5,47 +5,7 @@
 var SYNTH = window.speechSynthesis;
 var VOICE;
 
-function selectVoice() {
-    var voices = SYNTH.getVoices();
-    for (var i = 0; i < voices.length ; i++) {
-        if (voices[i].lang.startsWith('en')) {
-            VOICE = voices[i];
-            break;
-        }
-    }
-    if (VOICE) {
-        console.log('selected VOICE: ' + VOICE.name);
-    }
-}
-
-function ticSound() {
-    soundEffect(
-        400,       //frequency
-        0.02,         //attack
-        0.02,          //decay
-        "sine",       //waveform
-        10,            //volume
-        0,          //pan
-        0,            //wait before playing
-        1,          //pitch bend amount
-        false,         //reverse
-        0,          //random pitch range
-        0,            //dissonance
-        undefined,    //echo: [delay, feedback, filter]
-        undefined     //reverb: [duration, decay, reverse?]
-    );
-}
-
-function completedSound() {
-    //D
-    soundEffect(587.33, 0, 0.2, "square", 1, 0, 0);
-    //A
-    soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
-    //High D
-    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
-}
-
-var counter = (function () {
+var COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
     
     function step() {
@@ -89,6 +49,46 @@ var counter = (function () {
     }
 })();
 
+function selectVoice() {
+    var voices = SYNTH.getVoices();
+    for (var i = 0; i < voices.length ; i++) {
+        if (voices[i].lang.startsWith('en')) {
+            VOICE = voices[i];
+            break;
+        }
+    }
+    if (VOICE) {
+        console.log('selected VOICE: ' + VOICE.name);
+    }
+}
+
+function ticSound() {
+    soundEffect(
+        400,       //frequency
+        0.02,         //attack
+        0.02,          //decay
+        "sine",       //waveform
+        10,            //volume
+        0,          //pan
+        0,            //wait before playing
+        1,          //pitch bend amount
+        false,         //reverse
+        0,          //random pitch range
+        0,            //dissonance
+        undefined,    //echo: [delay, feedback, filter]
+        undefined     //reverb: [duration, decay, reverse?]
+    );
+}
+
+function completedSound() {
+    //D
+    soundEffect(587.33, 0, 0.2, "square", 1, 0, 0);
+    //A
+    soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
+    //High D
+    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
+}
+
 async function runTraining(board_id, training) {
     var board = getBoard(board_id);
 
@@ -128,7 +128,7 @@ async function runTraining(board_id, training) {
         break_pbar.style.display = "none";
 
         console.log(`pause ${set.pause} seconds`);
-        await counter.start(
+        await COUNTER.start(
             set.pause,
             1000,
             async function pauseCountdownStep(step) {
@@ -177,7 +177,7 @@ async function runTraining(board_id, training) {
             
             console.log(`rep ${rep+1}: hold`);
             SYNTH.speak(utter_go);
-            await counter.start(
+            await COUNTER.start(
                 set.hold,
                 1000,
                 function hangCountdownStep(step) {
@@ -188,7 +188,7 @@ async function runTraining(board_id, training) {
             await completedSound();
 
             console.log(`rep ${rep+1}: break`);
-            await counter.start(
+            await COUNTER.start(
                 set.break,
                 1000,
                 function breakCountdownStep(step) {
@@ -209,109 +209,44 @@ function getBoard(board_id) {
     }
 }    
 
-function fillTrainingSelect(board_id) {
-    var training_select = document.getElementsByName('training_select')[0];
-    while (training_select.firstChild) {
-        training_select.removeChild(training_select.firstChild);
-    }
-    var first = true;
-    for (var training_num in trainings) {
-        var training = trainings[training_num];
-        if (training.board == board_id) {
-            var opt = document.createElement('option');
-            opt.setAttribute('value', training_num);
-            if (first) {
-                opt.setAttribute('selected', 'selected');
-                showTrainingDetails(board_id, training_num);
-                first = false;
-            }
-            var content = document.createTextNode(training.title);
-            opt.appendChild(content);
-            training_select.appendChild(opt);
-        }
-    }
-}
-
-function showTrainingDetails(board_id, training_num) {
-    var board = getBoard(board_id);
-    var training = trainings[training_num];
-
-    var training_details = document.getElementById('training_details');
-    while (training_details.firstChild) {
-        training_details.removeChild(training_details.firstChild);
-    }
-
-    addElement(training_details, 'h2', training.title, {'class': 'training_title'});
-    addElement(training_details, 'p', training.description, {'class': 'training_description'});
-    var times = calculateTimes(training);
-    addElement(training_details, 'p', "Total time: " + Math.floor(times[3] / 60) + ":" + times[3] % 60 + " min. Hang time: " + Math.floor(times[0] / 60) + ":" + times[0] % 60 + " min.", {'class': 'training_description'});
-    
-    for (var set_num in training.sets) {
-        var set = training.sets[set_num];
-        
-        var div = addElement(training_details, 'div', undefined, {'class': 'training_set'});
-        
-        addElement(div, 'h3', (Number(set_num) + 1) + ". " + set.title, {'class': 'set_title'});
-
-        var outer = addElement(div, 'div', undefined, {'class': 'board_small_container'});
-
-        addElement(outer, 'img', undefined, {'class': 'board_img', 'src': "images/" + board.image, 'alt': ""});
-        addElement(outer, 'img', undefined, {'class': 'overlay_img overlay_left', 'src': "images/" + board.holds[set.left].image, 'alt': ""});
-        addElement(outer, 'img', undefined, {'class': 'overlay_img overlay_right', 'src': "images/" + board.holds[set.right].image, 'alt': ""});
-
-        addElement(div, 'p', set.description, {'class': 'set_description'});
-        addElement(div, 'p', 'Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds. Repeat " + set.reps + " times.", {'class': 'set_details'});
-    }
-    
-    function addElement(node, type, text, atts) {
-        var el = document.createElement(type);
-        if (text) {
-            var tn = document.createTextNode(text);
-            el.appendChild(tn);
-        }
-        for (var name in atts) {
-            el.setAttribute(name, atts[name]);
-        }
-        node.appendChild(el);
-        return el;
-    }
-    
-    function calculateTimes(training) {
-        var pause = 0, inter = 0, hold = 0;
-        for (var set of training.sets) {
-            pause += set.pause;
-            inter += set.reps * set.break;
-            hold += set.reps * set.hold;
-        }
-        return [hold, inter, pause, hold + inter + pause];
-    }
-}
-
-function init_menu() {
+function initMenu() {
     document.getElementById("menu_content").style.display = "block";
     document.getElementById("run_content").style.display = "none";
+    window.location.hash = "";
 }
 
-function init_run() {
+function initRun() {
     document.getElementById("menu_content").style.display = "none";
     document.getElementById("run_content").style.display = "block";
+    window.location.hash = "run";
 }
 
-function init_once() {
+function initOnce() {
     selectVoice();
     if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = selectVoice;
     }
 
     var pause_button = document.getElementsByName("pause")[0];
-    pause_button.addEventListener("click", counter.pause);
+    pause_button.addEventListener("click", COUNTER.pause);
+
+    var stop_button = document.getElementsByName("stop")[0];
+    stop_button.addEventListener("click", COUNTER.stop);
 
     var start_button = document.getElementsByName('start')[0];
-    start_button.addEventListener("click", function startTraining() {
-        init_run();
+    start_button.addEventListener("click", async function startTraining() {
+        initRun();
         var selected_board = board_select.options[board_select.selectedIndex].value;
         var selected_training = training_select.options[training_select.selectedIndex].value;
-        runTraining(selected_board, trainings[selected_training]);
+        try {
+            await runTraining(selected_board, trainings[selected_training]);
+        }
+        catch (err) {
+            console.log("Training aborted");
+        }
+        finally {
+            initMenu();
+        }
     });
 
     var board_select = document.getElementsByName('board_select')[0];
@@ -328,17 +263,98 @@ function init_once() {
         opt.appendChild(content);
         board_select.appendChild(opt);
     }
+    
     board_select.onchange = function(event) {
         var selected_board = board_select.options[board_select.selectedIndex].value;
         fillTrainingSelect(selected_board);
     }
+    
     training_select.onchange = function(event) {
         var selected_board = board_select.options[board_select.selectedIndex].value;
         var selected_training = training_select.options[training_select.selectedIndex].value;
         showTrainingDetails(selected_board, selected_training);
     }
+    
     fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
+
+    function fillTrainingSelect(board_id) {
+        var training_select = document.getElementsByName('training_select')[0];
+        while (training_select.firstChild) {
+            training_select.removeChild(training_select.firstChild);
+        }
+        var first = true;
+        for (var training_num in trainings) {
+            var training = trainings[training_num];
+            if (training.board == board_id) {
+                var opt = document.createElement('option');
+                opt.setAttribute('value', training_num);
+                if (first) {
+                    opt.setAttribute('selected', 'selected');
+                    showTrainingDetails(board_id, training_num);
+                    first = false;
+                }
+                var content = document.createTextNode(training.title);
+                opt.appendChild(content);
+                training_select.appendChild(opt);
+            }
+        }
+    }
+
+    function showTrainingDetails(board_id, training_num) {
+        var board = getBoard(board_id);
+        var training = trainings[training_num];
+
+        var training_details = document.getElementById('training_details');
+        while (training_details.firstChild) {
+            training_details.removeChild(training_details.firstChild);
+        }
+
+        addElement(training_details, 'h2', training.title, {'class': 'training_title'});
+        addElement(training_details, 'p', training.description, {'class': 'training_description'});
+        var times = calculateTimes(training);
+        addElement(training_details, 'p', "Total time: " + Math.floor(times[3] / 60) + ":" + times[3] % 60 + " min. Hang time: " + Math.floor(times[0] / 60) + ":" + times[0] % 60 + " min.", {'class': 'training_description'});
+        
+        for (var set_num in training.sets) {
+            var set = training.sets[set_num];
+            
+            var div = addElement(training_details, 'div', undefined, {'class': 'training_set'});
+            
+            addElement(div, 'h3', (Number(set_num) + 1) + ". " + set.title, {'class': 'set_title'});
+
+            var outer = addElement(div, 'div', undefined, {'class': 'board_small_container'});
+
+            addElement(outer, 'img', undefined, {'class': 'board_img', 'src': "images/" + board.image, 'alt': ""});
+            addElement(outer, 'img', undefined, {'class': 'overlay_img overlay_left', 'src': "images/" + board.holds[set.left].image, 'alt': ""});
+            addElement(outer, 'img', undefined, {'class': 'overlay_img overlay_right', 'src': "images/" + board.holds[set.right].image, 'alt': ""});
+
+            addElement(div, 'p', set.description, {'class': 'set_description'});
+            addElement(div, 'p', 'Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds. Repeat " + set.reps + " times.", {'class': 'set_details'});
+        }
+        
+        function addElement(node, type, text, atts) {
+            var el = document.createElement(type);
+            if (text) {
+                var tn = document.createTextNode(text);
+                el.appendChild(tn);
+            }
+            for (var name in atts) {
+                el.setAttribute(name, atts[name]);
+            }
+            node.appendChild(el);
+            return el;
+        }
+        
+        function calculateTimes(training) {
+            var pause = 0, inter = 0, hold = 0;
+            for (var set of training.sets) {
+                pause += set.pause;
+                inter += set.reps * set.break;
+                hold += set.reps * set.hold;
+            }
+            return [hold, inter, pause, hold + inter + pause];
+        }
+    }
 }
 
-init_once();
-init_menu();
+initOnce();
+initMenu();
