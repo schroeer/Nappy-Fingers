@@ -234,5 +234,22 @@ var trainings = [
                 "pause":        140,
             }
         ]
+    },
+    {
+        "title":        "Short test",
+        "description":  "Not a proper training",
+        "board":        "bm1000",
+        "sets":         [
+            {
+                "title":        "Evil holds",
+                "description":  "Pull up once",
+                "left":         2,
+                "right":        24,
+                "hold":         3,
+                "break":        3,
+                "reps":         1,
+                "pause":        16,
+            }
+        ]
     }
 ];
