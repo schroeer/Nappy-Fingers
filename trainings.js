@@ -281,7 +281,18 @@ var trainings = [
                 "break":        3,
                 "reps":         1,
                 "pause":        16,
+            },
+            {
+                "title":        "Evil holds 2",
+                "description":  "Pull up once",
+                "left":         2,
+                "right":        24,
+                "hold":         3,
+                "break":        3,
+                "reps":         1,
+                "pause":        70,
             }
+
         ]
     }
 ];

@@ -1,4 +1,4 @@
-// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r basic_training.js sound.js images index.html trainer.js daimlerstr.de:stella/www/trainer/
+// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r *.js *.html *.css images daimlerstr.de:stella/www/trainer/
 
 "use strict";
 
@@ -102,20 +102,27 @@ async function runTraining(board_id, training) {
         if (set.pause < 15) {
             set.pause = 15;
         }
-        var utter_set_desc = new SpeechSynthesisUtterance("Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + " times.");
-        utter_set_desc.VOICE = VOICE;
+
+        var utter_set_desc = new SpeechSynthesisUtterance();
+        utter_set_desc.text = "Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + ((set.reps > 1) ? " times." : " time.");
+        utter_set_desc.voice = VOICE;
         utter_set_desc.lang = 'en-US';
 
-        if (i > 0) {
-            var utter_pause = new SpeechSynthesisUtterance("Pause for " + set.pause + " seconds.");
-            utter_pause.VOICE = VOICE;
+        if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
+            var utter_pause = new SpeechSynthesisUtterance();
+            utter_pause.text = makePauseString(set.pause);
+            utter_pause.voice = VOICE;
             utter_pause.lang = 'en-US';
             console.log(`Speaking "${utter_pause.text}"`);
             speechSynthesis.speak(utter_pause);
-        }
 
-        set_title_div.textContent = "Pause";
-        set_description_div.textContent = "Pause for " + set.pause + " seconds";
+            set_title_div.textContent = "Pause";
+            set_description_div.textContent = "Pause for " + Math.floor(set.pause / 60).toString().padStart(2, "0") + ":" + (set.pause % 60).toString().padStart(2, "0") + " min.";
+        }
+        else {
+            set_title_div.textContent = "Get ready";
+            set_description_div.textContent = "";
+        }
         
         document.querySelectorAll("#run_content .overlay_img").forEach(function(element) {
             element.src = "";
@@ -134,7 +141,7 @@ async function runTraining(board_id, training) {
                 counter_div.textContent = set.pause - step;
                 pause_pbar.value = step + 1;
                 
-                if (set.pause - 15 == step) {
+                if (set.pause - step == 15) {
                     console.log(`Speaking "${utter_set_desc.text}"`);
                     speechSynthesis.speak(utter_set_desc);
 
@@ -144,7 +151,15 @@ async function runTraining(board_id, training) {
                     document.querySelector("#run_content .overlay_left").src = "images/" + board.holds[set.left].image;
                     document.querySelector("#run_content .overlay_right").src = "images/" + board.holds[set.right].image;
                 }
-                if (set.pause - 5 <= step) {
+                if ((set.pause - step) % 30 == 0) {
+                    var utter_pause = new SpeechSynthesisUtterance();
+                    utter_pause.text = makePauseString(set.pause - step);
+                    utter_pause.voice = VOICE;
+                    utter_pause.lang = 'en-US';
+                    console.log(`Speaking "${utter_pause.text}"`);
+                    speechSynthesis.speak(utter_pause);
+                }
+                if (set.pause - step <= 5) {
                     await ticSound();
                 }
             }
@@ -156,8 +171,9 @@ async function runTraining(board_id, training) {
    
     async function runSet(set) {
         
-        var utter_go = new SpeechSynthesisUtterance("Go!");
-        utter_go.VOICE = VOICE;
+        var utter_go = new SpeechSynthesisUtterance();
+        utter_go.text = "Go!";
+        utter_go.voice = VOICE;
         utter_go.lang = 'en-US';
 
         pause_pbar.style.display = "none";
@@ -197,6 +213,22 @@ async function runTraining(board_id, training) {
             );
         }
         console.log("set complete");
+    }
+    
+    function makePauseString(pause) {
+        var minutes = Math.floor(pause / 60);
+        var seconds = pause % 60;
+        var pause_str = "Pause for ";
+        if (minutes != 0) {
+            pause_str += minutes + ((minutes > 1) ? " minutes" : " minute");
+            if (seconds != 0) {
+                pause_str += " and ";
+            }
+        }
+        if (seconds != 0) {
+            pause_str += seconds + ((seconds > 1) ? " seconds" : " second");
+        }
+        return pause_str + ".";
     }
 }
 
@@ -241,7 +273,7 @@ function initOnce() {
             await runTraining(selected_board, trainings[selected_training]);
         }
         catch (err) {
-            console.log("Training aborted");
+            console.log("Training aborted (" + err + ")");
         }
         finally {
             initMenu();
@@ -311,7 +343,7 @@ function initOnce() {
         addElement(training_details, 'h2', training.title, {'class': 'training_title'});
         addElement(training_details, 'p', training.description, {'class': 'training_description'});
         var times = calculateTimes(training);
-        addElement(training_details, 'p', "Total time: " + Math.floor(times[3] / 60) + ":" + times[3] % 60 + " min. Hang time: " + Math.floor(times[0] / 60) + ":" + times[0] % 60 + " min.", {'class': 'training_description'});
+        addElement(training_details, 'p', "Total time: " + Math.floor(times[3] / 60) + ":" + (times[3] % 60).toString().padStart(2, "0") + " min. Hang time: " + Math.floor(times[0] / 60) + ":" + (times[0] % 60).toString().padStart(2, "0") + " min.", {'class': 'training_description'});
         
         for (var set_num in training.sets) {
             var set = training.sets[set_num];
