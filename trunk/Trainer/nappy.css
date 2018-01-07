@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 8px;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin: 0;
+    padding: 0.5em 0;
+    display: block;
+    background-color: #9bcdff;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 8px 0 16px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h3 {
+    margin: 8px 0 16px 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+p {
+    margin: 8px 0 8px 0;
+}
+
+h2#set_title {
+    margin: 8px 0 0 0;
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: bold;
+}
+
+p#set_description {
+    margin: 8px 0 0 0;
+    text-align: center;
+}
+
+div#counter {
+    margin: 8px 0 0 0;
+    font-size: 5em;
+    color: blue;
+    text-align: center;
+}
+
+progress {
+    width: 50%;
+    height: 3em;
+    margin: 8px 0 0 0;
+    -webkit-appearance: none;
+}
+
+progress#pause_pbar {
+    width: 100%;
+}
+
+::-webkit-progress-bar {
+    background-color: transparent;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+#hold_pbar::-webkit-progress-value {
+    background-color: red;
+}
+#break_pbar::-webkit-progress-value {
+    background-color: green;
+}
+#pause_pbar::-webkit-progress-value {
+    background-color: blue;
+}
+
+.board_outer_container {
+    margin: 8px 0 0 0;
+    padding: 0;
+}
+.board_inner_container {
+    position: relative;
+}
+.board_small_container {
+    margin: 8px 0 0 0;
+    position: relative;
+    width: 50%;
+    /*float: right;*/
+}
+img.board_img {
+    width: 100%;
+}
+img.overlay_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.4;
+    width: 100%;
+}
+
+div#training_details {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 0.5em;
+    margin: 8px 0 0 0;
+}
+
+div.training_set {
+    border: none;
+    border-radius: 4px;
+    background-color: #f3f3f3;
+    padding: 0.5em;
+    margin: 8px 0 0 0;
+}
+
+.set_details {
+    clear: both;
+}
+
+button {
+    margin: 8px 0 0 0;
+    height: 3em;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    background-color: #d9ecff;
+}
+
+#menu_content {
+    display: none;
+}
+
+#run_content {
+    display: none;
+}
+
+select {
+    width: 100%;
+    padding: 1em 0;
+    margin: 8px 0 0 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #d9ecff;
+}
