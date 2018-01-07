@@ -45,9 +45,13 @@ p#set_description {
 
 div#counter {
     margin: 8px 0 0 0;
-    font-size: 5em;
-    color: blue;
     text-align: center;
+    color: blue;
+}
+
+span#time_counter {
+    font-size: 5em;
+    margin: 0 10%;
 }
 
 progress {
