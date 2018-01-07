@@ -57,7 +57,7 @@ function selectVoice() {
         }
     }
     if (VOICE) {
-        console.log('selected VOICE: ' + VOICE.name);
+        console.log('selected VOICE: ' + VOICE.name + " (lang: " + VOICE.lang + "; local: " + VOICE.localService + ").");
     }
 }
 
@@ -93,7 +93,7 @@ async function runTraining(board_id, training) {
 
     var set_title_div = document.getElementById("set_title");
     var set_description_div = document.getElementById("set_description");
-    var counter_div = document.getElementById("counter");
+    var time_counter = document.getElementById("time_counter");
     var hold_pbar = document.getElementById("hold_pbar");
     var break_pbar = document.getElementById("break_pbar");
 
@@ -117,7 +117,7 @@ async function runTraining(board_id, training) {
             speechSynthesis.speak(utter_pause);
 
             set_title_div.textContent = "Pause";
-            set_description_div.textContent = "Pause for " + Math.floor(set.pause / 60).toString().padStart(2, "0") + ":" + (set.pause % 60).toString().padStart(2, "0") + " min.";
+            set_description_div.textContent = "Pause for " + Math.floor(set.pause / 60) + ":" + (set.pause % 60).toString().padStart(2, "0") + " min.";
         }
         else {
             set_title_div.textContent = "Get ready";
@@ -132,13 +132,15 @@ async function runTraining(board_id, training) {
         pause_pbar.style.display = "inline-block";
         hold_pbar.style.display = "none";
         break_pbar.style.display = "none";
+        document.getElementById("set_counter").textContent = Number(i) + 1 + "/" + training.sets.length;
+        document.getElementById("repeat_counter").textContent = "   ";
 
         console.log(`pause ${set.pause} seconds`);
         await COUNTER.start(
             set.pause,
             1000,
             async function pauseCountdownStep(step) {
-                counter_div.textContent = set.pause - step;
+                time_counter.textContent = set.pause - step;
                 pause_pbar.value = step + 1;
                 
                 if (set.pause - step == 15) {
@@ -151,7 +153,7 @@ async function runTraining(board_id, training) {
                     document.querySelector("#run_content .overlay_left").src = "images/" + board.holds[set.left].image;
                     document.querySelector("#run_content .overlay_right").src = "images/" + board.holds[set.right].image;
                 }
-                if ((set.pause - step) % 30 == 0) {
+                if (step > 0 && ((set.pause - step) % 30 == 0)) {
                     var utter_pause = new SpeechSynthesisUtterance();
                     utter_pause.text = makePauseString(set.pause - step);
                     utter_pause.voice = VOICE;
@@ -189,6 +191,7 @@ async function runTraining(board_id, training) {
         for (var rep = 0; rep < set.reps; rep++) {
             hold_pbar.value = 0;
             break_pbar.value = 0;
+            document.getElementById("repeat_counter").textContent = Number(rep) + 1 + "/" + set.reps;
             
             console.log(`rep ${rep+1}: hold`);
             speechSynthesis.speak(utter_go);
@@ -196,7 +199,7 @@ async function runTraining(board_id, training) {
                 set.hold,
                 1000,
                 function hangCountdownStep(step) {
-                    counter_div.textContent = set.hold - step;
+                    time_counter.textContent = set.hold - step;
                     hold_pbar.value = step + 1;
                 }
             );
@@ -206,9 +209,13 @@ async function runTraining(board_id, training) {
             await COUNTER.start(
                 set.break,
                 1000,
-                function breakCountdownStep(step) {
-                    counter_div.textContent = set.break - step;
+                async function breakCountdownStep(step) {
+                    time_counter.textContent = set.break - step;
                     break_pbar.value = step + 1;
+
+                    if (set.break - step <= 3) {
+                        await ticSound();
+                    }
                 }
             );
         }
