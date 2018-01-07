@@ -2,7 +2,6 @@
 
 "use strict";
 
-var SYNTH = window.speechSynthesis;
 var VOICE;
 
 var COUNTER = (function () {
@@ -50,7 +49,7 @@ var COUNTER = (function () {
 })();
 
 function selectVoice() {
-    var voices = SYNTH.getVoices();
+    var voices = speechSynthesis.getVoices();
     for (var i = 0; i < voices.length ; i++) {
         if (voices[i].lang.startsWith('en')) {
             VOICE = voices[i];
@@ -112,7 +111,7 @@ async function runTraining(board_id, training) {
             utter_pause.VOICE = VOICE;
             utter_pause.lang = 'en-US';
             console.log(`Speaking "${utter_pause.text}"`);
-            SYNTH.speak(utter_pause);
+            speechSynthesis.speak(utter_pause);
         }
 
         set_title_div.textContent = "Pause";
@@ -137,7 +136,7 @@ async function runTraining(board_id, training) {
                 
                 if (set.pause - 15 == step) {
                     console.log(`Speaking "${utter_set_desc.text}"`);
-                    SYNTH.speak(utter_set_desc);
+                    speechSynthesis.speak(utter_set_desc);
 
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
@@ -176,7 +175,7 @@ async function runTraining(board_id, training) {
             break_pbar.value = 0;
             
             console.log(`rep ${rep+1}: hold`);
-            SYNTH.speak(utter_go);
+            speechSynthesis.speak(utter_go);
             await COUNTER.start(
                 set.hold,
                 1000,

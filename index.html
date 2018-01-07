@@ -1,188 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 
-    <title>nappy fingers</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 8px;
-            font-family: sans-serif;
-        }
-        
-        h1 {
-            margin: 0;
-            padding: 0.5em 0;
-            display: block;
-            background-color: #9bcdff;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        
-        h2 {
-            margin: 8px 0 16px 0;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        h3 {
-            margin: 8px 0 16px 0;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        
-        p {
-            margin: 8px 0 8px 0;
-        }
-        
-        h2#set_title {
-            margin: 8px 0 0 0;
-            font-size: 1.1em;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        p#set_description {
-            margin: 8px 0 0 0;
-            text-align: center;
-        }
-        
-        div#counter {
-            margin: 8px 0 0 0;
-            font-size: 5em;
-            color: blue;
-            text-align: center;
-        }
-        
-        progress {
-            width: 50%;
-            height: 3em;
-            margin: 8px 0 0 0;
-            -webkit-appearance: none;
-        }
-        
-        progress#pause_pbar {
-            width: 100%;
-        }
-        
-        ::-webkit-progress-bar {
-            background-color: transparent;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        
-        #hold_pbar::-webkit-progress-value {
-            background-color: red;
-        }
-        #break_pbar::-webkit-progress-value {
-            background-color: green;
-        }
-        #pause_pbar::-webkit-progress-value {
-            background-color: blue;
-        }
-        
-        .board_outer_container {
-            margin: 8px 0 0 0;
-            padding: 0;
-        }
-        .board_inner_container {
-            position: relative;
-        }
-        .board_small_container {
-            margin: 8px 0 0 0;
-            position: relative;
-            width: 50%;
-            /*float: right;*/
-        }
-        img.board_img {
-            width: 100%;
-        }
-        img.overlay_img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.4;
-            width: 100%;
-        }
-        
-        div#training_details {
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            padding: 0.5em;
-            margin: 8px 0 0 0;
-        }
-        
-        div.training_set {
-            border: none;
-            border-radius: 4px;
-            background-color: #f3f3f3;
-            padding: 0.5em;
-            margin: 8px 0 0 0;
-        }
-        
-        .set_details {
-            clear: both;
-        }
-        
-        button {
-            margin: 8px 0 0 0;
-            height: 3em;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-            background-color: #d9ecff;
-        }
-        
-        #menu_content {
-            display: none;
-        }
-        
-        #run_content {
-            display: none;
-        }
-        
-        select {
-            width: 100%;
-            padding: 1em 0;
-            margin: 8px 0 0 0;
-            border: none;
-            border-radius: 4px;
-            background-color: #d9ecff;
-        }
-    </style>
-  </head>
-
-  <body>
-    <h1>nappy fingers</h1>
-    <div id="menu_content">
-        <select name="board_select"></select>
-        <select name="training_select"></select>
-        <div id="training_details"></div>
-        <button name="start">Start Training</button>
-    </div>
-    <div id="run_content">
-        <div class="board_outer_container">
-            <div class="board_inner_container">
-                <img class="board_img" src="images/bm1000.png" alt=""/>
-                <img class="overlay_img overlay_left" src="" alt=""/>
-                <img class="overlay_img overlay_right" src="" alt=""/>
-            </div>
+        <title>nappy fingers</title>
+        <link href="nappy.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>nappy fingers</h1>
+        <div id="menu_content">
+            <select name="board_select"></select>
+            <select name="training_select"></select>
+            <div id="training_details"></div>
+            <button name="start">Start Training</button>
         </div>
-        <h2 id="set_title"></h2>
-        <p id="set_description"></p>
-        <div id="counter"></div>
-        <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
-        <progress id="pause_pbar" max="7" value="0"></progress>
-        <button name="pause">Pause</button>
-        <button name="stop">Abort</button>
-    </div>
-    <script src="basic_training.js"></script>
-    <script src="sound.js"></script>
-    <script src="trainer.js"></script>
-  </body>
+        <div id="run_content">
+            <div class="board_outer_container">
+                <div class="board_inner_container">
+                    <img class="board_img" src="images/bm1000.png" alt=""/>
+                    <img class="overlay_img overlay_left" src="" alt=""/>
+                    <img class="overlay_img overlay_right" src="" alt=""/>
+                </div>
+            </div>
+            <h2 id="set_title"></h2>
+            <p id="set_description"></p>
+            <div id="counter"></div>
+            <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
+            <progress id="pause_pbar" max="7" value="0"></progress>
+            <button name="pause">Pause</button>
+            <button name="stop">Abort</button>
+        </div>
+        <script src="boards.js"></script>
+        <script src="trainings.js"></script>
+        <script src="sound.js"></script>
+        <script src="nappy.js"></script>
+    </body>
 </html>
