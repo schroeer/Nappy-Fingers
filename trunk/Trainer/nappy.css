@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    padding: 8px;
+  /*  padding: 8px;*/
     font-family: sans-serif;
 }
 
@@ -46,12 +46,26 @@ p#set_description {
 div#counter {
     margin: 8px 0 0 0;
     text-align: center;
-    color: blue;
+}
+
+span#set_counter {
+    width: 25%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 span#time_counter {
     font-size: 5em;
-    margin: 0 10%;
+    color: blue;
+    width: 50%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+span#repeat_counter {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25%;
 }
 
 progress {
@@ -82,7 +96,7 @@ progress#pause_pbar {
 }
 
 .board_outer_container {
-    margin: 8px 0 0 0;
+    margin: 16px 0 0 0;
     padding: 0;
 }
 .board_inner_container {
@@ -131,6 +145,7 @@ button {
     border: none;
     border-radius: 4px;
     background-color: #d9ecff;
+    font-size: 1em;
 }
 
 #menu_content {
@@ -148,4 +163,5 @@ select {
     border: none;
     border-radius: 4px;
     background-color: #d9ecff;
+    font-size: 1em;
 }
