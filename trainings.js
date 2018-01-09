@@ -233,7 +233,7 @@ var trainings = [
                 "hold":         6,
                 "break":        4,
                 "reps":         4,
-                "pause":        16,
+                "pause":        15,
             },
             {
                 "title":        "Open three fingers",
