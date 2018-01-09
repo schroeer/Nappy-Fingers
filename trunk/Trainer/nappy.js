@@ -289,22 +289,17 @@ function initOnce() {
 
     var board_select = document.getElementsByName('board_select')[0];
     var training_select = document.getElementsByName('training_select')[0];
-    var first = true;
     for (var board of boards) {
         var opt = document.createElement('option');
         opt.setAttribute('value', board.id);
-        if (first) {
-            opt.setAttribute('selected', 'selected');
-            first = false;
-        }
         var content = document.createTextNode(board.name);
         opt.appendChild(content);
         board_select.appendChild(opt);
     }
+    board_select.selectedIndex = 0;
     
     board_select.onchange = function(event) {
-        var selected_board = board_select.options[board_select.selectedIndex].value;
-        fillTrainingSelect(selected_board);
+       fillTrainingSelect();
     }
     
     training_select.onchange = function(event) {
@@ -313,10 +308,10 @@ function initOnce() {
         showTrainingDetails(selected_board, selected_training);
     }
     
-    fillTrainingSelect(board_select.options[board_select.selectedIndex].value);
+    fillTrainingSelect();
 
-    function fillTrainingSelect(board_id) {
-        var training_select = document.getElementsByName('training_select')[0];
+    function fillTrainingSelect() {
+        var board_id = board_select.options[board_select.selectedIndex].value;
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
