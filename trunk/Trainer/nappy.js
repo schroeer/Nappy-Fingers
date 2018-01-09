@@ -88,9 +88,7 @@ function completedSound() {
     soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
 }
 
-async function runTraining(board_id, training) {
-    var board = getBoard(board_id);
-
+async function runTraining(board, training) {
     var set_title_div = document.getElementById("set_title");
     var set_description_div = document.getElementById("set_description");
     var time_counter = document.getElementById("time_counter");
@@ -239,14 +237,6 @@ async function runTraining(board_id, training) {
     }
 }
 
-function getBoard(board_id) {
-    for (var board of boards) {
-        if (board.id == board_id) {
-            return board;
-        }
-    }
-}    
-
 function initMenu() {
     document.getElementById("menu_content").style.display = "block";
     document.getElementById("run_content").style.display = "none";
@@ -260,6 +250,9 @@ function initRun() {
 }
 
 function initOnce() {
+    var board_select = document.getElementsByName('board_select')[0];
+    var training_select = document.getElementsByName('training_select')[0];
+
     selectVoice();
     if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = selectVoice;
@@ -274,10 +267,10 @@ function initOnce() {
     var start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
         initRun();
-        var selected_board = board_select.options[board_select.selectedIndex].value;
-        var selected_training = training_select.options[training_select.selectedIndex].value;
+        var selected_board_num = board_select.options[board_select.selectedIndex].value;
+        var selected_training_num = training_select.options[training_select.selectedIndex].value;
         try {
-            await runTraining(selected_board, trainings[selected_training]);
+            await runTraining(boards[selected_board_num], trainings[selected_training_num]);
         }
         catch (err) {
             console.log("Training aborted (" + err + ")");
@@ -287,55 +280,48 @@ function initOnce() {
         }
     });
 
-    var board_select = document.getElementsByName('board_select')[0];
-    var training_select = document.getElementsByName('training_select')[0];
-    for (var board of boards) {
+    for (var board_num in boards) {
         var opt = document.createElement('option');
-        opt.setAttribute('value', board.id);
-        var content = document.createTextNode(board.name);
+        opt.setAttribute('value', board_num);
+        var content = document.createTextNode(boards[board_num].name);
         opt.appendChild(content);
         board_select.appendChild(opt);
     }
     board_select.selectedIndex = 0;
+    fillTrainingSelect();
     
     board_select.onchange = function(event) {
-       fillTrainingSelect();
+        fillTrainingSelect();
     }
     
     training_select.onchange = function(event) {
-        var selected_board = board_select.options[board_select.selectedIndex].value;
-        var selected_training = training_select.options[training_select.selectedIndex].value;
-        showTrainingDetails(selected_board, selected_training);
+        showTrainingDetails();
     }
-    
-    fillTrainingSelect();
 
     function fillTrainingSelect() {
-        var board_id = board_select.options[board_select.selectedIndex].value;
+        var board_num = board_select.options[board_select.selectedIndex].value;
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
-        var first = true;
         for (var training_num in trainings) {
             var training = trainings[training_num];
-            if (training.board == board_id) {
+            if (training.board == boards[board_num].id) {
                 var opt = document.createElement('option');
                 opt.setAttribute('value', training_num);
-                if (first) {
-                    opt.setAttribute('selected', 'selected');
-                    showTrainingDetails(board_id, training_num);
-                    first = false;
-                }
                 var content = document.createTextNode(training.title);
                 opt.appendChild(content);
                 training_select.appendChild(opt);
             }
+            training_select.selectedIndex = 0;
+            showTrainingDetails();
         }
     }
 
-    function showTrainingDetails(board_id, training_num) {
-        var board = getBoard(board_id);
-        var training = trainings[training_num];
+    function showTrainingDetails() {
+        var selected_board_num = board_select.options[board_select.selectedIndex].value;
+        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        var board = boards[selected_board_num];
+        var training = trainings[selected_training_num];
 
         var training_details = document.getElementById('training_details');
         while (training_details.firstChild) {
