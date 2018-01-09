@@ -258,12 +258,6 @@ function initOnce() {
         speechSynthesis.onvoiceschanged = selectVoice;
     }
 
-    var pause_button = document.getElementsByName("pause")[0];
-    pause_button.addEventListener("click", COUNTER.pause);
-
-    var stop_button = document.getElementsByName("stop")[0];
-    stop_button.addEventListener("click", COUNTER.stop);
-
     var start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
         initRun();
@@ -280,6 +274,12 @@ function initOnce() {
         }
     });
 
+    var pause_button = document.getElementsByName("pause")[0];
+    pause_button.addEventListener("click", COUNTER.pause);
+
+    var stop_button = document.getElementsByName("stop")[0];
+    stop_button.addEventListener("click", COUNTER.stop);
+
     for (var board_num in boards) {
         var opt = document.createElement('option');
         opt.setAttribute('value', board_num);
@@ -290,13 +290,8 @@ function initOnce() {
     board_select.selectedIndex = 0;
     fillTrainingSelect();
     
-    board_select.onchange = function(event) {
-        fillTrainingSelect();
-    }
-    
-    training_select.onchange = function(event) {
-        showTrainingDetails();
-    }
+    board_select.onchange = fillTrainingSelect;
+    training_select.onchange = showTrainingDetails;
 
     function fillTrainingSelect() {
         var board_num = board_select.options[board_select.selectedIndex].value;
