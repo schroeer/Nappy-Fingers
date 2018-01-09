@@ -2,8 +2,6 @@
 
 "use strict";
 
-var VOICE;
-
 var COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
     
@@ -48,19 +46,6 @@ var COUNTER = (function () {
     }
 })();
 
-function selectVoice() {
-    var voices = speechSynthesis.getVoices();
-    for (var i = 0; i < voices.length ; i++) {
-        if (voices[i].lang.startsWith('en')) {
-            VOICE = voices[i];
-            break;
-        }
-    }
-    if (VOICE) {
-        console.log('selected VOICE: ' + VOICE.name + " (lang: " + VOICE.lang + "; local: " + VOICE.localService + ").");
-    }
-}
-
 function ticSound() {
     soundEffect(
         400,       //frequency
@@ -103,13 +88,11 @@ async function runTraining(board, training) {
 
         var utter_set_desc = new SpeechSynthesisUtterance();
         utter_set_desc.text = "Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + ((set.reps > 1) ? " times." : " time.");
-        utter_set_desc.voice = VOICE;
         utter_set_desc.lang = 'en-US';
 
         if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
             var utter_pause = new SpeechSynthesisUtterance();
             utter_pause.text = makePauseString(set.pause);
-            utter_pause.voice = VOICE;
             utter_pause.lang = 'en-US';
             console.log(`Speaking "${utter_pause.text}"`);
             speechSynthesis.speak(utter_pause);
@@ -154,7 +137,6 @@ async function runTraining(board, training) {
                 if (step > 0 && ((set.pause - step) % 30 == 0)) {
                     var utter_pause = new SpeechSynthesisUtterance();
                     utter_pause.text = makePauseString(set.pause - step);
-                    utter_pause.voice = VOICE;
                     utter_pause.lang = 'en-US';
                     console.log(`Speaking "${utter_pause.text}"`);
                     speechSynthesis.speak(utter_pause);
@@ -173,7 +155,6 @@ async function runTraining(board, training) {
         
         var utter_go = new SpeechSynthesisUtterance();
         utter_go.text = "Go!";
-        utter_go.voice = VOICE;
         utter_go.lang = 'en-US';
 
         pause_pbar.style.display = "none";
@@ -252,11 +233,6 @@ function initRun() {
 function initOnce() {
     var board_select = document.getElementsByName('board_select')[0];
     var training_select = document.getElementsByName('training_select')[0];
-
-    selectVoice();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = selectVoice;
-    }
 
     var start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
