@@ -11,8 +11,8 @@
     <body>
         <h1 id="logo">nappy fingers</h1>
         <div id="menu_content">
-            <select name="board_select"></select>
-            <select name="training_select"></select>
+            <select class="big_select" name="board_select"></select>
+            <select class="big_select" name="training_select"></select>
             <div id="training_details"></div>
             <button name="start">Start Training</button>
         </div>
@@ -31,6 +31,66 @@
             <progress id="pause_pbar" max="7" value="0"></progress>
             <button name="pause">Pause</button>
             <button name="stop">Abort</button>
+        </div>
+        <div id="edit_content">
+            <form>
+                <label for="edit_training_title">Title</label>
+                <input type="text" id="edit_training_title" name="edit_training_title" value="Hang time" />
+                <br/>
+                <label for="edit_training_description">Description</label>
+                <textarea id="edit_training_description" name="edit_training_description">Much hang time on good holds</textarea>
+                <div class="training_pause">
+                    <label for="edit_set_0_pause">Pause before (seconds)</label>
+                    <input type="number" id="edit_set_0_pause" name="edit_set_0_pause" step="1" min="15" value="15" />
+                </div>
+                <div class="training_set">
+                    <label for="edit_set_title">Title</label>
+                    <input type="text" id="edit_set_title" name="edit_set_title" value="Warm up" />
+                    <br/>
+                    <label for="edit_set_description">Description</label>
+                    <textarea id="edit_set_description" name="edit_set_description">Hang on straight arms</textarea>
+                    <br/>
+                    <label for="edit_set_left">Left hand</label>
+                    <select id="edit_set_left" name="edit_set_left">
+                        <option value="0">no hold</option>
+                        <option value="1">jug</option>
+                        <option value="2">hard sloper</option>
+                        <option value="3">easy sloper</option>
+                        <option value="4">hard four finger pocket</option>
+                        <option value="5">easy four finger pocket</option>
+                        <option value="6">medium four finger pocket</option>
+                        <option value="7">easy two finger pocket</option>
+                        <option value="8">hard two finger pocket</option>
+                        <option value="9">easy three finger pocket</option>
+                        <option value="10">hard three finger pocket</option>
+                        <option value="11">medium three finger pocket</option>
+                        <option value="12">central pocket</option>
+                    </select>
+                    <br/>
+                    <label for="edit_set_right">Right hand</label>
+                    <select id="edit_set_right" name="edit_set_right">
+                        <option value="0">no hold</option>
+                        <option value="1">jug</option>
+                        <option value="2">hard sloper</option>
+                        <option value="3">easy sloper</option>
+                        <option value="4">hard four finger pocket</option>
+                        <option value="5">easy four finger pocket</option>
+                        <option value="6">medium four finger pocket</option>
+                        <option value="7">easy two finger pocket</option>
+                        <option value="8">hard two finger pocket</option>
+                        <option value="9">easy three finger pocket</option>
+                        <option value="10">hard three finger pocket</option>
+                        <option value="11">medium three finger pocket</option>
+                        <option value="12">central pocket</option>
+                    </select>
+                    <div class="board_small_container">
+                        <img class="board_img" src="images/bm1000.png" alt="">
+                        <img class="overlay_img overlay_left" src="images/bm1000_l01.png" alt="">
+                        <img class="overlay_img overlay_right" src="images/bm1000_r01.png" alt="">
+                    </div>
+                    <p class="set_details">Hold for 7 seconds. Interrupt for 4 seconds. Repeat 7 times.</p>
+                </div>
+            </form>
         </div>
         <script src="boards.js"></script>
         <script src="trainings.js"></script>

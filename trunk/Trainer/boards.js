@@ -3,98 +3,112 @@ var boards = [
         "id":    "bm1000",
         "name":  "Beastmaker 1000",
         "image": "bm1000.png",
-        "holds": {
+        "left_holds": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
             "1":    {
                 "name": "jug",
-                "image": "bm1000_01.png"
+                "image": "bm1000_l01.png"
             },
             "2":    {
                 "name": "hard sloper",
-                "image": "bm1000_02.png"
+                "image": "bm1000_l02.png"
             },
             "3":    {
                 "name": "easy sloper",
-                "image": "bm1000_03.png"
+                "image": "bm1000_l03.png"
             },
             "4":    {
                 "name": "hard four finger pocket",
-                "image": "bm1000_04.png"
+                "image": "bm1000_l04.png"
             },
             "5":    {
                 "name": "easy four finger pocket",
-                "image": "bm1000_05.png"
+                "image": "bm1000_l05.png"
             },
             "6":    {
                 "name": "medium four finger pocket",
-                "image": "bm1000_06.png"
+                "image": "bm1000_l06.png"
             },
             "7":    {
                 "name": "easy two finger pocket",
-                "image": "bm1000_07.png"
+                "image": "bm1000_l07.png"
             },
             "8":    {
                 "name": "hard two finger pocket",
-                "image": "bm1000_08.png"
+                "image": "bm1000_l08.png"
             },
             "9":    {
                 "name": "easy three finger pocket",
-                "image": "bm1000_09.png"
+                "image": "bm1000_l09.png"
             },
             "10":   {
                 "name": "hard three finger pocket",
-                "image": "bm1000_10.png"
+                "image": "bm1000_l10.png"
             },
             "11":   {
                 "name": "medium three finger pocket",
-                "image": "bm1000_11.png"
+                "image": "bm1000_l11.png"
             },
-            "21":   {
-                "name": "jug",
-                "image": "bm1000_21.png"
-            },
-            "22":   {
-                "name": "hard sloper",
-                "image": "bm1000_22.png"
-            },
-            "23":   {
-                "name": "easy sloper",
-                "image": "bm1000_23.png"
-            },
-            "24":   {
-                "name": "hard four finger pocket",
-                "image": "bm1000_24.png"
-            },
-            "25":   {
-                "name": "easy four finger pocket",
-                "image": "bm1000_25.png"
-            },
-            "26":   {
-                "name": "medium four finger pocket",
-                "image": "bm1000_26.png"
-            },
-            "27":   {
-                "name": "easy two finger pocket",
-                "image": "bm1000_27.png"
-            },
-            "28":   {
-                "name": "hard two finger pocket",
-                "image": "bm1000_28.png"
-            },
-            "29":   {
-                "name": "easy three finger pocket",
-                "image": "bm1000_29.png"
-            },
-            "30":   {
-                "name": "hard three finger pocket",
-                "image": "bm1000_30.png"
-            },
-            "31":   {
-                "name": "medium three finger pocket",
-                "image": "bm1000_31.png"
-            },
-            "40":   {
+            "12":   {
                 "name": "central pocket",
-                "image": "bm1000_40.png"
+                "image": "bm1000_12.png"
+            }
+        },
+        "right_holds": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
+            "1":    {
+                "name": "jug",
+                "image": "bm1000_r01.png"
+            },
+            "2":    {
+                "name": "hard sloper",
+                "image": "bm1000_r02.png"
+            },
+            "3":    {
+                "name": "easy sloper",
+                "image": "bm1000_r03.png"
+            },
+            "4":    {
+                "name": "hard four finger pocket",
+                "image": "bm1000_r04.png"
+            },
+            "5":    {
+                "name": "easy four finger pocket",
+                "image": "bm1000_r05.png"
+            },
+            "6":    {
+                "name": "medium four finger pocket",
+                "image": "bm1000_r06.png"
+            },
+            "7":    {
+                "name": "easy two finger pocket",
+                "image": "bm1000_r07.png"
+            },
+            "8":    {
+                "name": "hard two finger pocket",
+                "image": "bm1000_r08.png"
+            },
+            "9":    {
+                "name": "easy three finger pocket",
+                "image": "bm1000_r09.png"
+            },
+            "10":   {
+                "name": "hard three finger pocket",
+                "image": "bm1000_r10.png"
+            },
+            "11":   {
+                "name": "medium three finger pocket",
+                "image": "bm1000_r11.png"
+            },
+            "12":   {
+                "name": "central pocket",
+                "image": "bm1000_12.png"
             }
         }
     }

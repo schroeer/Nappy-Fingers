@@ -87,7 +87,7 @@ async function runTraining(board, training) {
         }
 
         var utter_set_desc = new SpeechSynthesisUtterance();
-        utter_set_desc.text = `Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.holds[set.left].name}. Right hand ${board.holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`;
+        utter_set_desc.text = `Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.left_holds[set.left].name}. Right hand ${board.right_holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`;
         utter_set_desc.lang = 'en-US';
 
         if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
@@ -131,8 +131,8 @@ async function runTraining(board, training) {
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
                     
-                    document.querySelector("#run_content .overlay_left").src = "images/" + board.holds[set.left].image;
-                    document.querySelector("#run_content .overlay_right").src = "images/" + board.holds[set.right].image;
+                    document.querySelector("#run_content .overlay_left").src = "images/" + board.left_holds[set.left].image;
+                    document.querySelector("#run_content .overlay_right").src = "images/" + board.right_holds[set.right].image;
                 }
                 if (step > 0 && ((set.pause - step) % 30 == 0)) {
                     var utter_pause = new SpeechSynthesisUtterance();
@@ -335,8 +335,8 @@ function initOnce() {
             var outer = addElement(div, 'div', null, {'class': 'board_small_container'});
 
             addElement(outer, 'img', null, {'class': 'board_img', 'src': "images/" + board.image, 'alt': ""});
-            addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': "images/" + board.holds[set.left].image, 'alt': ""});
-            addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': "images/" + board.holds[set.right].image, 'alt': ""});
+            addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': "images/" + board.left_holds[set.left].image, 'alt': ""});
+            addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': "images/" + board.right_holds[set.right].image, 'alt': ""});
 
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
             addElement(div, 'p', `Hold for ${set.hold} seconds. Interrupt for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
