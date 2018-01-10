@@ -168,7 +168,7 @@ button {
     display: none;
 }
 
-select {
+select.big_select {
     width: 100%;
     padding: 1em 0.5em;
     margin: 8px 0 0 0;
