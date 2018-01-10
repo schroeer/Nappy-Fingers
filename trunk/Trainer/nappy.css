@@ -9,7 +9,10 @@ h1#logo {
     padding: 0.3em 0 0.4em;
     display: block;
     background-color: #9bcdff;
-    background: linear-gradient(to bottom, #afd7ff 0%,#9bcdff 50%,#82c0ff 100%);    
+    background-image: url(images/daniellogo.png);
+    background-image: url(images/daniellogo.png), linear-gradient(to bottom, #afd7ff 0%,#9bcdff 50%,#82c0ff 100%);
+    background-repeat: no-repeat;
+    background-position: center right;
     border-radius: 0px;
     text-align: center;
     font-size: 2.5em;
@@ -167,7 +170,7 @@ button {
 
 select {
     width: 100%;
-    padding: 1em 0;
+    padding: 1em 0.5em;
     margin: 8px 0 0 0;
     border: none;
     border-radius: 0px;

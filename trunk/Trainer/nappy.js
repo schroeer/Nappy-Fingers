@@ -87,7 +87,7 @@ async function runTraining(board, training) {
         }
 
         var utter_set_desc = new SpeechSynthesisUtterance();
-        utter_set_desc.text = "Next exercise: " + set.description + " for " + set.hold + " seconds. " + "Left hand " + board.holds[set.left].name + ". Right hand " + board.holds[set.right].name + ". Repeat " + set.reps + ((set.reps > 1) ? " times." : " time.");
+        utter_set_desc.text = `Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.holds[set.left].name}. Right hand ${board.holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`;
         utter_set_desc.lang = 'en-US';
 
         if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
@@ -98,7 +98,7 @@ async function runTraining(board, training) {
             speechSynthesis.speak(utter_pause);
 
             set_title_div.textContent = "Pause";
-            set_description_div.textContent = "Pause for " + Math.floor(set.pause / 60) + ":" + (set.pause % 60).toString().padStart(2, "0") + " min.";
+            set_description_div.textContent = `Pause for ${Math.floor(set.pause / 60)}:${(set.pause % 60).toString().padStart(2, "0")} min.`;
         }
         else {
             set_title_div.textContent = "Get ready";
@@ -136,7 +136,7 @@ async function runTraining(board, training) {
                 }
                 if (step > 0 && ((set.pause - step) % 30 == 0)) {
                     var utter_pause = new SpeechSynthesisUtterance();
-                    utter_pause.text = makePauseString(set.pause - step);
+                    utter_pause.text = makePauseStringShort(set.pause - step);
                     utter_pause.lang = 'en-US';
                     console.log(`Speaking "${utter_pause.text}"`);
                     speechSynthesis.speak(utter_pause);
@@ -216,6 +216,25 @@ async function runTraining(board, training) {
         }
         return pause_str + ".";
     }
+
+    function makePauseStringShort(pause) {
+        var minutes = Math.floor(pause / 60);
+        var seconds = pause % 60;
+        var pause_str = "";
+        if (minutes != 0) {
+            pause_str += minutes + ((minutes > 1) ? " minutes" : " minute");
+            if (seconds != 0) {
+                pause_str += " ";
+            }
+        }
+        if (seconds != 0) {
+            pause_str += seconds;
+            if (minutes == 0) {
+                pause_str += (seconds > 1) ? " seconds" : " second";
+            }
+        }
+        return pause_str + ".";
+    }
 }
 
 function showMenu() {
@@ -243,7 +262,7 @@ function initOnce() {
             await runTraining(boards[selected_board_num], trainings[selected_training_num]);
         }
         catch (err) {
-            console.log("Training aborted (" + err + ")");
+            console.log(`Training aborted (${err})`);
         }
         finally {
             showMenu();
@@ -302,12 +321,12 @@ function initOnce() {
         addElement(training_details, 'h2', training.title, {'class': 'training_title'});
         addElement(training_details, 'p', training.description.replace(/([^.])$/, '$1.'), {'class': 'training_description'});
         var times = calculateTimes(training);
-        addElement(training_details, 'p', "Total time: " + Math.floor(times[3] / 60) + ":" + (times[3] % 60).toString().padStart(2, "0") + " min. Hang time: " + Math.floor(times[0] / 60) + ":" + (times[0] % 60).toString().padStart(2, "0") + " min.", {'class': 'training_description'});
+        addElement(training_details, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'training_description'});
         
         for (var set_num in training.sets) {
             var set = training.sets[set_num];
             
-            var pause_div = addElement(training_details, 'div', "Pause for " + set.pause + " seconds.", {'class': 'training_pause'});
+            var pause_div = addElement(training_details, 'div', `Pause for ${set.pause} seconds.`, {'class': 'training_pause'});
             
             var div = addElement(training_details, 'div', null, {'class': 'training_set'});
             
@@ -320,7 +339,7 @@ function initOnce() {
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': "images/" + board.holds[set.right].image, 'alt': ""});
 
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
-            addElement(div, 'p', 'Hold for ' + set.hold + " seconds. Interrupt for " + set.break + " seconds. Repeat " + set.reps + " times.", {'class': 'set_details'});
+            addElement(div, 'p', `Hold for ${set.hold} seconds. Interrupt for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
         }
         
         function addElement(node, type, text, atts) {
