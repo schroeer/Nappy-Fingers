@@ -237,9 +237,36 @@ async function runTraining(board, training) {
     }
 }
 
+function updateTraining(event) {
+    trainings[this.dataset.training][this.dataset.field] = this.value;
+    console.log(`Setting training[${this.dataset.training}].${this.dataset.field} = ${this.value}.`);
+}
+
+function showTrainingEdit(training_num) {
+    var training_edit = document.getElementById('training_edit');
+    while (training_edit.firstChild) {
+        training_edit.removeChild(training_edit.firstChild);
+    }
+    
+    var training = trainings[training_num];
+
+    var label = document.createElement('label');
+    var tn = document.createTextNode("Title");
+    label.appendChild(tn);
+    var input = document.createElement('input');
+    input.value = training.title;
+    input.dataset["training"] = training_num;
+    input.dataset["field"] = "title";
+    input.type = "text";
+    input.addEventListener("change", updateTraining);
+    label.appendChild(input);
+    training_edit.appendChild(label);
+}
+
 function showMenu() {
     document.getElementById("menu_content").style.display = "block";
     document.getElementById("run_content").style.display = "none";
+    showTrainingEdit(0);
     window.location.hash = "";
 }
 

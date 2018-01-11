@@ -33,12 +33,13 @@
             <button name="stop">Abort</button>
         </div>
         <div id="edit_content">
-            <form>
-                <label for="edit_training_title">Title</label>
-                <input type="text" id="edit_training_title" name="edit_training_title" value="Hang time" />
+            <form id="training_edit">
+                <label>Title
+                    <input data-training="0" data-field="title" type="text" value="Hang time" onchange="updateTraining(this)"/>
+                </label>
                 <br/>
                 <label for="edit_training_description">Description</label>
-                <textarea id="edit_training_description" name="edit_training_description">Much hang time on good holds</textarea>
+                <textarea id="edit_training_description" name="edit_training_description" onchange="trainings[0].description = this.value">Much hang time on good holds</textarea>
                 <div class="training_pause">
                     <label for="edit_set_0_pause">Pause before (seconds)</label>
                     <input type="number" id="edit_set_0_pause" name="edit_set_0_pause" step="1" min="15" value="15" />
