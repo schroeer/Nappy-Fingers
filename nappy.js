@@ -239,7 +239,7 @@ async function runTraining(board, training) {
 
 function updateTraining(event) {
     trainings[this.dataset.training][this.dataset.field] = this.value;
-    console.log(`Setting training[${this.dataset.training}].${this.dataset.field} = ${this.value}.`);
+    console.log(`Setting training[${this.dataset.training}].${this.dataset.field} = "${this.value}".`);
 }
 
 function showTrainingEdit(training_num) {
@@ -250,17 +250,20 @@ function showTrainingEdit(training_num) {
     
     var training = trainings[training_num];
 
+    var id = "edit_title";
     var label = document.createElement('label');
+    label.htmlFor = id;
     var tn = document.createTextNode("Title");
     label.appendChild(tn);
+    training_edit.appendChild(label);
     var input = document.createElement('input');
+    input.id = id;
     input.value = training.title;
     input.dataset["training"] = training_num;
     input.dataset["field"] = "title";
     input.type = "text";
     input.addEventListener("change", updateTraining);
-    label.appendChild(input);
-    training_edit.appendChild(label);
+    training_edit.appendChild(input);
 }
 
 function showMenu() {
