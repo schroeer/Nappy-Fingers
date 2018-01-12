@@ -168,6 +168,10 @@ button {
     display: none;
 }
 
+#edit_content {
+    display: block;
+}
+
 select.big_select {
     width: 100%;
     padding: 1em 0.5em;
@@ -215,6 +219,27 @@ div.edit_set {
     grid-gap: 8px 8px;
 }
 
+button.button_delete {
+    margin: 8px 0 0 0;
+    height: 3em;
+    width: 9em;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: #f37c7c;
+    font-size: 1em;
+}
+
+button.button_add {
+    margin: 8px auto;
+    display: block;
+    height: 3em;
+    width: 9em;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: #a4deb3;
+    font-size: 1em;
+}
+
 .edit-label {
     grid-column: 1 / 2;
     justify-self: end;
@@ -236,7 +261,7 @@ div.edit_set {
 
 .edit-span {
     grid-column: 1 / 4;
-    justify-self: stretch;
+    justify-self: center;
 }
 
 .edit-row1 {
