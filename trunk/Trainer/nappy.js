@@ -250,20 +250,120 @@ function showTrainingEdit(training_num) {
     
     var training = trainings[training_num];
 
-    var id = "edit_title";
-    var label = document.createElement('label');
-    label.htmlFor = id;
-    var tn = document.createTextNode("Title");
-    label.appendChild(tn);
-    training_edit.appendChild(label);
-    var input = document.createElement('input');
-    input.id = id;
-    input.value = training.title;
-    input.dataset["training"] = training_num;
-    input.dataset["field"] = "title";
-    input.type = "text";
-    input.addEventListener("change", updateTraining);
-    training_edit.appendChild(input);
+    var board_num = 0;
+    
+    const template_edit_set = document.getElementById('template_edit_set');
+        
+    for (let set_num in training.sets) {
+        let set = training.sets[set_num];
+        
+        let fragment = template_edit_set.content.cloneNode(true);
+        fragment.querySelectorAll('label').forEach(function(label) {
+            label.htmlFor += "_" + set_num;
+        });
+        
+        let pause = fragment.getElementById('edit_set_pause');
+        pause.value = set.pause;
+        pause.id += "_" + set_num;
+        pause.addEventListener('change', function() {
+            if (this.value < 15) {
+                this.value = 15;
+            }
+            trainings[training_num].sets[set_num].pause = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].pause = ${this.value}.`);
+        });
+        
+        let title = fragment.getElementById('edit_set_title');
+        title.value = set.title;
+        title.id += "_" + set_num;
+        title.addEventListener('change', function() {
+            trainings[training_num].sets[set_num].title = this.value;
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
+        });
+
+        let description = fragment.getElementById('edit_set_description');
+        description.value = set.description;
+        description.id += "_" + set_num;
+        description.addEventListener('change', function() {
+            trainings[training_num].sets[set_num].description = this.value;
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
+        });
+
+        let img_board = fragment.querySelector('img.board_img');
+        let img_left = fragment.querySelector('img.overlay_left');
+        let img_right = fragment.querySelector('img.overlay_right');
+        
+        img_board.src = "images/" + boards[board_num].image;
+
+        let left = fragment.getElementById('edit_set_left');
+        left.id += "_" + set_num;
+        for (let hold_id in boards[board_num].left_holds) {
+            let opt = document.createElement('option');
+            opt.setAttribute('value', hold_id);
+            let content = document.createTextNode(boards[board_num].left_holds[hold_id].name);
+            opt.appendChild(content);
+            left.appendChild(opt);
+        }
+        left.value = set.left;
+        img_left.src = "images/" + boards[board_num].left_holds[set.left].image;
+        left.addEventListener('change', function() {
+            trainings[training_num].sets[set_num].left = this.value;
+            img_left.src = "images/" + boards[board_num].left_holds[this.value].image;
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
+        });
+
+        let right = fragment.getElementById('edit_set_right');
+        right.id += "_" + set_num;
+        for (let hold_id in boards[board_num].right_holds) {
+            let opt = document.createElement('option');
+            opt.setAttribute('value', hold_id);
+            let content = document.createTextNode(boards[board_num].right_holds[hold_id].name);
+            opt.appendChild(content);
+            right.appendChild(opt);
+        }
+        right.value = set.right;
+        img_right.src = "images/" + boards[board_num].right_holds[set.right].image;
+        right.addEventListener('change', function() {
+            trainings[training_num].sets[set_num].right = this.value;
+            img_right.src = "images/" + boards[board_num].right_holds[this.value].image;
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
+        });
+
+        let hold = fragment.getElementById('edit_set_hold');
+        hold.value = set.hold;
+        hold.id += "_" + set_num;
+        hold.addEventListener('change', function() {
+            if (this.value < 1) {
+                this.value = 1;
+            }
+            trainings[training_num].sets[set_num].hold = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].hold = ${this.value}.`);
+        });
+        
+        let interr = fragment.getElementById('edit_set_break');
+        interr.value = set.break;
+        interr.id += "_" + set_num;
+        interr.addEventListener('change', function() {
+            if (this.value < 1) {
+                this.value = 1;
+            }
+            trainings[training_num].sets[set_num].break = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].break = ${this.value}.`);
+        });
+        
+        let reps = fragment.getElementById('edit_set_reps');
+        reps.value = set.reps;
+        reps.id += "_" + set_num;
+        reps.addEventListener('change', function() {
+            if (this.value < 1) {
+                this.value = 1;
+            }
+            trainings[training_num].sets[set_num].reps = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
+        });
+        
+        training_edit.appendChild(fragment);
+    }
 }
 
 function showMenu() {
@@ -398,4 +498,4 @@ function initOnce() {
 
 initOnce();
 showMenu();
-//showTrainingEdit(0);
+showTrainingEdit(0);

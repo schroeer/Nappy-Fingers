@@ -188,7 +188,7 @@ div.edit_header {
     padding: 0.5em;
     margin: 8px 0 0 0;
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: 5em auto;
     grid-template-rows: repeat(2,auto);
     grid-gap: 8px 8px;
 }
@@ -199,7 +199,7 @@ div.edit_pause {
     padding: 0.5em;
     margin: 8px 0 0 0;
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: 5em 4em auto ;
     grid-template-rows: repeat(1,auto);
     grid-gap: 8px 8px;
 }
@@ -210,7 +210,7 @@ div.edit_set {
     padding: 0.5em;
     margin: 8px 0 0 0;
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: 5em 4em auto ;
     grid-template-rows: repeat(9,auto);
     grid-gap: 8px 8px;
 }
@@ -220,13 +220,22 @@ div.edit_set {
     justify-self: end;
 }
 
+.edit-label-right {
+    grid-column: 3 / 4;
+}
+
 .edit-input {
     grid-column: 2 / 3;
     justify-self: stretch;
 }
 
+.edit-input-big {
+    grid-column: 2 / 4;
+    justify-self: stretch;
+}
+
 .edit-span {
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     justify-self: stretch;
 }
 
