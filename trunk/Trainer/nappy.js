@@ -283,6 +283,9 @@ function showTrainingEdit(training_num) {
             label.htmlFor += "_" + set_num;
         });
         
+        let number = fragment.querySelector('.edit_set_number');
+        number.innerHTML = set_num;
+        
         let pause = fragment.getElementById('edit_set_pause');
         pause.value = set.pause;
         pause.id += "_" + set_num;
