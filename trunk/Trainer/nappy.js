@@ -243,14 +243,35 @@ function updateTraining(event) {
 }
 
 function showTrainingEdit(training_num) {
-    var training_edit = document.getElementById('training_edit');
-    while (training_edit.firstChild) {
-        training_edit.removeChild(training_edit.firstChild);
-    }
-    
+    var board_num = 0;
     var training = trainings[training_num];
 
-    var board_num = 0;
+    var edit_content = document.getElementById('edit_content');
+    var form = document.getElementById('training_edit');
+    if (form) {
+        edit_content.removeChild(form);
+    }
+
+    const template_edit = document.getElementById('template_edit');
+    
+    let fragment = template_edit.content.cloneNode(true);
+    let title = fragment.getElementById('edit_training_title');
+    title.value = training.title;
+    title.addEventListener('change', function() {
+        trainings[training_num].title = this.value;
+        console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
+    });
+
+    let description = fragment.getElementById('edit_training_description');
+    description.value = training.description;
+    description.addEventListener('change', function() {
+        trainings[training_num].description = this.value;
+        console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
+    });
+
+    edit_content.appendChild(fragment);
+    
+    form = document.getElementById('training_edit');
     
     const template_edit_set = document.getElementById('template_edit_set');
         
@@ -362,7 +383,7 @@ function showTrainingEdit(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
         });
         
-        training_edit.appendChild(fragment);
+        form.appendChild(fragment);
     }
 }
 
@@ -497,5 +518,5 @@ function initOnce() {
 }
 
 initOnce();
-showMenu();
+//showMenu();
 showTrainingEdit(0);
