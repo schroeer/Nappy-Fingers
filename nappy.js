@@ -269,7 +269,6 @@ function showTrainingEdit(training_num) {
 function showMenu() {
     document.getElementById("menu_content").style.display = "block";
     document.getElementById("run_content").style.display = "none";
-    showTrainingEdit(0);
     window.location.hash = "";
 }
 
@@ -399,3 +398,4 @@ function initOnce() {
 
 initOnce();
 showMenu();
+//showTrainingEdit(0);
