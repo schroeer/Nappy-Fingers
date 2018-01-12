@@ -33,26 +33,26 @@
             <button name="stop">Abort</button>
         </div>
         <div id="edit_content">
-            <form id="training_edit">
-                <label>Title
-                    <input data-training="0" data-field="title" type="text" value="Hang time" onchange="updateTraining(this)"/>
-                </label>
-                <br/>
-                <label for="edit_training_description">Description</label>
-                <textarea id="edit_training_description" name="edit_training_description" onchange="trainings[0].description = this.value">Much hang time on good holds</textarea>
-                <div class="training_pause">
-                    <label for="edit_set_0_pause">Pause before (seconds)</label>
-                    <input type="number" id="edit_set_0_pause" name="edit_set_0_pause" step="1" min="15" value="15" />
+            <form id="training_edit" onsubmit="return false;">
+                <div class="edit_header">
+                    <label class="edit-label edit-row1" for="edit_training_title">Title</label>
+                    <input class="edit-input edit-row1" data-training="0" data-field="title" id="edit_training_title" type="text" value="Hang time" onchange="updateTraining(this)"/>
+                    <label class="edit-label edit-row2" for="edit_training_description">Description</label>
+                    <textarea class="edit-input edit-row2" id="edit_training_description" onchange="trainings[0].description = this.value">Much hang time on good holds</textarea>
+                    <textarea class="edit-input edit-row2" id="edit_training_description" onchange="trainings[0].description = this.value">Much hang time on good holds</textarea>
                 </div>
-                <div class="training_set">
-                    <label for="edit_set_title">Title</label>
-                    <input type="text" id="edit_set_title" name="edit_set_title" value="Warm up" />
-                    <br/>
-                    <label for="edit_set_description">Description</label>
-                    <textarea id="edit_set_description" name="edit_set_description">Hang on straight arms</textarea>
-                    <br/>
-                    <label for="edit_set_left">Left hand</label>
-                    <select id="edit_set_left" name="edit_set_left">
+                <button name="add_set">Add Exercise</button>
+                <div class="edit_pause">
+                    <label class="edit-label edit-row1" for="edit_set_0_pause">Pause (s)</label>
+                    <input class="edit-input edit-row1" type="number" id="edit_set_0_pause" name="edit_set_0_pause" step="1" min="15" value="15" />
+                </div>
+                <div class="edit_set">
+                    <label class="edit-label edit-row1" for="edit_set_title">Title</label>
+                    <input class="edit-input edit-row1" type="text" id="edit_set_title" name="edit_set_title" value="Warm up" />
+                    <label class="edit-label edit-row2" for="edit_set_description">Description</label>
+                    <textarea class="edit-input edit-row2" id="edit_set_description" name="edit_set_description">Hang on straight arms</textarea>
+                    <label class="edit-label edit-row3" for="edit_set_left">Left hand</label>
+                    <select class="edit-input edit-row3" id="edit_set_left">
                         <option value="0">no hold</option>
                         <option value="1">jug</option>
                         <option value="2">hard sloper</option>
@@ -67,9 +67,8 @@
                         <option value="11">medium three finger pocket</option>
                         <option value="12">central pocket</option>
                     </select>
-                    <br/>
-                    <label for="edit_set_right">Right hand</label>
-                    <select id="edit_set_right" name="edit_set_right">
+                    <label class="edit-label edit-row4" for="edit_set_right">Right hand</label>
+                    <select class="edit-input edit-row4" id="edit_set_right" name="edit_set_right">
                         <option value="0">no hold</option>
                         <option value="1">jug</option>
                         <option value="2">hard sloper</option>
@@ -84,12 +83,18 @@
                         <option value="11">medium three finger pocket</option>
                         <option value="12">central pocket</option>
                     </select>
-                    <div class="board_small_container">
+                    <div class="board_inner_container edit-input edit-row5">
                         <img class="board_img" src="images/bm1000.png" alt="">
                         <img class="overlay_img overlay_left" src="images/bm1000_l01.png" alt="">
                         <img class="overlay_img overlay_right" src="images/bm1000_r01.png" alt="">
                     </div>
-                    <p class="set_details">Hold for 7 seconds. Interrupt for 4 seconds. Repeat 7 times.</p>
+                    <label class="edit-label edit-row6" for="edit_set_0_hold">Hold (s)</label>
+                    <input class="edit-input edit-row6" type="number" id="edit_set_0_hold" name="edit_set_0_hold" min="1" step="1" value="7" />
+                    <label class="edit-label edit-row7" for="edit_set_0_break">Break (s)</label>
+                    <input class="edit-input edit-row7" type="number" id="edit_set_0_break" name="edit_set_0_break" min="1" step="1" value="4" />
+                    <label class="edit-label edit-row8" for="edit_set_0_rep">Repeat</label>
+                    <input class="edit-input edit-row8" type="number" id="edit_set_0_rep" name="edit_set_0_rep" min="1" step="1" value="7" />
+                    <button class="edit-span edit-row9" name="delete_set">Delete Exercise</button>
                 </div>
             </form>
         </div>
