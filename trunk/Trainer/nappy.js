@@ -284,7 +284,7 @@ function showTrainingEdit(training_num) {
         });
         
         let number = fragment.querySelector('.edit_set_number');
-        number.innerHTML = set_num;
+        number.innerHTML = 1 + Number(set_num);
         
         let pause = fragment.getElementById('edit_set_pause');
         pause.value = set.pause;
