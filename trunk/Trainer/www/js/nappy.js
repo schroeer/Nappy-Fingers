@@ -519,7 +519,3 @@ function initOnce() {
         }
     }
 }
-
-initOnce();
-//showMenu();
-showTrainingEdit(0);
