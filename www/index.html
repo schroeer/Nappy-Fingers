@@ -90,9 +90,17 @@
                 </div>
             </template>
         </div>
+        <script src="cordova.js"></script>
         <script src="js/boards.js"></script>
         <script src="js/trainings.js"></script>
         <script src="js/sound.js"></script>
         <script src="js/nappy.js"></script>
+        <script>
+            document.addEventListener('deviceready', function() {
+                console.log('Received "deviceready"');
+                initOnce();
+                showMenu();
+            }, false);
+        </script>
     </body>
 </html>
