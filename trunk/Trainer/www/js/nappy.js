@@ -1,4 +1,4 @@
-// pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r *.js *.html *.css images daimlerstr.de:stella/www/trainer/
+// phonegap prepare browser & pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
 
 "use strict";
 
@@ -257,14 +257,14 @@ function showTrainingEdit(training_num) {
     let fragment = template_edit.content.cloneNode(true);
     let title = fragment.getElementById('edit_training_title');
     title.value = training.title;
-    title.addEventListener('change', function() {
+    title.addEventListener('change', function changedTrainingTitle() {
         trainings[training_num].title = this.value;
         console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
     });
 
     let description = fragment.getElementById('edit_training_description');
     description.value = training.description;
-    description.addEventListener('change', function() {
+    description.addEventListener('change', function changedTrainingDescription() {
         trainings[training_num].description = this.value;
         console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
     });
@@ -289,7 +289,7 @@ function showTrainingEdit(training_num) {
         let pause = fragment.getElementById('edit_set_pause');
         pause.value = set.pause;
         pause.id += "_" + set_num;
-        pause.addEventListener('change', function() {
+        pause.addEventListener('change', function changeSetPause() {
             if (this.value < 15) {
                 this.value = 15;
             }
@@ -300,7 +300,7 @@ function showTrainingEdit(training_num) {
         let title = fragment.getElementById('edit_set_title');
         title.value = set.title;
         title.id += "_" + set_num;
-        title.addEventListener('change', function() {
+        title.addEventListener('change', function changeSetTitle() {
             trainings[training_num].sets[set_num].title = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
         });
@@ -308,7 +308,7 @@ function showTrainingEdit(training_num) {
         let description = fragment.getElementById('edit_set_description');
         description.value = set.description;
         description.id += "_" + set_num;
-        description.addEventListener('change', function() {
+        description.addEventListener('change', function changeSetDescription() {
             trainings[training_num].sets[set_num].description = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
         });
@@ -329,8 +329,8 @@ function showTrainingEdit(training_num) {
             left.appendChild(opt);
         }
         left.value = set.left;
-        img_left.src = "images/" + boards[board_num].left_holds[set.left].image;
-        left.addEventListener('change', function() {
+        img_left.src = boards[board_num].left_holds[set.left].image ? "images/" + boards[board_num].left_holds[set.left].image : "";
+        left.addEventListener('change', function changeSetLeft() {
             trainings[training_num].sets[set_num].left = this.value;
             img_left.src = "images/" + boards[board_num].left_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
@@ -346,8 +346,8 @@ function showTrainingEdit(training_num) {
             right.appendChild(opt);
         }
         right.value = set.right;
-        img_right.src = "images/" + boards[board_num].right_holds[set.right].image;
-        right.addEventListener('change', function() {
+        img_right.src = boards[board_num].right_holds[set.right].image ? "images/" + boards[board_num].right_holds[set.right].image : "";
+        right.addEventListener('change', function changeSetRight() {
             trainings[training_num].sets[set_num].right = this.value;
             img_right.src = "images/" + boards[board_num].right_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
@@ -356,7 +356,7 @@ function showTrainingEdit(training_num) {
         let hold = fragment.getElementById('edit_set_hold');
         hold.value = set.hold;
         hold.id += "_" + set_num;
-        hold.addEventListener('change', function() {
+        hold.addEventListener('change', function changeSetHold() {
             if (this.value < 1) {
                 this.value = 1;
             }
@@ -367,7 +367,7 @@ function showTrainingEdit(training_num) {
         let interr = fragment.getElementById('edit_set_break');
         interr.value = set.break;
         interr.id += "_" + set_num;
-        interr.addEventListener('change', function() {
+        interr.addEventListener('change', function changeSetBreak() {
             if (this.value < 1) {
                 this.value = 1;
             }
@@ -378,12 +378,27 @@ function showTrainingEdit(training_num) {
         let reps = fragment.getElementById('edit_set_reps');
         reps.value = set.reps;
         reps.id += "_" + set_num;
-        reps.addEventListener('change', function() {
+        reps.addEventListener('change', function changeSetReps() {
             if (this.value < 1) {
                 this.value = 1;
             }
             trainings[training_num].sets[set_num].reps = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
+        });
+        
+        let button_add = fragment.querySelector('.button_add');
+        button_add.addEventListener("click", async function addSet() {
+            trainings[training_num].sets.splice(set_num, 0, {
+                "title":        "",
+                "description":  "",
+                "left":         1,
+                "right":        1,
+                "hold":         5,
+                "break":        5,
+                "reps":         5,
+                "pause":        60,
+            });
+            showTrainingEdit(training_num);
         });
         
         form.appendChild(fragment);
@@ -393,13 +408,25 @@ function showTrainingEdit(training_num) {
 function showMenu() {
     document.getElementById("menu_content").style.display = "block";
     document.getElementById("run_content").style.display = "none";
+    document.getElementById("edit_content").style.display = "none";
+    window.scrollTo(0,0);
     window.location.hash = "";
 }
 
 function showRun() {
     document.getElementById("menu_content").style.display = "none";
     document.getElementById("run_content").style.display = "block";
+    document.getElementById("edit_content").style.display = "none";
+    window.scrollTo(0,0);
     window.location.hash = "run";
+}
+
+function showEdit() {
+    document.getElementById("menu_content").style.display = "none";
+    document.getElementById("run_content").style.display = "none";
+    document.getElementById("edit_content").style.display = "block";
+    window.scrollTo(0,0);
+    window.location.hash = "edit";
 }
 
 function initOnce() {
@@ -412,14 +439,40 @@ function initOnce() {
         var selected_board_num = board_select.options[board_select.selectedIndex].value;
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
         try {
+            window.plugins.insomnia.keepAwake();
             await runTraining(boards[selected_board_num], trainings[selected_training_num]);
         }
         catch (err) {
             console.log(`Training aborted (${err})`);
         }
         finally {
+            window.plugins.insomnia.allowSleepAgain();
             showMenu();
         }
+    });
+
+    var edit_button = document.getElementsByName('edit')[0];
+    edit_button.addEventListener("click", async function editTraining() {
+        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        showTrainingEdit(selected_training_num);
+        showEdit();
+    });
+
+    var clone_button = document.getElementsByName('clone')[0];
+    clone_button.addEventListener("click", async function cloneTraining() {
+        var selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
+        trainings.splice(selected_training_num, 0, JSON.parse(JSON.stringify(trainings[selected_training_num])));
+        trainings[selected_training_num + 1].title += " (copy)";
+        fillTrainingSelect(selected_training_num + 1);
+        showTrainingEdit(selected_training_num + 1);
+        showEdit();
+    });
+
+    var delete_button = document.getElementsByName('delete')[0];
+    delete_button.addEventListener("click", async function editTraining() {
+        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        trainings.splice(selected_training_num, 1);
+        fillTrainingSelect(0);
     });
 
     var pause_button = document.getElementsByName("pause")[0];
@@ -441,7 +494,7 @@ function initOnce() {
     board_select.onchange = fillTrainingSelect;
     training_select.onchange = showTrainingDetails;
 
-    function fillTrainingSelect() {
+    function fillTrainingSelect(selected = 0) {
         var board_num = board_select.options[board_select.selectedIndex].value;
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
@@ -455,9 +508,9 @@ function initOnce() {
                 opt.appendChild(content);
                 training_select.appendChild(opt);
             }
-            training_select.selectedIndex = 0;
-            showTrainingDetails();
         }
+        training_select.selectedIndex = selected;
+        showTrainingDetails();
     }
 
     function showTrainingDetails() {
@@ -488,8 +541,8 @@ function initOnce() {
             var outer = addElement(div, 'div', null, {'class': 'board_small_container'});
 
             addElement(outer, 'img', null, {'class': 'board_img', 'src': "images/" + board.image, 'alt': ""});
-            addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': "images/" + board.left_holds[set.left].image, 'alt': ""});
-            addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': "images/" + board.right_holds[set.right].image, 'alt': ""});
+            addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': (board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : ""), 'alt': ""});
+            addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': (board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : ""), 'alt': ""});
 
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
             addElement(div, 'p', `Hold for ${set.hold} seconds. Interrupt for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});

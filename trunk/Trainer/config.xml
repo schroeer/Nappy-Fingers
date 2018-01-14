@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="de.danielschroeer.nappyfingers" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>nappy fingers</name>
+    <description>Strong fingers for changing the baby</description>
+    <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>
+    <content src="index.html" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="14" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <engine name="android" spec="~6.3.0" />
+    <engine name="browser" spec="~5.0.3" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
+    <plugin name="cordova-plugin-insomnia" spec="~4.3.0" />
+    <plugin name="phonegap-plugin-speech-synthesis" spec="https://github.com/macdonst/SpeechSynthesisPlugin.git" />
+</widget>
