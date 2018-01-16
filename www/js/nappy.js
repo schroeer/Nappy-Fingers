@@ -185,18 +185,21 @@ async function runTraining(board, training) {
             await completedSound();
 
             console.log(`rep ${rep+1}: break`);
-            await COUNTER.start(
-                set.break,
-                1000,
-                async function breakCountdownStep(step) {
-                    time_counter.textContent = set.break - step;
-                    break_pbar.value = step + 1;
+            
+            if (rep < set.reps - 1) {
+                await COUNTER.start(
+                    set.break,
+                    1000,
+                    async function breakCountdownStep(step) {
+                        time_counter.textContent = set.break - step;
+                        break_pbar.value = step + 1;
 
-                    if (set.break - step <= 3) {
-                        await ticSound();
+                        if (set.break - step <= 3) {
+                            await ticSound();
+                        }
                     }
-                }
-            );
+                );
+            }
         }
         console.log("set complete");
     }
@@ -432,6 +435,10 @@ function showEdit() {
 function initOnce() {
     var board_select = document.getElementsByName('board_select')[0];
     var training_select = document.getElementsByName('training_select')[0];
+    
+    window.onhashchange = hashChanged(event) {
+        console.log("Hash changed to " + window.location.hash);
+    };
 
     var start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
@@ -565,10 +572,20 @@ function initOnce() {
             var pause = 0, inter = 0, hold = 0;
             for (var set of training.sets) {
                 pause += set.pause;
-                inter += set.reps * set.break;
+                inter += (set.reps - 1) * set.break;
                 hold += set.reps * set.hold;
             }
             return [hold, inter, pause, hold + inter + pause];
         }
     }
 }
+
+function downloadTrainings() {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(trainings, null, "  "));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", "trainings.json");
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
