@@ -47,11 +47,11 @@
                             <label for="edit_training_description" class="edit-label edit-row2">Description</label>
                             <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
                         </div>
+                        <button class="button_add" name="add_set">Add Exercise</button>
                     </form>
+                    <button class="button_ok" name="edit_complete">Done</button>
                 </template>
                 <template id="template_edit_set">
-                    <button class="button_add" name="add_set">Add Exercise</button>
-
                     <div class="edit_pause">
                         <label for="edit_set_pause" class="edit-label edit-row1">Pause</label>
                         <input id="edit_set_pause" class="edit-input edit-row1" type="number" step="1" min="15"/>
@@ -92,6 +92,8 @@
 
                         <button name="delete_set" class="edit-span edit-row9 button_delete">Delete Exercise</button>
                     </div>
+
+                    <button class="button_add" name="add_set">Add Exercise</button>
                 </template>
             </div>
         </div>
@@ -103,7 +105,7 @@
         <script>
             document.addEventListener('deviceready', function() {
                 console.log('Received "deviceready"');
-                initOnce();
+                init();
                 showMenu();
             }, false);
         </script>

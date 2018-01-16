@@ -20,7 +20,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <engine name="android" spec="~6.3.0" />
+    <engine name="android" spec="^7.0.0" />
     <engine name="browser" spec="~5.0.3" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
     <plugin name="cordova-plugin-insomnia" spec="~4.3.0" />

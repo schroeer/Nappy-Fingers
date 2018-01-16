@@ -92,7 +92,7 @@ async function runTraining(board, training) {
 
         if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
             var utter_pause = new SpeechSynthesisUtterance();
-            utter_pause.text = makePauseString(set.pause);
+            utter_pause.text = makePauseString(set.pause, false);
             utter_pause.lang = 'en-US';
             console.log(`Speaking "${utter_pause.text}"`);
             speechSynthesis.speak(utter_pause);
@@ -131,12 +131,12 @@ async function runTraining(board, training) {
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
                     
-                    document.querySelector("#run_content .overlay_left").src = "images/" + board.left_holds[set.left].image;
-                    document.querySelector("#run_content .overlay_right").src = "images/" + board.right_holds[set.right].image;
+                    document.querySelector("#run_content .overlay_left").src = board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : "";
+                    document.querySelector("#run_content .overlay_right").src = board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : "";
                 }
                 if (step > 0 && ((set.pause - step) % 30 == 0)) {
                     var utter_pause = new SpeechSynthesisUtterance();
-                    utter_pause.text = makePauseStringShort(set.pause - step);
+                    utter_pause.text = makePauseString(set.pause - step, true);
                     utter_pause.lang = 'en-US';
                     console.log(`Speaking "${utter_pause.text}"`);
                     speechSynthesis.speak(utter_pause);
@@ -149,7 +149,12 @@ async function runTraining(board, training) {
 
         await runSet(set);
     }
-    console.log("training complete");
+    var utter_complete = new SpeechSynthesisUtterance();
+    utter_complete.text = "Congratulations!";
+    utter_complete.lang = 'en-US';
+    console.log(`Speaking "${utter_complete.text}"`);
+    speechSynthesis.speak(utter_complete);
+    console.log("Training completed");
    
     async function runSet(set) {
         
@@ -204,35 +209,19 @@ async function runTraining(board, training) {
         console.log("set complete");
     }
     
-    function makePauseString(pause) {
+    function makePauseString(pause, short = false) {
         var minutes = Math.floor(pause / 60);
         var seconds = pause % 60;
-        var pause_str = "Pause for ";
+        var pause_str = short ? "" : "Pause for ";
         if (minutes != 0) {
             pause_str += minutes + ((minutes > 1) ? " minutes" : " minute");
             if (seconds != 0) {
-                pause_str += " and ";
-            }
-        }
-        if (seconds != 0) {
-            pause_str += seconds + ((seconds > 1) ? " seconds" : " second");
-        }
-        return pause_str + ".";
-    }
-
-    function makePauseStringShort(pause) {
-        var minutes = Math.floor(pause / 60);
-        var seconds = pause % 60;
-        var pause_str = "";
-        if (minutes != 0) {
-            pause_str += minutes + ((minutes > 1) ? " minutes" : " minute");
-            if (seconds != 0) {
-                pause_str += " ";
+                pause_str += short ? " " : " and ";
             }
         }
         if (seconds != 0) {
             pause_str += seconds;
-            if (minutes == 0) {
+            if (!short || minutes == 0) {
                 pause_str += (seconds > 1) ? " seconds" : " second";
             }
         }
@@ -240,14 +229,9 @@ async function runTraining(board, training) {
     }
 }
 
-function updateTraining(event) {
-    trainings[this.dataset.training][this.dataset.field] = this.value;
-    console.log(`Setting training[${this.dataset.training}].${this.dataset.field} = "${this.value}".`);
-}
-
-function showTrainingEdit(training_num) {
+function updateEditPage(training_num) {
     var board_num = 0;
-    var training = trainings[training_num];
+    var training = TRAININGS[training_num];
 
     var edit_content = document.getElementById('edit_content');
     var form = document.getElementById('training_edit');
@@ -258,18 +242,40 @@ function showTrainingEdit(training_num) {
     const template_edit = document.getElementById('template_edit');
     
     let fragment = template_edit.content.cloneNode(true);
+
     let title = fragment.getElementById('edit_training_title');
     title.value = training.title;
     title.addEventListener('change', function changedTrainingTitle() {
-        trainings[training_num].title = this.value;
+        TRAININGS[training_num].title = this.value;
         console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
     });
 
     let description = fragment.getElementById('edit_training_description');
     description.value = training.description;
     description.addEventListener('change', function changedTrainingDescription() {
-        trainings[training_num].description = this.value;
+        TRAININGS[training_num].description = this.value;
         console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
+    });
+
+    let button_add = fragment.querySelector('button[name=add_set]');
+    button_add.addEventListener("click", async function addSet() {
+        TRAININGS[training_num].sets.splice(0, 0, {
+            "title":        "",
+            "description":  "",
+            "left":         1,
+            "right":        1,
+            "hold":         5,
+            "break":        5,
+            "reps":         5,
+            "pause":        60,
+        });
+        updateEditPage(training_num);
+    });
+
+    let button_done = fragment.querySelector('button[name=edit_complete]');
+    button_done.addEventListener("click", async function editDone() {
+        // save
+        showMenu();
     });
 
     edit_content.appendChild(fragment);
@@ -296,7 +302,7 @@ function showTrainingEdit(training_num) {
             if (this.value < 15) {
                 this.value = 15;
             }
-            trainings[training_num].sets[set_num].pause = Number(this.value);
+            TRAININGS[training_num].sets[set_num].pause = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].pause = ${this.value}.`);
         });
         
@@ -304,7 +310,7 @@ function showTrainingEdit(training_num) {
         title.value = set.title;
         title.id += "_" + set_num;
         title.addEventListener('change', function changeSetTitle() {
-            trainings[training_num].sets[set_num].title = this.value;
+            TRAININGS[training_num].sets[set_num].title = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
         });
 
@@ -312,7 +318,7 @@ function showTrainingEdit(training_num) {
         description.value = set.description;
         description.id += "_" + set_num;
         description.addEventListener('change', function changeSetDescription() {
-            trainings[training_num].sets[set_num].description = this.value;
+            TRAININGS[training_num].sets[set_num].description = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
         });
 
@@ -320,39 +326,39 @@ function showTrainingEdit(training_num) {
         let img_left = fragment.querySelector('img.overlay_left');
         let img_right = fragment.querySelector('img.overlay_right');
         
-        img_board.src = "images/" + boards[board_num].image;
+        img_board.src = "images/" + BOARDS[board_num].image;
 
         let left = fragment.getElementById('edit_set_left');
         left.id += "_" + set_num;
-        for (let hold_id in boards[board_num].left_holds) {
+        for (let hold_id in BOARDS[board_num].left_holds) {
             let opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            let content = document.createTextNode(boards[board_num].left_holds[hold_id].name);
+            let content = document.createTextNode(BOARDS[board_num].left_holds[hold_id].name);
             opt.appendChild(content);
             left.appendChild(opt);
         }
         left.value = set.left;
-        img_left.src = boards[board_num].left_holds[set.left].image ? "images/" + boards[board_num].left_holds[set.left].image : "";
+        img_left.src = BOARDS[board_num].left_holds[set.left].image ? "images/" + BOARDS[board_num].left_holds[set.left].image : "";
         left.addEventListener('change', function changeSetLeft() {
-            trainings[training_num].sets[set_num].left = this.value;
-            img_left.src = "images/" + boards[board_num].left_holds[this.value].image;
+            TRAININGS[training_num].sets[set_num].left = this.value;
+            img_left.src = "images/" + BOARDS[board_num].left_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
         });
 
         let right = fragment.getElementById('edit_set_right');
         right.id += "_" + set_num;
-        for (let hold_id in boards[board_num].right_holds) {
+        for (let hold_id in BOARDS[board_num].right_holds) {
             let opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            let content = document.createTextNode(boards[board_num].right_holds[hold_id].name);
+            let content = document.createTextNode(BOARDS[board_num].right_holds[hold_id].name);
             opt.appendChild(content);
             right.appendChild(opt);
         }
         right.value = set.right;
-        img_right.src = boards[board_num].right_holds[set.right].image ? "images/" + boards[board_num].right_holds[set.right].image : "";
+        img_right.src = BOARDS[board_num].right_holds[set.right].image ? "images/" + BOARDS[board_num].right_holds[set.right].image : "";
         right.addEventListener('change', function changeSetRight() {
-            trainings[training_num].sets[set_num].right = this.value;
-            img_right.src = "images/" + boards[board_num].right_holds[this.value].image;
+            TRAININGS[training_num].sets[set_num].right = this.value;
+            img_right.src = "images/" + BOARDS[board_num].right_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
         });
 
@@ -363,7 +369,7 @@ function showTrainingEdit(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            trainings[training_num].sets[set_num].hold = Number(this.value);
+            TRAININGS[training_num].sets[set_num].hold = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].hold = ${this.value}.`);
         });
         
@@ -374,7 +380,7 @@ function showTrainingEdit(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            trainings[training_num].sets[set_num].break = Number(this.value);
+            TRAININGS[training_num].sets[set_num].break = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].break = ${this.value}.`);
         });
         
@@ -385,13 +391,13 @@ function showTrainingEdit(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            trainings[training_num].sets[set_num].reps = Number(this.value);
+            TRAININGS[training_num].sets[set_num].reps = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
         });
         
-        let button_add = fragment.querySelector('.button_add');
+        let button_add = fragment.querySelector('button[name=add_set]');
         button_add.addEventListener("click", async function addSet() {
-            trainings[training_num].sets.splice(set_num, 0, {
+            TRAININGS[training_num].sets.splice(Number(set_num) + 1, 0, {
                 "title":        "",
                 "description":  "",
                 "left":         1,
@@ -401,7 +407,13 @@ function showTrainingEdit(training_num) {
                 "reps":         5,
                 "pause":        60,
             });
-            showTrainingEdit(training_num);
+            updateEditPage(training_num);
+        });
+        
+        let button_delete = fragment.querySelector('button[name=delete_set]');
+        button_delete.addEventListener("click", async function deleteSet() {
+            TRAININGS[training_num].sets.splice(set_num, 1);
+            updateEditPage(training_num);
         });
         
         form.appendChild(fragment);
@@ -432,11 +444,11 @@ function showEdit() {
     window.location.hash = "edit";
 }
 
-function initOnce() {
+function init() {
     var board_select = document.getElementsByName('board_select')[0];
     var training_select = document.getElementsByName('training_select')[0];
     
-    window.onhashchange = hashChanged(event) {
+    window.onhashchange = function hashChanged(event) {
         console.log("Hash changed to " + window.location.hash);
     };
 
@@ -447,7 +459,7 @@ function initOnce() {
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
         try {
             window.plugins.insomnia.keepAwake();
-            await runTraining(boards[selected_board_num], trainings[selected_training_num]);
+            await runTraining(BOARDS[selected_board_num], TRAININGS[selected_training_num]);
         }
         catch (err) {
             console.log(`Training aborted (${err})`);
@@ -461,24 +473,26 @@ function initOnce() {
     var edit_button = document.getElementsByName('edit')[0];
     edit_button.addEventListener("click", async function editTraining() {
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
-        showTrainingEdit(selected_training_num);
+        updateEditPage(selected_training_num);
         showEdit();
     });
 
     var clone_button = document.getElementsByName('clone')[0];
     clone_button.addEventListener("click", async function cloneTraining() {
         var selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
-        trainings.splice(selected_training_num, 0, JSON.parse(JSON.stringify(trainings[selected_training_num])));
-        trainings[selected_training_num + 1].title += " (copy)";
+        TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
+        TRAININGS[selected_training_num + 1].title += " (copy)";
         fillTrainingSelect(selected_training_num + 1);
-        showTrainingEdit(selected_training_num + 1);
+        updateEditPage(selected_training_num + 1);
         showEdit();
     });
 
     var delete_button = document.getElementsByName('delete')[0];
     delete_button.addEventListener("click", async function editTraining() {
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
-        trainings.splice(selected_training_num, 1);
+        // TODO: confirm
+        TRAININGS.splice(selected_training_num, 1);
+        // TODO: save
         fillTrainingSelect(0);
     });
 
@@ -488,10 +502,10 @@ function initOnce() {
     var stop_button = document.getElementsByName("stop")[0];
     stop_button.addEventListener("click", COUNTER.stop);
 
-    for (var board_num in boards) {
+    for (var board_num in BOARDS) {
         var opt = document.createElement('option');
         opt.setAttribute('value', board_num);
-        var content = document.createTextNode(boards[board_num].name);
+        var content = document.createTextNode(BOARDS[board_num].name);
         opt.appendChild(content);
         board_select.appendChild(opt);
     }
@@ -506,9 +520,9 @@ function initOnce() {
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
-        for (var training_num in trainings) {
-            var training = trainings[training_num];
-            if (training.board == boards[board_num].id) {
+        for (var training_num in TRAININGS) {
+            var training = TRAININGS[training_num];
+            if (training.board == BOARDS[board_num].id) {
                 var opt = document.createElement('option');
                 opt.setAttribute('value', training_num);
                 var content = document.createTextNode(training.title);
@@ -523,8 +537,8 @@ function initOnce() {
     function showTrainingDetails() {
         var selected_board_num = board_select.options[board_select.selectedIndex].value;
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
-        var board = boards[selected_board_num];
-        var training = trainings[selected_training_num];
+        var board = BOARDS[selected_board_num];
+        var training = TRAININGS[selected_training_num];
 
         var training_details = document.getElementById('training_details');
         while (training_details.firstChild) {
@@ -581,9 +595,9 @@ function initOnce() {
 }
 
 function downloadTrainings() {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(trainings, null, "  "));
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
     var downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", "trainings.json");
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
