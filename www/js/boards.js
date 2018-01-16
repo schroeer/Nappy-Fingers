@@ -1,4 +1,4 @@
-var boards = [
+var BOARDS = [
     {
         "id":    "bm1000",
         "name":  "Beastmaker 1000",

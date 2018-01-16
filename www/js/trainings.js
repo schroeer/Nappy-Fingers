@@ -1,4 +1,4 @@
-var trainings = [
+var TRAININGS = [
     {
         "title":        "Hang time", // Little Boy
         "description":  "Much hang time on good holds",
