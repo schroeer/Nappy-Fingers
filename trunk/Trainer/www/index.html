@@ -11,87 +11,89 @@
     </head>
     <body>
         <h1 id="logo">nappy fingers</h1>
-        <div id="menu_content">
-            <select class="big_select" name="board_select"></select>
-            <select class="big_select" name="training_select"></select>
-            <div id="training_details"></div>
-            <button name="start">Start Training</button>
-            <button name="edit">Edit</button>
-            <button name="clone">Clone &amp; Edit</button>
-            <button name="delete">Delete</button>
-        </div>
-        <div id="run_content">
-            <div class="board_outer_container">
-                <div class="board_inner_container">
-                    <img class="board_img" src="images/bm1000.png" alt=""/>
-                    <img class="overlay_img overlay_left" src="" alt=""/>
-                    <img class="overlay_img overlay_right" src="" alt=""/>
-                </div>
+        <div id="content">
+            <div id="menu_content">
+                <select class="big_select" name="board_select"></select>
+                <select class="big_select" name="training_select"></select>
+                <div id="training_details"></div>
+                <button name="start">Start Training</button>
+                <button name="edit">Edit</button>
+                <button name="clone">Clone &amp; Edit</button>
+                <button name="delete">Delete</button>
             </div>
-            <h2 id="set_title"></h2>
-            <p id="set_description"></p>
-            <div id="counter"><span id="set_counter"></span><span id="time_counter"></span><span id="repeat_counter"></span></div>
-            <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
-            <progress id="pause_pbar" max="7" value="0"></progress>
-            <button name="pause">Pause</button>
-            <button name="stop">Abort</button>
-        </div>
-        <div id="edit_content">
-            <template id="template_edit">
-                <form id="training_edit" onsubmit="return false;">
-                    <div class="edit_header">
-                        <label for="edit_training_title" class="edit-label edit-row1">Title</label>
-                        <input id="edit_training_title" class="edit-input edit-row1" type="text""/>
-
-                        <label for="edit_training_description" class="edit-label edit-row2">Description</label>
-                        <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
+            <div id="run_content">
+                <div class="board_outer_container">
+                    <div class="board_inner_container">
+                        <img class="board_img" src="images/bm1000.png" alt=""/>
+                        <img class="overlay_img overlay_left" src="" alt=""/>
+                        <img class="overlay_img overlay_right" src="" alt=""/>
                     </div>
-                </form>
-            </template>
-            <template id="template_edit_set">
-                <button class="button_add" name="add_set">Add Exercise</button>
-
-                <div class="edit_pause">
-                    <label for="edit_set_pause" class="edit-label edit-row1">Pause</label>
-                    <input id="edit_set_pause" class="edit-input edit-row1" type="number" step="1" min="15"/>
-                    <label for="edit_set_pause" class="edit-label-right edit-row1">s</label>
                 </div>
+                <h2 id="set_title"></h2>
+                <p id="set_description"></p>
+                <div id="counter"><span id="set_counter"></span><span id="time_counter"></span><span id="repeat_counter"></span></div>
+                <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
+                <progress id="pause_pbar" max="7" value="0"></progress>
+                <button name="pause">Pause</button>
+                <button name="stop">Abort</button>
+            </div>
+            <div id="edit_content">
+                <template id="template_edit">
+                    <form id="training_edit" onsubmit="return false;">
+                        <div class="edit_header">
+                            <label for="edit_training_title" class="edit-label edit-row1">Title</label>
+                            <input id="edit_training_title" class="edit-input edit-row1" type="text""/>
 
-                <div class="edit_set">
-                    <div class="edit_set_number edit-label edit-row1"></div>
-                    <div class="board_inner_container edit-input-big edit-row1">
-                        <img class="board_img" src="" alt="">
-                        <img class="overlay_img overlay_left" src="" alt="">
-                        <img class="overlay_img overlay_right" src="" alt="">
+                            <label for="edit_training_description" class="edit-label edit-row2">Description</label>
+                            <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
+                        </div>
+                    </form>
+                </template>
+                <template id="template_edit_set">
+                    <button class="button_add" name="add_set">Add Exercise</button>
+
+                    <div class="edit_pause">
+                        <label for="edit_set_pause" class="edit-label edit-row1">Pause</label>
+                        <input id="edit_set_pause" class="edit-input edit-row1" type="number" step="1" min="15"/>
+                        <label for="edit_set_pause" class="edit-label-right edit-row1">s</label>
                     </div>
 
-                    <label for="edit_set_title" class="edit-label edit-row2">Title</label>
-                    <input id="edit_set_title" class="edit-input-big edit-row2" type="text"/>
+                    <div class="edit_set">
+                        <div class="edit_set_number edit-label edit-row1"></div>
+                        <div class="board_inner_container edit-input-big edit-row1">
+                            <img class="board_img" src="" alt="">
+                            <img class="overlay_img overlay_left" src="" alt="">
+                            <img class="overlay_img overlay_right" src="" alt="">
+                        </div>
 
-                    <label for="edit_set_description" class="edit-label edit-row3">Description</label>
-                    <textarea id="edit_set_description" class="edit-input-big edit-row3"></textarea>
+                        <label for="edit_set_title" class="edit-label edit-row2">Title</label>
+                        <input id="edit_set_title" class="edit-input-big edit-row2" type="text"/>
 
-                    <label for="edit_set_left" class="edit-label edit-row4">Left hand</label>
-                    <select id="edit_set_left" class="edit-input-big edit-row4"></select>
+                        <label for="edit_set_description" class="edit-label edit-row3">Description</label>
+                        <textarea id="edit_set_description" class="edit-input-big edit-row3"></textarea>
 
-                    <label for="edit_set_right" class="edit-label edit-row5">Right hand</label>
-                    <select id="edit_set_right" class="edit-input-big edit-row5"></select>
+                        <label for="edit_set_left" class="edit-label edit-row4">Left hand</label>
+                        <select id="edit_set_left" class="edit-input-big edit-row4"></select>
 
-                    <label for="edit_set_hold" class="edit-label edit-row6">Hold</label>
-                    <input id="edit_set_hold" class="edit-input edit-row6" type="number" min="1" step="1"/>
-                    <label for="edit_set_hold" class="edit-label-right edit-row6">s</label>
+                        <label for="edit_set_right" class="edit-label edit-row5">Right hand</label>
+                        <select id="edit_set_right" class="edit-input-big edit-row5"></select>
 
-                    <label for="edit_set_break" class="edit-label edit-row7">Interrupt</label>
-                    <input id="edit_set_break" class="edit-input edit-row7" type="number"min="1" step="1"/>
-                    <label for="edit_set_break" class="edit-label-right edit-row7">s</label>
+                        <label for="edit_set_hold" class="edit-label edit-row6">Hold</label>
+                        <input id="edit_set_hold" class="edit-input edit-row6" type="number" min="1" step="1"/>
+                        <label for="edit_set_hold" class="edit-label-right edit-row6">s</label>
 
-                    <label for="edit_set_reps" class="edit-label edit-row8">Repeat</label>
-                    <input id="edit_set_reps" class="edit-input edit-row8" type="number" min="1" step="1"/>
-                    <label for="edit_set_reps" class="edit-label-right edit-row8">times</label>
+                        <label for="edit_set_break" class="edit-label edit-row7">Interrupt</label>
+                        <input id="edit_set_break" class="edit-input edit-row7" type="number"min="1" step="1"/>
+                        <label for="edit_set_break" class="edit-label-right edit-row7">s</label>
 
-                    <button name="delete_set" class="edit-span edit-row9 button_delete">Delete Exercise</button>
-                </div>
-            </template>
+                        <label for="edit_set_reps" class="edit-label edit-row8">Repeat</label>
+                        <input id="edit_set_reps" class="edit-input edit-row8" type="number" min="1" step="1"/>
+                        <label for="edit_set_reps" class="edit-label-right edit-row8">times</label>
+
+                        <button name="delete_set" class="edit-span edit-row9 button_delete">Delete Exercise</button>
+                    </div>
+                </template>
+            </div>
         </div>
         <script src="cordova.js"></script>
         <script src="js/boards.js"></script>

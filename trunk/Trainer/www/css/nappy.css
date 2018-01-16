@@ -6,8 +6,12 @@ body {
 
 h1#logo {
     margin: 0;
-    padding: 0.3em 0 0.4em;
-    display: block;
+    padding: 10px 0 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
     background-color: #9bcdff;
     background-image: url(../images/daniellogo.png);
     background-image: url(../images/daniellogo.png), linear-gradient(to bottom, #afd7ff 0%,#9bcdff 50%,#82c0ff 100%);
@@ -15,7 +19,7 @@ h1#logo {
     background-position: center right;
     border-radius: 0px;
     text-align: center;
-    font-size: 2.5em;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -56,6 +60,7 @@ span#set_counter {
     width: 25%;
     display: inline-block;
     vertical-align: middle;
+    font-size: 2em;
 }
 
 span#time_counter {
@@ -70,6 +75,7 @@ span#repeat_counter {
     display: inline-block;
     vertical-align: middle;
     width: 25%;
+    font-size: 2em;
 }
 
 progress {
@@ -158,6 +164,10 @@ button {
     border-radius: 0px;
     background-color: #d9ecff;
     font-size: 1em;
+}
+
+#content {
+    padding: 70px 0 0 0;
 }
 
 #menu_content {
