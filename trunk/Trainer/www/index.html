@@ -16,10 +16,10 @@
                 <select class="big_select" name="board_select"></select>
                 <select class="big_select" name="training_select"></select>
                 <div id="training_details"></div>
-                <button name="start">Start Training</button>
-                <button name="edit">Edit</button>
-                <button name="clone">Clone &amp; Edit</button>
-                <button name="delete">Delete</button>
+                <button name="start"><i class="material-icons md-dark">play_arrow</i> Start Training</button>
+                <button name="edit"><i class="material-icons md-dark">mode_edit</i> Edit</button>
+                <button name="clone"><i class="material-icons md-dark">content_copy</i> Clone &amp; Edit</button>
+                <button name="delete"><i class="material-icons md-dark">delete</i> Delete</button>
             </div>
             <div id="run_content">
                 <div class="board_outer_container">
@@ -34,8 +34,8 @@
                 <div id="counter"><span id="set_counter"></span><span id="time_counter"></span><span id="repeat_counter"></span></div>
                 <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
                 <progress id="pause_pbar" max="7" value="0"></progress>
-                <button name="pause">Pause</button>
-                <button name="stop">Abort</button>
+                <button name="pause"><i class="material-icons md-dark">pause</i>Pause</button>
+                <button name="stop"><i class="material-icons md-dark">stop</i>Abort</button>
             </div>
             <div id="edit_content">
                 <template id="template_edit">
@@ -47,9 +47,9 @@
                             <label for="edit_training_description" class="edit-label edit-row2">Description</label>
                             <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
                         </div>
-                        <button class="button_add" name="add_set">Add Exercise</button>
+                        <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i> Add Exercise</button>
                     </form>
-                    <button class="button_ok" name="edit_complete">Done</button>
+                    <button class="button_ok" name="edit_complete"><i class="material-icons md-dark">done</i> Done</button>
                 </template>
                 <template id="template_edit_set">
                     <div class="edit_pause">
@@ -90,18 +90,18 @@
                         <input id="edit_set_reps" class="edit-input edit-row8" type="number" min="1" step="1"/>
                         <label for="edit_set_reps" class="edit-label-right edit-row8">times</label>
 
-                        <button name="delete_set" class="edit-span edit-row9 button_delete">Delete Exercise</button>
+                        <button name="delete_set" class="edit-span edit-row9 button_delete"><i class="material-icons md-dark">delete</i> Delete Exercise</button>
                     </div>
 
-                    <button class="button_add" name="add_set">Add Exercise</button>
+                    <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i> Add Exercise</button>
                 </template>
             </div>
         </div>
-        <script src="cordova.js"></script>
         <script src="js/boards.js"></script>
         <script src="js/trainings.js"></script>
         <script src="js/sound.js"></script>
         <script src="js/nappy.js"></script>
+        <script src="cordova.js"></script>
         <script>
             document.addEventListener('deviceready', function() {
                 console.log('Received "deviceready"');
@@ -109,5 +109,12 @@
                 showMenu();
             }, false);
         </script>
+<!--
+        <script>
+            window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
+            init();
+            showMenu();
+        </script>
+-->
     </body>
 </html>

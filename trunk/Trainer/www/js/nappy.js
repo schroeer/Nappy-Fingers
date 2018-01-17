@@ -234,9 +234,11 @@ function updateEditPage(training_num) {
     var training = TRAININGS[training_num];
 
     var edit_content = document.getElementById('edit_content');
-    var form = document.getElementById('training_edit');
-    if (form) {
-        edit_content.removeChild(form);
+
+    // TODO: wrong. button done muss auch gelöscht werden.
+    // Alle children löschen löscht aber auch Templates.
+    if (document.getElementById('training_edit')) {
+        edit_content.removeChild(document.getElementById('training_edit'));
     }
 
     const template_edit = document.getElementById('template_edit');
@@ -280,7 +282,7 @@ function updateEditPage(training_num) {
 
     edit_content.appendChild(fragment);
     
-    form = document.getElementById('training_edit');
+    var form = document.getElementById('training_edit');
     
     const template_edit_set = document.getElementById('template_edit_set');
         
@@ -594,6 +596,7 @@ function init() {
     }
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
 function downloadTrainings() {
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
     var downloadAnchorNode = document.createElement('a');
