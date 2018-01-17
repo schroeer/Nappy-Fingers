@@ -2,11 +2,31 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url(MaterialIcons-Regular.woff2) format('woff2'),
-    url(MaterialIcons-Regular.woff) format('woff'),
-    url(MaterialIcons-Regular.ttf) format('truetype');
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(MaterialIcons-Regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(Roboto.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url(Roboto-Medium.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url(Roboto-Bold.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
 }
 
 .material-icons {
@@ -46,7 +66,7 @@
 body {
     margin: 0;
   /*  padding: 8px;*/
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1#logo {
@@ -208,7 +228,10 @@ button {
     border: none;
     border-radius: 0px;
     background-color: #d9ecff;
-    font-size: 1em;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
 }
 
 #content {
@@ -227,9 +250,27 @@ button {
     display: block;
 }
 
+input {
+    border-width: 0 0 1px 0;
+    background-color: transparent;
+    border-color: rgba(0,0,0,0.42);
+    font-family: 'Roboto', sans-serif;
+}
+
+select {
+    border-width: 0 0 1px 0;
+    background-color: transparent;
+    border-color: rgba(0,0,0,0.42);
+    font-family: 'Roboto', sans-serif;
+}
+    
 textarea {
     resize: vertical;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
+    border-width: 1px;
+    border-radius: 2px;
+    background-color: transparent;
+    border-color: rgba(0,0,0,0.42);
 }
 
 select.big_select {
@@ -285,21 +326,11 @@ div.edit_set {
 }
 
 button.button_delete {
-    margin: 8px 0 0 0;
-    height: 3em;
-    border: 1px solid darkgrey;
-    border-radius: 0px;
     background-color: #f37c7c;
-    font-size: 1em;
 }
 
 button.button_add {
-    margin: 8px 0 0 0;
-    height: 3em;
-    border: 1px solid darkgrey;
-    border-radius: 0px;
     background-color: #a4deb3;
-    font-size: 1em;
 }
 
 .edit_set_number {
