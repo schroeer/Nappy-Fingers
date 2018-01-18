@@ -67,6 +67,7 @@ body {
     margin: 0;
   /*  padding: 8px;*/
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 h1#logo {
@@ -86,18 +87,19 @@ h1#logo {
     text-align: center;
     font-size: 40px;
     font-weight: bold;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
 h2 {
     margin: 8px 0 16px 0;
-    font-size: 1.5em;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 500;
 }
 
 h3 {
     margin: 8px 0 16px 0;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 p {
@@ -143,10 +145,14 @@ span#repeat_counter {
     font-size: 2em;
 }
 
+div#pbars {
+    padding: 8px;
+}
+
 progress {
     width: 50%;
     height: 3em;
-    margin: 8px 0 0 0;
+    margin: 0;
     -webkit-appearance: none;
 }
 
@@ -172,7 +178,7 @@ progress#pause_pbar {
 
 .board_outer_container {
     margin: 16px 0 0 0;
-    padding: 0;
+    padding: 0 8px;
 }
 .board_inner_container {
     position: relative;
@@ -224,13 +230,20 @@ button {
     margin: 8px 8px 0 8px;
     width: calc(100% - 16px);
     border: none;
-    border-radius: 0px;
+    border-radius: 2px;
     background-color: #d9ecff;
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+    will-change: box-shadow;
+}
+
+button:active {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    outline: none;
 }
 
 #content {
