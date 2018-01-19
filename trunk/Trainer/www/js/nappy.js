@@ -79,24 +79,16 @@ async function runTraining(board, training) {
     var time_counter = document.getElementById("time_counter");
     var hold_pbar = document.getElementById("hold_pbar");
     var break_pbar = document.getElementById("break_pbar");
-
+    var pause_pbar = document.getElementById("pause_pbar");
+    
     for (var i in training.sets) {
         var set = training.sets[i];
         if (set.pause < 15) {
             set.pause = 15;
         }
 
-        var utter_set_desc = new SpeechSynthesisUtterance();
-        utter_set_desc.text = `Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.left_holds[set.left].name}. Right hand ${board.right_holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`;
-        utter_set_desc.lang = 'en-US';
-
         if (i > 0) { // Vor dem ersten Satz keine Ansage der Pause
-            var utter_pause = new SpeechSynthesisUtterance();
-            utter_pause.text = makePauseString(set.pause, false);
-            utter_pause.lang = 'en-US';
-            console.log(`Speaking "${utter_pause.text}"`);
-            speechSynthesis.speak(utter_pause);
-
+            speak(makePauseString(set.pause, false));
             set_title_div.textContent = "Pause";
             set_description_div.textContent = `Pause for ${Math.floor(set.pause / 60)}:${(set.pause % 60).toString().padStart(2, "0")} min.`;
         }
@@ -124,9 +116,8 @@ async function runTraining(board, training) {
                 time_counter.textContent = set.pause - step;
                 pause_pbar.value = step + 1;
                 
-                if (set.pause - step == 15) {
-                    console.log(`Speaking "${utter_set_desc.text}"`);
-                    speechSynthesis.speak(utter_set_desc);
+                if (set.pause - step == 15) { // 15s vor Ende der Pause: Ankündigung des nächsten Satzes
+                    speak(`Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.left_holds[set.left].name}. Right hand ${board.right_holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`);
 
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
@@ -134,14 +125,10 @@ async function runTraining(board, training) {
                     document.querySelector("#run_content .overlay_left").src = board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : "";
                     document.querySelector("#run_content .overlay_right").src = board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : "";
                 }
-                if (step > 0 && ((set.pause - step) % 30 == 0)) {
-                    var utter_pause = new SpeechSynthesisUtterance();
-                    utter_pause.text = makePauseString(set.pause - step, true);
-                    utter_pause.lang = 'en-US';
-                    console.log(`Speaking "${utter_pause.text}"`);
-                    speechSynthesis.speak(utter_pause);
+                if (step > 0 && ((set.pause - step) % 30 == 0)) { // alle 30s Zeit ansagen
+                    speak(makePauseString(set.pause - step, true));
                 }
-                if (set.pause - step <= 5) {
+                if (set.pause - step <= 5) { // letzte fünf Sekunden der Pause ticken
                     await ticSound();
                 }
             }
@@ -149,15 +136,10 @@ async function runTraining(board, training) {
 
         await runSet(set);
     }
-    var utter_complete = new SpeechSynthesisUtterance();
-    utter_complete.text = "Congratulations!";
-    utter_complete.lang = 'en-US';
-    console.log(`Speaking "${utter_complete.text}"`);
-    speechSynthesis.speak(utter_complete);
+    speak("Congratulations!");
     console.log("Training completed");
    
     async function runSet(set) {
-        
         var utter_go = new SpeechSynthesisUtterance();
         utter_go.text = "Go!";
         utter_go.lang = 'en-US';
@@ -175,6 +157,10 @@ async function runTraining(board, training) {
         for (var rep = 0; rep < set.reps; rep++) {
             hold_pbar.value = 0;
             break_pbar.value = 0;
+            if (rep == set.reps - 1) { // bei letzter Wiederholung Break-Balken weg
+                break_pbar.style.display = "none";
+            }
+
             document.getElementById("repeat_counter").textContent = Number(rep) + 1 + "/" + set.reps;
             
             console.log(`rep ${rep+1}: hold`);
@@ -191,7 +177,7 @@ async function runTraining(board, training) {
 
             console.log(`rep ${rep+1}: break`);
             
-            if (rep < set.reps - 1) {
+            if (rep < set.reps - 1) { // bei letzter Wiederholung keine Break-Pause
                 await COUNTER.start(
                     set.break,
                     1000,
@@ -209,6 +195,14 @@ async function runTraining(board, training) {
         console.log("set complete");
     }
     
+    function speak(message) {
+        var utterance = new SpeechSynthesisUtterance();
+        utterance.text = message;
+        utterance.lang = 'en-US';
+        console.log(`Speaking "${message}"`);
+        speechSynthesis.speak(utterance);
+    }
+
     function makePauseString(pause, short = false) {
         var minutes = Math.floor(pause / 60);
         var seconds = pause % 60;
