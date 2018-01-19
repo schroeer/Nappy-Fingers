@@ -10,16 +10,16 @@
         <link href="css/nappy.css" rel="stylesheet" />
     </head>
     <body>
-        <h1 id="logo">nappy fingers</h1>
+        <h1 class="toolbar"><span id="toolbar_icon"><i class="material-icons md-dark">menu</i></span><span id="toolbar_title">nappy fingers</span></h1>
         <div id="content">
             <div id="menu_content">
                 <select class="big_select" name="board_select"></select>
                 <select class="big_select" name="training_select"></select>
                 <div id="training_details"></div>
-                <button name="start"><i class="material-icons md-dark">play_arrow</i> Start Training</button>
-                <button name="edit"><i class="material-icons md-dark">mode_edit</i> Edit</button>
-                <button name="clone"><i class="material-icons md-dark">content_copy</i> Clone &amp; Edit</button>
-                <button name="delete"><i class="material-icons md-dark">delete</i> Delete</button>
+                <button name="start"><i class="material-icons md-dark">play_arrow</i>Start Training</button>
+                <button name="edit"><i class="material-icons md-dark">mode_edit</i>Edit</button>
+                <button name="clone"><i class="material-icons md-dark">content_copy</i>Clone &amp; Edit</button>
+                <button name="delete"><i class="material-icons md-dark">delete</i>Delete</button>
             </div>
             <div id="run_content">
                 <div class="board_outer_container">
@@ -36,6 +36,7 @@
                     <progress id="hold_pbar" max="7" value="0"></progress><progress id="break_pbar" max="3" value="0"></progress>
                     <progress id="pause_pbar" max="7" value="0"></progress>
                 </div>
+                <!--<div id="pause_overlay"><i class="material-icons md-dark md-288">pause_circle_outline</i></div>-->
                 <button name="pause"><i class="material-icons md-dark">pause</i>Pause</button>
                 <button name="stop"><i class="material-icons md-dark">stop</i>Abort</button>
             </div>
@@ -49,9 +50,9 @@
                             <label for="edit_training_description" class="edit-label edit-row2">Description</label>
                             <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
                         </div>
-                        <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i> Add Exercise</button>
+                        <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
                     </form>
-                    <button class="button_ok" name="edit_complete"><i class="material-icons md-dark">done</i> Done</button>
+                    <button class="button_ok" name="edit_complete"><i class="material-icons md-dark">done</i>Done</button>
                 </template>
                 <template id="template_edit_set">
                     <div class="edit_pause">
@@ -92,10 +93,10 @@
                         <input id="edit_set_reps" class="edit-input edit-row8" type="number" min="1" step="1"/>
                         <label for="edit_set_reps" class="edit-label-right edit-row8">times</label>
 
-                        <button name="delete_set" class="edit-span edit-row9 button_delete"><i class="material-icons md-dark">delete</i> Delete Exercise</button>
+                        <button name="delete_set" class="edit-span edit-row9 button_delete"><i class="material-icons md-dark">delete</i>Delete Exercise</button>
                     </div>
 
-                    <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i> Add Exercise</button>
+                    <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
                 </template>
             </div>
         </div>
@@ -103,6 +104,7 @@
         <script src="js/trainings.js"></script>
         <script src="js/sound.js"></script>
         <script src="js/nappy.js"></script>
+<!--
         <script src="cordova.js"></script>
         <script>
             document.addEventListener('deviceready', function() {
@@ -111,12 +113,11 @@
                 showMenu();
             }, false);
         </script>
-<!--
+-->
         <script>
             window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
             init();
             showMenu();
         </script>
--->
     </body>
 </html>
