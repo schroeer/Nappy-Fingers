@@ -52,13 +52,6 @@
   font-feature-settings: 'liga';
 }
 
-button .material-icons {
-  font-size: 18px;
-  vertical-align: sub;
-  float: left;
-  margin-right: -1em;
-}
-
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
@@ -226,7 +219,7 @@ h1.toolbar span#toolbar_title {
 }
 
 h2 {
-    margin: 8px 0 16px 0;
+    margin: 8px 0 8px 0;
     font-size: 24px;
     font-weight: 400;
     letter-spacing: normal;
@@ -361,9 +354,14 @@ div#pause_overlay {
     transform: translate(-50%, -50%);
 }
 
-div#training_details {
+div#training_details_header {
     padding: 0 8px;
     margin: 16px 0 0 0;
+}
+
+div#training_details_sets {
+    padding: 0 8px;
+    margin: 0;
 }
 
 div.training_pause {
@@ -386,8 +384,13 @@ div.training_set {
     clear: both;
 }
 
-button {
-    height: 3em;
+.button_container {
+    padding: 8px 8px 0 8px;
+    text-align: right;
+}
+
+button.button_wide {
+    height: 36px;
     margin: 8px 8px 0 8px;
     width: calc(100% - 16px);
     border: none;
@@ -404,11 +407,72 @@ button {
     will-change: box-shadow;
 }
 
-button:active {
+button.button_wide:active {
     box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),
                 0 8px 10px 1px rgba(0,0,0,.14),
                 0 3px 14px 2px rgba(0,0,0,.12);
     outline: none;
+}
+
+button.button_wide .material-icons {
+    font-size: 18px;
+    vertical-align: sub;
+    float: left;
+    margin-right: -1em;
+}
+
+button.button_flat {
+    color: #007ac1;
+    height: 36px;
+    padding: 8px;
+    min-width: 88px;
+    border: none;
+    border-radius: 2px;
+    background-color: transparent;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+}
+
+button.button_wide:active {
+    background-color: #999999;
+}
+
+button.button_flat .material-icons {
+    font-size: 18px;
+    vertical-align: sub;
+}
+
+button.button_round {
+    position: fixed;
+    margin: 0;
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background-color: #007ac1;
+    text-align: center;
+    display: inline-block;
+    -webkit-box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+
+button.button_round:active {
+    -webkit-box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12); 
+}
+
+button[name=start] {
+    bottom: 24px;
+    right: 16px;
+}
+
+button[name=edit] {
+    bottom: 96px;
+    right: 16px;
 }
 
 #content {

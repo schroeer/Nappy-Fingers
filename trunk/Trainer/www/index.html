@@ -14,11 +14,14 @@
         <div id="content">
             <div id="main_content">
                 <select class="big_select" name="training_select"></select>
-                <div id="training_details"></div>
-                <button name="start"><i class="material-icons md-dark">play_arrow</i>Start Training</button>
-                <button name="edit"><i class="material-icons md-dark">mode_edit</i>Edit</button>
-                <button name="clone"><i class="material-icons md-dark">content_copy</i>Clone</button>
-                <button name="delete"><i class="material-icons md-dark">delete</i>Delete</button>
+                <div id="training_details_header"></div>
+                <div class="button_container">
+                    <button class="button_flat" name="clone">Clone</button>
+                    <button class="button_flat" name="delete">Delete</button>
+                </div>
+                <div id="training_details_sets"></div>
+                <button class="button_round" name="start"><i class="material-icons md-light md-24">play_arrow</i></button>
+                <button class="button_round" name="edit"><i class="material-icons md-light">mode_edit</i></button>
             </div>
             <div id="run_content">
                 <div class="board_outer_container">
@@ -36,7 +39,7 @@
                     <progress id="pause_pbar" max="7" value="0"></progress>
                 </div>
                 <!--<div id="pause_overlay"><i class="material-icons md-dark md-288">pause_circle_outline</i></div>-->
-                <button name="pause"><i class="material-icons md-dark">pause</i>Pause</button>
+                <button class="button_wide" name="pause"><i class="material-icons md-dark">pause</i>Pause</button>
             </div>
             <div id="edit_content">
                 <template id="template_edit">
@@ -48,7 +51,7 @@
                             <label for="edit_training_description" class="edit-label edit-row2">Description</label>
                             <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
                         </div>
-                        <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
+                        <button class="button_wide button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
                     </form>
                 </template>
                 <template id="template_edit_set">
@@ -90,10 +93,10 @@
                         <input id="edit_set_reps" class="edit-input edit-row8" type="number" min="1" step="1"/>
                         <label for="edit_set_reps" class="edit-label-right edit-row8">times</label>
 
-                        <button name="delete_set" class="edit-span edit-row9 button_delete"><i class="material-icons md-dark">delete</i>Delete Exercise</button>
+                        <button name="delete_set" class="edit-span edit-row9 button_wide button_delete"><i class="material-icons md-dark">delete</i>Delete Exercise</button>
                     </div>
 
-                    <button class="button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
+                    <button class="button_add button_wide" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
                 </template>
             </div>
         </div>
