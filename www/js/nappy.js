@@ -234,27 +234,17 @@ async function runTraining(board, training) {
 }
 
 function updateMainPage() {
-    var board_select = document.getElementsByName('board_select')[0];
     var training_select = document.getElementsByName('training_select')[0];
     var selected_training = training_select.selectedIndex;
     if (selected_training == -1)
         selected_training = 0;
-    console.log(selected_training);
     
-    for (var board_num in BOARDS) {
-        var opt = document.createElement('option');
-        opt.setAttribute('value', board_num);
-        var content = document.createTextNode(BOARDS[board_num].name);
-        opt.appendChild(content);
-        board_select.appendChild(opt);
-    }
-    board_select.selectedIndex = 0;
     fillTrainingSelect(selected_training);
     
-    board_select.onchange = fillTrainingSelect;    training_select.onchange = showTrainingDetails;
+    training_select.onchange = showTrainingDetails;
 
     function fillTrainingSelect(selected = 0) {
-        var board_num = board_select.options[board_select.selectedIndex].value;
+        var board_num = 0;
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
@@ -273,7 +263,7 @@ function updateMainPage() {
     }
 
     function showTrainingDetails() {
-        var selected_board_num = board_select.options[board_select.selectedIndex].value;
+        var selected_board_num = 0;
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
         var board = BOARDS[selected_board_num];
         var training = TRAININGS[selected_training_num];
@@ -338,8 +328,6 @@ function updateEditPage(training_num) {
 
     var edit_content = document.getElementById('edit_content');
 
-    // TODO: wrong. button done muss auch gelöscht werden.
-    // Alle children löschen löscht aber auch Templates.
     if (document.getElementById('training_edit')) {
         edit_content.removeChild(document.getElementById('training_edit'));
     }
@@ -375,12 +363,6 @@ function updateEditPage(training_num) {
             "pause":        60,
         });
         updateEditPage(training_num);
-    });
-
-    let button_done = fragment.querySelector('button[name=edit_complete]');
-    button_done.addEventListener("click", async function editDone() {
-        // save
-        navigateTo("");
     });
 
     edit_content.appendChild(fragment);
@@ -539,7 +521,7 @@ function handleRouting(event) {
         old_page = match ? match[1] : "";
         old_num = match ? match[2] : null;
     }
-    console.log("Navigating to " + new_page);
+    console.log(`Navigating to ${new_page}`);
     if (old_page == "run") {
         // TODO: are you sure?
         COUNTER.stop();
@@ -616,6 +598,7 @@ function init() {
         var selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
         TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
         TRAININGS[selected_training_num + 1].title += " (copy)";
+        training_select.selectedIndex = selected_training_num + 1;
         navigateTo(`edit_${selected_training_num + 1}`);
     });
 
@@ -625,16 +608,13 @@ function init() {
         // TODO: confirm
         TRAININGS.splice(selected_training_num, 1);
         // TODO: save
+        training_select.selectedIndex = 0;
         updateMainPage();
+        window.scrollTo(0,0);
     });
 
     var pause_button = document.getElementsByName("pause")[0];
     pause_button.addEventListener("click", COUNTER.pause);
-
-    var stop_button = document.getElementsByName("stop")[0];
-    stop_button.addEventListener("click", function stopRun() {
-        navigateTo("");
-    });
 
     handleRouting();
 }
