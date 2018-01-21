@@ -599,7 +599,8 @@ function init() {
         TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
         TRAININGS[selected_training_num + 1].title += " (copy)";
         training_select.selectedIndex = selected_training_num + 1;
-        navigateTo(`edit_${selected_training_num + 1}`);
+        updateMainPage();
+        window.scrollTo(0,0);
     });
 
     var delete_button = document.getElementsByName('delete')[0];
