@@ -268,22 +268,27 @@ function updateMainPage() {
         var board = BOARDS[selected_board_num];
         var training = TRAININGS[selected_training_num];
 
-        var training_details = document.getElementById('training_details');
-        while (training_details.firstChild) {
-            training_details.removeChild(training_details.firstChild);
+        var training_details_header = document.getElementById('training_details_header');
+        while (training_details_header.firstChild) {
+            training_details_header.removeChild(training_details_header.firstChild);
         }
 
-        addElement(training_details, 'h2', training.title, {'class': 'training_title'});
-        addElement(training_details, 'p', training.description.replace(/([^.])$/, '$1.'), {'class': 'training_description'});
+        addElement(training_details_header, 'h2', training.title, {'class': 'training_title'});
+        addElement(training_details_header, 'p', training.description.replace(/([^.])$/, '$1.'), {'class': 'training_description'});
         var times = calculateTimes(training);
-        addElement(training_details, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'training_description'});
+        addElement(training_details_header, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'training_description'});
         
+        var training_details_sets = document.getElementById('training_details_sets');
+        while (training_details_sets.firstChild) {
+            training_details_sets.removeChild(training_details_sets.firstChild);
+        }
+
         for (var set_num in training.sets) {
             var set = training.sets[set_num];
             
-            var pause_div = addElement(training_details, 'div', `Pause for ${set.pause} seconds.`, {'class': 'training_pause'});
+            var pause_div = addElement(training_details_sets, 'div', `Pause for ${set.pause} seconds.`, {'class': 'training_pause'});
             
-            var div = addElement(training_details, 'div', null, {'class': 'training_set'});
+            var div = addElement(training_details_sets, 'div', null, {'class': 'training_set'});
             
             addElement(div, 'h3', (Number(set_num) + 1) + ". " + set.title, {'class': 'set_title'});
 
@@ -571,7 +576,7 @@ function init() {
 
     var start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
-        var selected_board_num = board_select.options[board_select.selectedIndex].value;
+        var selected_board_num = 0;
         var selected_training_num = training_select.options[training_select.selectedIndex].value;
         navigateTo("run_" + selected_training_num);
         try {
@@ -598,6 +603,7 @@ function init() {
         var selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
         TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
         TRAININGS[selected_training_num + 1].title += " (copy)";
+        // TODO: save
         training_select.selectedIndex = selected_training_num + 1;
         updateMainPage();
         window.scrollTo(0,0);
