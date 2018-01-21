@@ -201,10 +201,17 @@ h1.toolbar {
     background-repeat: no-repeat;
     background-position: center right;
     border-radius: 0px;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), /* 2dp */
+                0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+                0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
-h1.toolbar span#toolbar_icon {
+h1.toolbar #toolbar_icon_back {
+    padding: 16px;
+    display: none;
+}
+
+h1.toolbar #toolbar_icon_menu {
     padding: 16px;
 }
 
@@ -236,7 +243,6 @@ h3 {
 
 p {
     margin: 8px 0 0 0;
-    letter-spacing: 0.56px;
     line-height: 20px;    
 }
 
@@ -409,7 +415,7 @@ button:active {
     padding: 58px 0 8px 0;
 }
 
-#menu_content {
+#main_content {
     display: none;
 }
 
@@ -452,7 +458,9 @@ select.big_select {
     border-radius: 0px;
     background-color: #d9ecff;
     font-size: 1em;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
+                0 2px 2px 0 rgba(0,0,0,.14),
+                0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 input[type='number'] {
