@@ -10,9 +10,9 @@
         <link href="css/nappy.css" rel="stylesheet" />
     </head>
     <body>
-        <h1 class="toolbar"><span id="toolbar_icon"><i class="material-icons md-dark">menu</i></span><span id="toolbar_title">nappy fingers</span></h1>
+        <h1 class="toolbar"><span id="toolbar_icon_menu"><i class="material-icons md-dark">menu</i></span><a href="#" id="toolbar_icon_back"><i class="material-icons md-dark">arrow_back</i></a><span id="toolbar_title">nappy fingers</span></h1>
         <div id="content">
-            <div id="menu_content">
+            <div id="main_content">
                 <select class="big_select" name="board_select"></select>
                 <select class="big_select" name="training_select"></select>
                 <div id="training_details"></div>
@@ -109,14 +109,12 @@
             document.addEventListener('deviceready', function() {
                 console.log('Received "deviceready"');
                 init();
-                showMenu();
             }, false);
         </script>
 <!--
         <script>
             window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
             init();
-            showMenu();
         </script>
 -->
     </body>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="de.danielschroeer.nappyfingers" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="de.danielschroeer.nappyfingers" version="0.5.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>nappy fingers</name>
     <description>Strong fingers for changing the baby</description>
     <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>
@@ -25,4 +25,5 @@
     <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
     <plugin name="cordova-plugin-insomnia" spec="~4.3.0" />
     <plugin name="phonegap-plugin-speech-synthesis" spec="https://github.com/macdonst/SpeechSynthesisPlugin.git" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
 </widget>
