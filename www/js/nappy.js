@@ -2,7 +2,11 @@
 
 "use strict";
 
-var COUNTER = (function () {
+var SETTINGS = {
+    board: 0
+};
+
+const COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
     
     function step() {
@@ -48,35 +52,32 @@ var COUNTER = (function () {
 
 function ticSound() {
     soundEffect(
-        400,       //frequency
-        0.02,         //attack
-        0.02,          //decay
-        "sine",       //waveform
-        10,            //volume
+        400,        //frequency
+        0.02,       //attack
+        0.02,       //decay
+        "sine",     //waveform
+        10,         //volume
         0,          //pan
-        0,            //wait before playing
+        0,          //wait before playing
         1,          //pitch bend amount
-        false,         //reverse
+        false,      //reverse
         0,          //random pitch range
-        0,            //dissonance
-        undefined,    //echo: [delay, feedback, filter]
-        undefined     //reverb: [duration, decay, reverse?]
+        0,          //dissonance
+        undefined,  //echo: [delay, feedback, filter]
+        undefined   //reverb: [duration, decay, reverse?]
     );
 }
 
 function completedSound() {
-    //D
-    soundEffect(587.33, 0, 0.2, "square", 1, 0, 0);
-    //A
-    soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
-    //High D
-    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
+    soundEffect( 587.33, 0, 0.2, "square", 1, 0, 0);    //D
+    soundEffect( 880   , 0, 0.2, "square", 1, 0, 0.1);  //A
+    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);  //High D
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
 function downloadTrainings() {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
-    var downloadAnchorNode = document.createElement('a');
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
+    const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", "trainings.json");
     downloadAnchorNode.click();
@@ -84,15 +85,15 @@ function downloadTrainings() {
 }
 
 async function runTraining(board, training) {
-    var set_title_div = document.getElementById("set_title");
-    var set_description_div = document.getElementById("set_description");
-    var time_counter = document.getElementById("time_counter");
-    var hold_pbar = document.getElementById("hold_pbar");
-    var break_pbar = document.getElementById("break_pbar");
-    var pause_pbar = document.getElementById("pause_pbar");
+    const set_title_div = document.getElementById("set_title");
+    const set_description_div = document.getElementById("set_description");
+    const time_counter = document.getElementById("time_counter");
+    const hold_pbar = document.getElementById("hold_pbar");
+    const break_pbar = document.getElementById("break_pbar");
+    const pause_pbar = document.getElementById("pause_pbar");
     
-    for (var i in training.sets) {
-        var set = training.sets[i];
+    for (let i in training.sets) {
+        let set = training.sets[i];
         if (set.pause < 15) {
             set.pause = 15;
         }
@@ -150,7 +151,7 @@ async function runTraining(board, training) {
     console.log("Training completed");
    
     async function runSet(set) {
-        var utter_go = new SpeechSynthesisUtterance();
+        const utter_go = new SpeechSynthesisUtterance();
         utter_go.text = "Go!";
         utter_go.lang = 'en-US';
 
@@ -164,7 +165,7 @@ async function runTraining(board, training) {
         break_pbar.max = set.break;
         break_pbar.style.width = 100 * set.break / (set.hold + set.break) + "%";
         
-        for (var rep = 0; rep < set.reps; rep++) {
+        for (let rep = 0; rep < set.reps; rep++) {
             hold_pbar.value = 0;
             break_pbar.value = 0;
             if (rep == set.reps - 1) { // bei letzter Wiederholung Break-Balken weg
@@ -206,7 +207,7 @@ async function runTraining(board, training) {
     }
     
     function speak(message) {
-        var utterance = new SpeechSynthesisUtterance();
+        const utterance = new SpeechSynthesisUtterance();
         utterance.text = message;
         utterance.lang = 'en-US';
         console.log(`Speaking "${message}"`);
@@ -214,9 +215,9 @@ async function runTraining(board, training) {
     }
 
     function makePauseString(pause, short = false) {
-        var minutes = Math.floor(pause / 60);
-        var seconds = pause % 60;
-        var pause_str = short ? "" : "Pause for ";
+        const minutes = Math.floor(pause / 60);
+        const seconds = pause % 60;
+        let pause_str = short ? "" : "Pause for ";
         if (minutes != 0) {
             pause_str += minutes + ((minutes > 1) ? " minutes" : " minute");
             if (seconds != 0) {
@@ -234,8 +235,8 @@ async function runTraining(board, training) {
 }
 
 function updateMainPage() {
-    var training_select = document.getElementsByName('training_select')[0];
-    var selected_training = training_select.selectedIndex;
+    const training_select = document.getElementsByName('training_select')[0];
+    let selected_training = training_select.selectedIndex;
     if (selected_training == -1)
         selected_training = 0;
     
@@ -244,16 +245,15 @@ function updateMainPage() {
     training_select.onchange = showTrainingDetails;
 
     function fillTrainingSelect(selected = 0) {
-        var board_num = 0;
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
-        for (var training_num in TRAININGS) {
-            var training = TRAININGS[training_num];
-            if (training.board == BOARDS[board_num].id) {
-                var opt = document.createElement('option');
+        for (let training_num in TRAININGS) {
+            const training = TRAININGS[training_num];
+            if (training.board == BOARDS[SETTINGS.board].id) {
+                const opt = document.createElement('option');
                 opt.setAttribute('value', training_num);
-                var content = document.createTextNode(training.title);
+                const content = document.createTextNode(training.title);
                 opt.appendChild(content);
                 training_select.appendChild(opt);
             }
@@ -263,52 +263,45 @@ function updateMainPage() {
     }
 
     function showTrainingDetails() {
-        var selected_board_num = 0;
-        var selected_training_num = training_select.options[training_select.selectedIndex].value;
-        var board = BOARDS[selected_board_num];
-        var training = TRAININGS[selected_training_num];
+        const selected_training_num = training_select.options[training_select.selectedIndex].value;
+        const board = BOARDS[SETTINGS.board];
+        const training = TRAININGS[selected_training_num];
 
-        var training_details_header = document.getElementById('training_details_header');
+        const training_details_header = document.getElementById('training_details_header');
         while (training_details_header.firstChild) {
             training_details_header.removeChild(training_details_header.firstChild);
         }
 
         addElement(training_details_header, 'h2', training.title, {'class': 'training_title'});
         addElement(training_details_header, 'p', training.description.replace(/([^.])$/, '$1.'), {'class': 'training_description'});
-        var times = calculateTimes(training);
+        const times = calculateTimes(training);
         addElement(training_details_header, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'training_description'});
         
-        var training_details_sets = document.getElementById('training_details_sets');
+        const training_details_sets = document.getElementById('training_details_sets');
         while (training_details_sets.firstChild) {
             training_details_sets.removeChild(training_details_sets.firstChild);
         }
 
-        for (var set_num in training.sets) {
-            var set = training.sets[set_num];
-            
-            var pause_div = addElement(training_details_sets, 'div', `Pause for ${set.pause} seconds.`, {'class': 'training_pause'});
-            
-            var div = addElement(training_details_sets, 'div', null, {'class': 'training_set'});
-            
+        for (let set_num in training.sets) {
+            const set = training.sets[set_num];
+            const pause_div = addElement(training_details_sets, 'div', `Pause for ${set.pause} seconds.`, {'class': 'training_pause'});
+            const div = addElement(training_details_sets, 'div', null, {'class': 'training_set'});
             addElement(div, 'h3', (Number(set_num) + 1) + ". " + set.title, {'class': 'set_title'});
-
-            var outer = addElement(div, 'div', null, {'class': 'board_small_container'});
-
+            const outer = addElement(div, 'div', null, {'class': 'board_small_container'});
             addElement(outer, 'img', null, {'class': 'board_img', 'src': "images/" + board.image, 'alt': ""});
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': (board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : ""), 'alt': ""});
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': (board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : ""), 'alt': ""});
-
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
             addElement(div, 'p', `Hold for ${set.hold} seconds. Interrupt for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
         }
         
         function addElement(node, type, text, atts) {
-            var el = document.createElement(type);
+            const el = document.createElement(type);
             if (text) {
-                var tn = document.createTextNode(text);
+                const tn = document.createTextNode(text);
                 el.appendChild(tn);
             }
-            for (var name in atts) {
+            for (let name in atts) {
                 el.setAttribute(name, atts[name]);
             }
             node.appendChild(el);
@@ -316,8 +309,8 @@ function updateMainPage() {
         }
         
         function calculateTimes(training) {
-            var pause = 0, inter = 0, hold = 0;
-            for (var set of training.sets) {
+            let pause = 0, inter = 0, hold = 0;
+            for (let set of training.sets) {
                 pause += set.pause;
                 inter += (set.reps - 1) * set.break;
                 hold += set.reps * set.hold;
@@ -328,34 +321,31 @@ function updateMainPage() {
 }
 
 function updateEditPage(training_num) {
-    var board_num = 0;
-    var training = TRAININGS[training_num];
+    const training = TRAININGS[training_num];
 
-    var edit_content = document.getElementById('edit_content');
-
+    const edit_content = document.getElementById('edit_content');
     if (document.getElementById('training_edit')) {
         edit_content.removeChild(document.getElementById('training_edit'));
     }
 
     const template_edit = document.getElementById('template_edit');
-    
-    let fragment = template_edit.content.cloneNode(true);
+    const fragment = template_edit.content.cloneNode(true);
 
-    let title = fragment.getElementById('edit_training_title');
+    const title = fragment.getElementById('edit_training_title');
     title.value = training.title;
     title.addEventListener('change', function changedTrainingTitle() {
         TRAININGS[training_num].title = this.value;
         console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
     });
 
-    let description = fragment.getElementById('edit_training_description');
+    const description = fragment.getElementById('edit_training_description');
     description.value = training.description;
     description.addEventListener('change', function changedTrainingDescription() {
         TRAININGS[training_num].description = this.value;
         console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
     });
 
-    let button_add = fragment.querySelector('button[name=add_set]');
+    const button_add = fragment.querySelector('button[name=add_set]');
     button_add.addEventListener("click", async function addSet() {
         TRAININGS[training_num].sets.splice(0, 0, {
             "title":        "",
@@ -372,22 +362,21 @@ function updateEditPage(training_num) {
 
     edit_content.appendChild(fragment);
     
-    var form = document.getElementById('training_edit');
-    
+    const form = document.getElementById('training_edit');
     const template_edit_set = document.getElementById('template_edit_set');
         
     for (let set_num in training.sets) {
-        let set = training.sets[set_num];
+        const set = training.sets[set_num];
         
-        let fragment = template_edit_set.content.cloneNode(true);
+        const fragment = template_edit_set.content.cloneNode(true);
         fragment.querySelectorAll('label').forEach(function(label) {
             label.htmlFor += "_" + set_num;
         });
         
-        let number = fragment.querySelector('.edit_set_number');
+        const number = fragment.querySelector('.edit_set_number');
         number.innerHTML = 1 + Number(set_num);
         
-        let pause = fragment.getElementById('edit_set_pause');
+        const pause = fragment.getElementById('edit_set_pause');
         pause.value = set.pause;
         pause.id += "_" + set_num;
         pause.addEventListener('change', function changeSetPause() {
@@ -398,7 +387,7 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].pause = ${this.value}.`);
         });
         
-        let title = fragment.getElementById('edit_set_title');
+        const title = fragment.getElementById('edit_set_title');
         title.value = set.title;
         title.id += "_" + set_num;
         title.addEventListener('change', function changeSetTitle() {
@@ -406,7 +395,7 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
         });
 
-        let description = fragment.getElementById('edit_set_description');
+        const description = fragment.getElementById('edit_set_description');
         description.value = set.description;
         description.id += "_" + set_num;
         description.addEventListener('change', function changeSetDescription() {
@@ -414,47 +403,47 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
         });
 
-        let img_board = fragment.querySelector('img.board_img');
-        let img_left = fragment.querySelector('img.overlay_left');
-        let img_right = fragment.querySelector('img.overlay_right');
+        const img_board = fragment.querySelector('img.board_img');
+        const img_left = fragment.querySelector('img.overlay_left');
+        const img_right = fragment.querySelector('img.overlay_right');
         
-        img_board.src = "images/" + BOARDS[board_num].image;
+        img_board.src = "images/" + BOARDS[SETTINGS.board].image;
 
-        let left = fragment.getElementById('edit_set_left');
+        const left = fragment.getElementById('edit_set_left');
         left.id += "_" + set_num;
-        for (let hold_id in BOARDS[board_num].left_holds) {
-            let opt = document.createElement('option');
+        for (let hold_id in BOARDS[SETTINGS.board].left_holds) {
+            const opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            let content = document.createTextNode(BOARDS[board_num].left_holds[hold_id].name);
+            const content = document.createTextNode(BOARDS[SETTINGS.board].left_holds[hold_id].name);
             opt.appendChild(content);
             left.appendChild(opt);
         }
         left.value = set.left;
-        img_left.src = BOARDS[board_num].left_holds[set.left].image ? "images/" + BOARDS[board_num].left_holds[set.left].image : "";
+        img_left.src = BOARDS[SETTINGS.board].left_holds[set.left].image ? "images/" + BOARDS[SETTINGS.board].left_holds[set.left].image : "";
         left.addEventListener('change', function changeSetLeft() {
             TRAININGS[training_num].sets[set_num].left = this.value;
-            img_left.src = "images/" + BOARDS[board_num].left_holds[this.value].image;
+            img_left.src = "images/" + BOARDS[SETTINGS.board].left_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
         });
 
-        let right = fragment.getElementById('edit_set_right');
+        const right = fragment.getElementById('edit_set_right');
         right.id += "_" + set_num;
-        for (let hold_id in BOARDS[board_num].right_holds) {
-            let opt = document.createElement('option');
+        for (let hold_id in BOARDS[SETTINGS.board].right_holds) {
+            const opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            let content = document.createTextNode(BOARDS[board_num].right_holds[hold_id].name);
+            const content = document.createTextNode(BOARDS[SETTINGS.board].right_holds[hold_id].name);
             opt.appendChild(content);
             right.appendChild(opt);
         }
         right.value = set.right;
-        img_right.src = BOARDS[board_num].right_holds[set.right].image ? "images/" + BOARDS[board_num].right_holds[set.right].image : "";
+        img_right.src = BOARDS[SETTINGS.board].right_holds[set.right].image ? "images/" + BOARDS[SETTINGS.board].right_holds[set.right].image : "";
         right.addEventListener('change', function changeSetRight() {
             TRAININGS[training_num].sets[set_num].right = this.value;
-            img_right.src = "images/" + BOARDS[board_num].right_holds[this.value].image;
+            img_right.src = "images/" + BOARDS[SETTINGS.board].right_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
         });
 
-        let hold = fragment.getElementById('edit_set_hold');
+        const hold = fragment.getElementById('edit_set_hold');
         hold.value = set.hold;
         hold.id += "_" + set_num;
         hold.addEventListener('change', function changeSetHold() {
@@ -465,7 +454,7 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].hold = ${this.value}.`);
         });
         
-        let interr = fragment.getElementById('edit_set_break');
+        const interr = fragment.getElementById('edit_set_break');
         interr.value = set.break;
         interr.id += "_" + set_num;
         interr.addEventListener('change', function changeSetBreak() {
@@ -476,7 +465,7 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].break = ${this.value}.`);
         });
         
-        let reps = fragment.getElementById('edit_set_reps');
+        const reps = fragment.getElementById('edit_set_reps');
         reps.value = set.reps;
         reps.id += "_" + set_num;
         reps.addEventListener('change', function changeSetReps() {
@@ -487,7 +476,7 @@ function updateEditPage(training_num) {
             console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
         });
         
-        let button_add = fragment.querySelector('button[name=add_set]');
+        const button_add = fragment.querySelector('button[name=add_set]');
         button_add.addEventListener("click", async function addSet() {
             TRAININGS[training_num].sets.splice(Number(set_num) + 1, 0, {
                 "title":        "",
@@ -502,7 +491,7 @@ function updateEditPage(training_num) {
             updateEditPage(training_num);
         });
         
-        let button_delete = fragment.querySelector('button[name=delete_set]');
+        const button_delete = fragment.querySelector('button[name=delete_set]');
         button_delete.addEventListener("click", async function deleteSet() {
             TRAININGS[training_num].sets.splice(set_num, 1);
             updateEditPage(training_num);
@@ -517,10 +506,10 @@ function navigateTo(page) {
 }
 
 function handleRouting(event) {
-    var match = location.hash.match(/#?([^_]+)_?(\d*)/);
-    var new_page = match ? match[1] : "";
-    var new_num = match ? match[2] : null;
-    var old_page = "", old_num = null;
+    let match = location.hash.match(/#?([^_]+)_?(\d*)/);
+    const new_page = match ? match[1] : "";
+    const new_num = match ? match[2] : null;
+    let old_page = "", old_num = null;
     if (event) {
         match = event.oldURL.match(/[^#]*#?([^_]+)_?(\d*)/);
         old_page = match ? match[1] : "";
@@ -563,8 +552,8 @@ function handleRouting(event) {
 }
 
 function init() {
-    var board_select = document.getElementsByName('board_select')[0];
-    var training_select = document.getElementsByName('training_select')[0];
+    const board_select = document.getElementsByName('board_select')[0];
+    const training_select = document.getElementsByName('training_select')[0];
     
     window.addEventListener('hashchange', handleRouting);
 
@@ -574,14 +563,13 @@ function init() {
 
     StatusBar.hide();
 
-    var start_button = document.getElementsByName('start')[0];
+    const start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
-        var selected_board_num = 0;
-        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        const selected_training_num = training_select.options[training_select.selectedIndex].value;
         navigateTo("run_" + selected_training_num);
         try {
             window.plugins.insomnia.keepAwake();
-            await runTraining(BOARDS[selected_board_num], TRAININGS[selected_training_num]);
+            await runTraining(BOARDS[SETTINGS.board], TRAININGS[selected_training_num]);
             navigateTo("");
         }
         catch (err) {
@@ -592,15 +580,15 @@ function init() {
         }
     });
 
-    var edit_button = document.getElementsByName('edit')[0];
+    const edit_button = document.getElementsByName('edit')[0];
     edit_button.addEventListener("click", async function editTraining() {
-        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        const selected_training_num = training_select.options[training_select.selectedIndex].value;
         navigateTo(`edit_${selected_training_num}`);
     });
 
-    var clone_button = document.getElementsByName('clone')[0];
+    const clone_button = document.getElementsByName('clone')[0];
     clone_button.addEventListener("click", async function cloneTraining() {
-        var selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
+        const selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
         TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
         TRAININGS[selected_training_num + 1].title += " (copy)";
         // TODO: save
@@ -609,9 +597,9 @@ function init() {
         window.scrollTo(0,0);
     });
 
-    var delete_button = document.getElementsByName('delete')[0];
+    const delete_button = document.getElementsByName('delete')[0];
     delete_button.addEventListener("click", async function editTraining() {
-        var selected_training_num = training_select.options[training_select.selectedIndex].value;
+        const selected_training_num = training_select.options[training_select.selectedIndex].value;
         // TODO: confirm
         TRAININGS.splice(selected_training_num, 1);
         // TODO: save
@@ -620,8 +608,15 @@ function init() {
         window.scrollTo(0,0);
     });
 
-    var pause_button = document.getElementsByName("pause")[0];
+    const pause_button = document.getElementsByName("pause")[0];
     pause_button.addEventListener("click", COUNTER.pause);
+
+	var TouchMenu = TouchMenuLA({
+		target: document.getElementById('drawer')
+	});
+	document.getElementById('toolbar_icon_menu').addEventListener('click', function(){
+		TouchMenu.toggle();
+	});
 
     handleRouting();
 }
