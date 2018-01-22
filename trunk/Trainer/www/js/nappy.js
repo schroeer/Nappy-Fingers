@@ -612,7 +612,9 @@ function init() {
     pause_button.addEventListener("click", COUNTER.pause);
 
 	var TouchMenu = TouchMenuLA({
-		target: document.getElementById('drawer')
+		target: document.getElementById('drawer'),
+        width: screen.width-56,
+        zIndex: 2
 	});
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(){
 		TouchMenu.toggle();
