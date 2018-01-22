@@ -637,3 +637,34 @@ button.button_add {
     grid-row: 9 / 10;
 }
 
+.drawer-header {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+.drawer-header:before {
+    display: block;
+    padding-top: 56.25%;
+    content: "";
+}
+
+.drawer-header-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #007ac1;
+    background-image: url(../images/nappy.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    -webkit-box-align: end;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 400;
+}
