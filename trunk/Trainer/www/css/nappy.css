@@ -466,12 +466,12 @@ button.button_round:active {
 }
 
 button[name=start] {
-    bottom: 24px;
+    bottom: 16px;
     right: 16px;
 }
 
 button[name=edit] {
-    bottom: 96px;
+    bottom: 88px;
     right: 16px;
 }
 
