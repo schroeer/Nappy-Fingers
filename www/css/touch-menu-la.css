@@ -1,10 +1,10 @@
 ﻿.touch-menu-la {
-    width: 280px;
     height: 100%;
     position: absolute;
     top: 0;
-    left: -280px;
-    background-color: #FFF;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12); 
 }
 
     .touch-menu-la .tmla-handle {
@@ -36,7 +36,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #000;
+    background-color: transparent;
     opacity: 0.0;
     z-index: -1;
 }
