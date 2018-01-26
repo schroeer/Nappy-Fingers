@@ -637,6 +637,10 @@ button.button_add {
     grid-row: 9 / 10;
 }
 
+#drawer {
+    display: none
+}
+
 .drawer-header {
     width: 100%;
     display: inline-block;
@@ -667,4 +671,25 @@ button.button_add {
     padding: 16px;
     font-size: 16px;
     font-weight: 400;
+}
+
+.menu-items {
+    margin: 8px 0 0 0;
+    padding: 0;
+}
+
+.menu-items a {
+    padding: 0 16px 0 16px;
+    height: 48px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.87);
+    line-height: 24px;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.menu-items a .material-icons {
+    padding: 0 32px 0 0;
 }

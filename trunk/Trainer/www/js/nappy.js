@@ -84,6 +84,16 @@ function downloadTrainings() {
     downloadAnchorNode.remove();
 }
 
+function uploadTrainings(files) {
+    var file = files[0];
+    console.log(file.name + " " + file.type);
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        console.log(event.target.result)
+    };
+    reader.readAsText(file);
+}
+
 async function runTraining(board, training) {
     const set_title_div = document.getElementById("set_title");
     const set_description_div = document.getElementById("set_description");
@@ -618,7 +628,18 @@ function init() {
 	});
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(){
 		TouchMenu.toggle();
-	});
+	}, false);
+    document.getElementById('a_export_trainings').addEventListener('click', function(event){
+        event.preventDefault();
+        TouchMenu.close();
+        downloadTrainings();
+	}, false);
+    document.getElementById("a_import_trainings").addEventListener("click", function(event) {
+        event.preventDefault();
+        TouchMenu.close();
+        document.getElementById("fileElem").click();
+    }, false);
+    document.getElementById('drawer').style.display = "block";
 
     handleRouting();
 }

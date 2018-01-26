@@ -102,14 +102,14 @@
             </div>
         </div>
         <div id="drawer" class="touch-menu-la">
-            <header class="drawer-header"><div class="drawer-header-content">nappy fingers</div></header>
-            <ul class="menu-items">
-                <li><i class="material-icons">fitness_center</i>Change board</li>
-                <li><i class="material-icons">file_download</i>Export trainings</li>
-                <li><i class="material-icons">file_upload</i>Import trainings</li>
-                <li><i class="material-icons">info</i>About</li>
-            </ul>
-            <div class="drawer-footer">&copy; Daniel Schröer</div>
+            <header class="drawer-header"><div class="drawer-header-content"></div></header>
+            <div class="menu-items">
+                <a id="a_change_board" href="#"><i class="material-icons md-dark">fitness_center</i>Change board</a>
+                <a id="a_export_trainings" href="#" href="#"><i class="material-icons md-dark">file_download</i>Export trainings</a>
+                <a id="a_import_trainings" href="#" href="#"><i class="material-icons md-dark">file_upload</i>Import trainings</a>
+                <a id="a_info" href="#" href="#"><i class="material-icons md-dark">info</i>About</a>
+            </div>
+            <input type="file" id="fileElem" multiple accept="application/json" style="display:none" onchange="uploadTrainings(this.files)">
         </div>
 
         <script src="js/boards.js"></script>
