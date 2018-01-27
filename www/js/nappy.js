@@ -74,22 +74,30 @@ function completedSound() {
     soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);  //High D
 }
 
-// https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
 function downloadTrainings() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "trainings.json");
+    const date = new Date();
+    const filename = `trainings_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
+    downloadAnchorNode.setAttribute("download", filename);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 }
 
 function uploadTrainings(files) {
-    var file = files[0];
-    console.log(file.name + " " + file.type);
-    var reader = new FileReader();
+    const file = files[0];
+    const reader = new FileReader();
     reader.onload = function(event) {
-        console.log(event.target.result)
+        try {
+            const tr = JSON.parse(event.target.result);
+            if (tr instanceof Array) {
+                TRAININGS = tr;
+                console.log(`Imported ${tr.length} trainings from file "${file.name}"`);
+                updateMainPage();
+            }
+        }
+        catch(error) {}
     };
     reader.readAsText(file);
 }
