@@ -2,9 +2,11 @@
 
 "use strict";
 
-var SETTINGS = {
+var DEFAULT_SETTINGS = {
     board: 0
 };
+
+var SETTINGS, TRAININGS;
 
 const COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
@@ -100,6 +102,31 @@ function uploadTrainings(files) {
         catch(error) {}
     };
     reader.readAsText(file);
+}
+
+function storeTrainingsAndSettings() {
+    window.localStorage.setItem('settings', JSON.stringify(SETTINGS));
+    window.localStorage.setItem('trainings', JSON.stringify(TRAININGS));
+    console.log('Stored trainings and settings in local storage');
+}
+
+function loadTrainingsAndSettings() {
+    if (window.localStorage.getItem('settings')) {
+        SETTINGS = JSON.parse(window.localStorage.getItem('settings'));
+        console.log('Restored settings from storage');
+    }
+    else {
+        SETTINGS = DEFAULT_SETTINGS;
+        console.log('Using default settings');
+    }
+    if (window.localStorage.getItem('trainings')) {
+        TRAININGS = JSON.parse(window.localStorage.getItem('trainings'));
+        console.log(`Restored ${TRAININGS.length} trainings from storage`);
+    }
+    else {
+        TRAININGS = DEFAULT_TRAININGS;
+        console.log('Using default trainings');
+    }
 }
 
 async function runTraining(board, training) {
@@ -252,9 +279,9 @@ async function runTraining(board, training) {
     }
 }
 
-function updateMainPage() {
+function updateMainPage(preselect) {
     const training_select = document.getElementsByName('training_select')[0];
-    let selected_training = training_select.selectedIndex;
+    let selected_training = (typeof preselect !== 'undefined') ? preselect : training_select.selectedIndex;
     if (selected_training == -1)
         selected_training = 0;
     
@@ -354,6 +381,7 @@ function updateEditPage(training_num) {
     title.addEventListener('change', function changedTrainingTitle() {
         TRAININGS[training_num].title = this.value;
         console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
+        storeTrainingsAndSettings();
     });
 
     const description = fragment.getElementById('edit_training_description');
@@ -361,6 +389,7 @@ function updateEditPage(training_num) {
     description.addEventListener('change', function changedTrainingDescription() {
         TRAININGS[training_num].description = this.value;
         console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
+        storeTrainingsAndSettings();
     });
 
     const button_add = fragment.querySelector('button[name=add_set]');
@@ -375,6 +404,7 @@ function updateEditPage(training_num) {
             "reps":         5,
             "pause":        60,
         });
+        storeTrainingsAndSettings();
         updateEditPage(training_num);
     });
 
@@ -403,6 +433,7 @@ function updateEditPage(training_num) {
             }
             TRAININGS[training_num].sets[set_num].pause = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].pause = ${this.value}.`);
+            storeTrainingsAndSettings();
         });
         
         const title = fragment.getElementById('edit_set_title');
@@ -411,6 +442,7 @@ function updateEditPage(training_num) {
         title.addEventListener('change', function changeSetTitle() {
             TRAININGS[training_num].sets[set_num].title = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
+            storeTrainingsAndSettings();
         });
 
         const description = fragment.getElementById('edit_set_description');
@@ -419,6 +451,7 @@ function updateEditPage(training_num) {
         description.addEventListener('change', function changeSetDescription() {
             TRAININGS[training_num].sets[set_num].description = this.value;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
+            storeTrainingsAndSettings();
         });
 
         const img_board = fragment.querySelector('img.board_img');
@@ -442,6 +475,7 @@ function updateEditPage(training_num) {
             TRAININGS[training_num].sets[set_num].left = this.value;
             img_left.src = "images/" + BOARDS[SETTINGS.board].left_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
+            storeTrainingsAndSettings();
         });
 
         const right = fragment.getElementById('edit_set_right');
@@ -459,6 +493,7 @@ function updateEditPage(training_num) {
             TRAININGS[training_num].sets[set_num].right = this.value;
             img_right.src = "images/" + BOARDS[SETTINGS.board].right_holds[this.value].image;
             console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
+            storeTrainingsAndSettings();
         });
 
         const hold = fragment.getElementById('edit_set_hold');
@@ -470,6 +505,7 @@ function updateEditPage(training_num) {
             }
             TRAININGS[training_num].sets[set_num].hold = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].hold = ${this.value}.`);
+            storeTrainingsAndSettings();
         });
         
         const interr = fragment.getElementById('edit_set_break');
@@ -481,6 +517,7 @@ function updateEditPage(training_num) {
             }
             TRAININGS[training_num].sets[set_num].break = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].break = ${this.value}.`);
+            storeTrainingsAndSettings();
         });
         
         const reps = fragment.getElementById('edit_set_reps');
@@ -492,6 +529,7 @@ function updateEditPage(training_num) {
             }
             TRAININGS[training_num].sets[set_num].reps = Number(this.value);
             console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
+            storeTrainingsAndSettings();
         });
         
         const button_add = fragment.querySelector('button[name=add_set]');
@@ -506,12 +544,14 @@ function updateEditPage(training_num) {
                 "reps":         5,
                 "pause":        60,
             });
+            storeTrainingsAndSettings();
             updateEditPage(training_num);
         });
         
         const button_delete = fragment.querySelector('button[name=delete_set]');
         button_delete.addEventListener("click", async function deleteSet() {
             TRAININGS[training_num].sets.splice(set_num, 1);
+            storeTrainingsAndSettings();
             updateEditPage(training_num);
         });
         
@@ -551,7 +591,7 @@ function handleRouting(event) {
             break;
         case "edit":
             updateEditPage(new_num);
-            document.getElementById("toolbar_title").innerText = "Editor";
+            document.getElementById("toolbar_title").innerText = TRAININGS[new_num].title;
             document.getElementById("toolbar_icon_back").style.display = "inline";
             document.getElementById("toolbar_icon_menu").style.display = "none";
             document.getElementById("main_content").style.display = "none";
@@ -559,7 +599,7 @@ function handleRouting(event) {
             document.getElementById("edit_content").style.display = "block";
             break;
         case "run":
-            document.getElementById("toolbar_title").innerText = "Trainer";
+            document.getElementById("toolbar_title").innerText = TRAININGS[new_num].title;
             document.getElementById("toolbar_icon_back").style.display = "inline";
             document.getElementById("toolbar_icon_menu").style.display = "none";
             document.getElementById("main_content").style.display = "none";
@@ -573,13 +613,15 @@ function init() {
     const board_select = document.getElementsByName('board_select')[0];
     const training_select = document.getElementsByName('training_select')[0];
     
+    StatusBar.hide();
+
+    loadTrainingsAndSettings();
+
     window.addEventListener('hashchange', handleRouting);
 
     window.addEventListener("backbutton", function popstate(event) {
         console.log("backbutton event " + event);
     }, false);
-
-    StatusBar.hide();
 
     const start_button = document.getElementsByName('start')[0];
     start_button.addEventListener("click", async function startTraining() {
@@ -609,21 +651,23 @@ function init() {
         const selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
         TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
         TRAININGS[selected_training_num + 1].title += " (copy)";
-        // TODO: save
-        training_select.selectedIndex = selected_training_num + 1;
-        updateMainPage();
+        storeTrainingsAndSettings();
+        updateMainPage(selected_training_num + 1);
         window.scrollTo(0,0);
     });
 
     const delete_button = document.getElementsByName('delete')[0];
     delete_button.addEventListener("click", async function editTraining() {
-        const selected_training_num = training_select.options[training_select.selectedIndex].value;
-        // TODO: confirm
-        TRAININGS.splice(selected_training_num, 1);
-        // TODO: save
-        training_select.selectedIndex = 0;
-        updateMainPage();
-        window.scrollTo(0,0);
+        if (TRAININGS.length > 1) {
+            const selected_training_num = training_select.options[training_select.selectedIndex].value;
+            // TODO: confirm
+            TRAININGS.splice(selected_training_num, 1);
+            storeTrainingsAndSettings();
+            updateMainPage(0);
+            window.scrollTo(0,0);
+        }
+        // TODO: else cannot delete last training
+        // TODO: delete button disablen
     });
 
     const pause_button = document.getElementsByName("pause")[0];
@@ -634,7 +678,7 @@ function init() {
         width: Math.min(Math.min(screen.availWidth, screen.availHeight) - 56, 280),
         zIndex: 2 
 	});
-	document.getElementById('toolbar_icon_menu').addEventListener('click', function(){
+	document.getElementById('toolbar_icon_menu').addEventListener('click', function(event){
 		TouchMenu.toggle();
 	}, false);
     document.getElementById('a_export_trainings').addEventListener('click', function(event){
@@ -646,6 +690,14 @@ function init() {
         event.preventDefault();
         TouchMenu.close();
         document.getElementById("fileElem").click();
+    }, false);
+    document.getElementById("a_restore_trainings").addEventListener("click", function restoreTrainings(event) {
+        event.preventDefault();
+        TouchMenu.close();
+        TRAININGS = DEFAULT_TRAININGS;
+        console.log('Restored default trainings');
+        storeTrainingsAndSettings();
+        updateMainPage();
     }, false);
     document.getElementById('drawer').style.display = "block";
 

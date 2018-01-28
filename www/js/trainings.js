@@ -1,4 +1,4 @@
-var TRAININGS = [
+var DEFAULT_TRAININGS = [
     {
         "title":        "Hang time", // Little Boy
         "description":  "Much hang time on good holds",

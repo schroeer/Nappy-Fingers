@@ -34,7 +34,6 @@
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
-  vertical-align: sub;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -179,6 +178,8 @@ body {
 }
 
 h1.toolbar {
+    font-weight: 500;
+    line-height: 20px;
     margin: 0;
     padding: 0;
     position: fixed;
@@ -186,6 +187,8 @@ h1.toolbar {
     left: 0;
     width: 100%;
     height: 56px;
+    display: flex;
+    align-items: center;
     box-sizing: border-box;    
     z-index: 1;
     background-color: #9bcdff;
@@ -216,6 +219,10 @@ h1.toolbar span#toolbar_title {
     line-height: 24px;
     display: inline-block;
     color: rgba(0, 0, 0, 0.87);
+    white-space: nowrap;
+    max-width: calc(100% - 56px - 85px);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 h2 {
@@ -681,7 +688,7 @@ button.button_add {
 .menu-items hr {
     border-color: rgba(0,0,0,.3);
     border-width: 0 0 1px 0;
-    margin: 0;
+    margin: 8px 0;
 }
 .menu-items a {
     padding: 0 16px 0 16px;
@@ -690,8 +697,8 @@ button.button_add {
     font-weight: 500;
     color: rgba(0,0,0,0.87);
     line-height: 24px;
-    display: flex;
     text-decoration: none;
+    display: flex;
     align-items: center;
 }
 
