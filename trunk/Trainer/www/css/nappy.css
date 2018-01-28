@@ -265,12 +265,12 @@ span#set_counter {
     width: 25%;
     display: inline-block;
     vertical-align: middle;
-    font-size: 2em;
+    font-size: 34px;
 }
 
 span#time_counter {
-    font-size: 5em;
-    color: #5a5aea;
+    font-size: 70px;
+    color: #007ac1;
     width: 50%;
     vertical-align: middle;
     display: inline-block;
@@ -280,7 +280,7 @@ span#repeat_counter {
     display: inline-block;
     vertical-align: middle;
     width: 25%;
-    font-size: 2em;
+    font-size: 34px;
 }
 
 div#pbars {
@@ -288,7 +288,7 @@ div#pbars {
 }
 
 progress {
-    height: 3em;
+    height: 40px;
     margin: 0;
     -webkit-appearance: none;
 }
@@ -326,7 +326,7 @@ progress#pause_pbar {
     border-radius: 0 2px 2px 0;
 }
 #pause_pbar::-webkit-progress-value {
-    background-color: #5a5aea;
+    background-color: #007ac1;
     border-radius: 2px;
 }
 
@@ -375,7 +375,7 @@ div.training_pause {
     border: none;
     border-radius: 2px;
     background-color: #edf5e8;
-    padding: 0.5em;
+    padding: 8px;
     margin: 8px 0 0 0;
 }    
 
@@ -383,7 +383,7 @@ div.training_set {
     border: none;
     border-radius: 2px;
     background-color: #f3f3f3;
-    padding: 0.5em;
+    padding: 8px;
     margin: 8px 0 0 0;
 }
 
@@ -425,7 +425,7 @@ button.button_wide .material-icons {
     font-size: 18px;
     vertical-align: sub;
     float: left;
-    margin-right: -1em;
+    margin-right: -18px;
 }
 
 button.button_flat {
@@ -498,6 +498,11 @@ button[name=edit] {
     display: block;
 }
 
+#about_content {
+    display: none;
+    padding: 8px;
+}
+
 input {
     border-width: 0 0 1px 0;
     background-color: transparent;
@@ -524,11 +529,12 @@ textarea {
 select.big_select {
     margin: 8px 8px 0 8px;
     width: calc(100% - 16px);
-    padding: 1em 0.5em;
+    padding: 16px 8px;
     border: none;
     border-radius: 0px;
     background-color: #d9ecff;
-    font-size: 1em;
+    font-size: 14px;
+    font-weight: 500;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
                 0 2px 2px 0 rgba(0,0,0,.14),
                 0 1px 5px 0 rgba(0,0,0,.12);
@@ -538,15 +544,12 @@ input[type='number'] {
     text-align: right;
 }
 
-form#training_edit {
-}
-
 div.edit_header {
     border-radius: 4px;
-    padding: 0.5em;
+    padding: 8px;
     margin: 8px 8px 0 8px;
     display: grid;
-    grid-template-columns: 5em auto;
+    grid-template-columns: 72px auto;
     grid-template-rows: repeat(2,auto);
     grid-gap: 8px 8px;
 }
@@ -554,10 +557,10 @@ div.edit_header {
 div.edit_pause {
     border-radius: 2px;
     background-color: #edf5e8;
-    padding: 0.5em;
+    padding: 8px;
     margin: 8px 8px 0 8px;
     display: grid;
-    grid-template-columns: 5em 3em auto ;
+    grid-template-columns: 72px 40px auto ;
     grid-template-rows: repeat(1,auto);
     grid-gap: 8px 8px;
 }
@@ -565,22 +568,16 @@ div.edit_pause {
 div.edit_set {
     border-radius: 2px;
     background-color: #f3f3f3;
-    padding: 0.5em;
+    padding: 8px;
     margin: 8px 8px 0 8px;
     display: grid;
-    grid-template-columns: 5em 3em auto ;
+    grid-template-columns: 72px 40px auto ;
     grid-template-rows: repeat(9,auto);
     grid-gap: 8px 8px;
 }
 
-button.button_delete {
-}
-
-button.button_add {
-}
-
 .edit_set_number {
-    font-size: 4em;
+    font-size: 56px;
     color: darkgrey;
 }
 
