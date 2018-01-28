@@ -588,6 +588,7 @@ function handleRouting(event) {
             document.getElementById("main_content").style.display = "block";
             document.getElementById("run_content").style.display = "none";
             document.getElementById("edit_content").style.display = "none";
+            document.getElementById("about_content").style.display = "none";
             break;
         case "edit":
             updateEditPage(new_num);
@@ -597,6 +598,7 @@ function handleRouting(event) {
             document.getElementById("main_content").style.display = "none";
             document.getElementById("run_content").style.display = "none";
             document.getElementById("edit_content").style.display = "block";
+            document.getElementById("about_content").style.display = "none";
             break;
         case "run":
             document.getElementById("toolbar_title").innerText = TRAININGS[new_num].title;
@@ -605,6 +607,16 @@ function handleRouting(event) {
             document.getElementById("main_content").style.display = "none";
             document.getElementById("run_content").style.display = "block";
             document.getElementById("edit_content").style.display = "none";
+            document.getElementById("about_content").style.display = "none";
+            break;
+        case "about":
+            document.getElementById("toolbar_title").innerText = "About";
+            document.getElementById("toolbar_icon_back").style.display = "inline";
+            document.getElementById("toolbar_icon_menu").style.display = "none";
+            document.getElementById("main_content").style.display = "none";
+            document.getElementById("run_content").style.display = "none";
+            document.getElementById("edit_content").style.display = "none";
+            document.getElementById("about_content").style.display = "block";
             break;
     }
 }
@@ -699,6 +711,11 @@ function init() {
         storeTrainingsAndSettings();
         updateMainPage();
     }, false);
+    document.getElementById('a_about').addEventListener('click', function(event){
+        event.preventDefault();
+        TouchMenu.close();
+        navigateTo('about');
+	}, false);
     document.getElementById('drawer').style.display = "block";
 
     handleRouting();
