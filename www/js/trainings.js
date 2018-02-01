@@ -219,7 +219,10 @@ var DEFAULT_TRAININGS = [
                 "pause":        120,
             }
         ]
-    },
+    }
+];
+
+var OLD = [
     {
         "title":        "Ralfi Beginner", // https://ralfisordinarylife.files.wordpress.com/2016/02/hangboard-training-plan-beginner.pdf
         "description":  "Hangboard training plan for beginners",
@@ -295,4 +298,4 @@ var DEFAULT_TRAININGS = [
 
         ]
     }
-];
+]
