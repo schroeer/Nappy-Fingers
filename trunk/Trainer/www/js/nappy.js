@@ -1,6 +1,8 @@
-// phonegap prepare browser & pscp -l schroeer -i ..\Gipfelkreuz\private_key.ppk -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
+// phonegap prepare browser & pscp -l schroeer -i "C:\Users\Daniel Schröer\svncode\Gipfelkreuz\private_key.ppk" -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
 
 "use strict";
+
+// TODO: "break" should be renamed to "rest"
 
 var DEFAULT_SETTINGS = {
     board: 0
