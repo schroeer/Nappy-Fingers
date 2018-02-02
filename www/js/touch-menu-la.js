@@ -1,16 +1,16 @@
 var TouchMenuLA = function (options) {
     var self,
         defaults,
-		menuClassName = '',
-		mask,
-		handle,
-		menuHammer,
-		maskHammer,
-		newPos = 0,
-		currentPos = 0,
-		startPoint = 0,
-		countStart = 0,
-		velocity = 0.0;
+        menuClassName = '',
+        mask,
+        handle,
+        menuHammer,
+        maskHammer,
+        newPos = 0,
+        currentPos = 0,
+        startPoint = 0,
+        countStart = 0,
+        velocity = 0.0;
 
     var TouchMenuLA = function () {
         self = this;
