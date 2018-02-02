@@ -10,8 +10,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         7,
-                "break":        4,
-                "reps":         7,
+                "rest":         4,
+                "repeat":       7,
                 "pause":        15,
             },
             {
@@ -20,8 +20,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         10,
-                "break":        10,
-                "reps":         3,
+                "rest":         10,
+                "repeat":       3,
                 "pause":        120,
             },
             {
@@ -30,8 +30,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        5,
                 "hold":         6,
-                "break":        4,
-                "reps":         4,
+                "rest":         4,
+                "repeat":       4,
                 "pause":        90,
             },
             {
@@ -40,8 +40,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        9,
                 "hold":         5,
-                "break":        7,
-                "reps":         5,
+                "rest":         7,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -50,8 +50,8 @@ var DEFAULT_TRAININGS = [
                 "left":         9,
                 "right":        1,
                 "hold":         5,
-                "break":        7,
-                "reps":         5,
+                "rest":         7,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -60,8 +60,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        5,
                 "hold":         5,
-                "break":        4,
-                "reps":         5,
+                "rest":         4,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -70,8 +70,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        5,
                 "hold":         7,
-                "break":        4,
-                "reps":         7,
+                "rest":         4,
+                "repeat":       7,
                 "pause":        120,
             },
             {
@@ -80,8 +80,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         7,
-                "break":        4,
-                "reps":         7,
+                "rest":         4,
+                "repeat":       7,
                 "pause":        120,
             }
         ]
@@ -97,8 +97,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         7,
-                "break":        4,
-                "reps":         5,
+                "rest":         4,
+                "repeat":       5,
                 "pause":        15,
             },
             {
@@ -107,8 +107,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        7,
                 "hold":         6,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        90,
             },
             {
@@ -117,8 +117,8 @@ var DEFAULT_TRAININGS = [
                 "left":         7,
                 "right":        5,
                 "hold":         6,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -127,8 +127,8 @@ var DEFAULT_TRAININGS = [
                 "left":         9,
                 "right":        9,
                 "hold":         6,
-                "break":        4,
-                "reps":         6,
+                "rest":         4,
+                "repeat":       6,
                 "pause":        120,
             },
             {
@@ -137,8 +137,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        5,
                 "hold":         7,
-                "break":        10,
-                "reps":         4,
+                "rest":         10,
+                "repeat":       4,
                 "pause":        120,
             },
             {
@@ -147,8 +147,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         7,
-                "break":        4,
-                "reps":         5,
+                "rest":         4,
+                "repeat":       5,
                 "pause":        120,
             }
         ]
@@ -164,8 +164,8 @@ var DEFAULT_TRAININGS = [
                 "left":         1,
                 "right":        1,
                 "hold":         7,
-                "break":        4,
-                "reps":         5,
+                "rest":         4,
+                "repeat":       5,
                 "pause":        15,
             },
             {
@@ -174,8 +174,8 @@ var DEFAULT_TRAININGS = [
                 "left":         9,
                 "right":        11,
                 "hold":         5,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        60,
             },
             {
@@ -184,8 +184,8 @@ var DEFAULT_TRAININGS = [
                 "left":         11,
                 "right":        9,
                 "hold":         5,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -194,8 +194,8 @@ var DEFAULT_TRAININGS = [
                 "left":         7,
                 "right":        9,
                 "hold":         5,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -204,8 +204,8 @@ var DEFAULT_TRAININGS = [
                 "left":         9,
                 "right":        7,
                 "hold":         5,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        120,
             },
             {
@@ -214,8 +214,8 @@ var DEFAULT_TRAININGS = [
                 "left":         5,
                 "right":        5,
                 "hold":         7,
-                "break":        5,
-                "reps":         7,
+                "rest":         5,
+                "repeat":       7,
                 "pause":        120,
             }
         ]
@@ -234,8 +234,8 @@ var OLD = [
                 "left":         1,
                 "right":        1,
                 "hold":         6,
-                "break":        4,
-                "reps":         4,
+                "rest":         4,
+                "repeat":       4,
                 "pause":        15,
             },
             {
@@ -244,8 +244,8 @@ var OLD = [
                 "left":         9,
                 "right":        9,
                 "hold":         6,
-                "break":        4,
-                "reps":         4,
+                "rest":         4,
+                "repeat":       4,
                 "pause":        140,
             },
             {
@@ -254,8 +254,8 @@ var OLD = [
                 "left":         6,
                 "right":        6,
                 "hold":         6,
-                "break":        4,
-                "reps":         4,
+                "rest":         4,
+                "repeat":       4,
                 "pause":        140,
             },
             {
@@ -264,8 +264,8 @@ var OLD = [
                 "left":         3,
                 "right":        3,
                 "hold":         6,
-                "break":        4,
-                "reps":         4,
+                "rest":         4,
+                "repeat":       4,
                 "pause":        140,
             }
         ]
@@ -281,8 +281,8 @@ var OLD = [
                 "left":         2,
                 "right":        4,
                 "hold":         3,
-                "break":        3,
-                "reps":         1,
+                "rest":         3,
+                "repeat":       1,
                 "pause":        16,
             },
             {
@@ -291,8 +291,8 @@ var OLD = [
                 "left":         0,
                 "right":        2,
                 "hold":         3,
-                "break":        3,
-                "reps":         1,
+                "rest":         3,
+                "repeat":       1,
                 "pause":        70,
             }
 

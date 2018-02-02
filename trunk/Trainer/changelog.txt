@@ -1,3 +1,6 @@
+x.x.x
+    - Change "break" to "rest" and "reps" to "repeat" in trainings JSON
+
 1.0.1
     - Enhance appearance of drawer
     - Various corrections to grammar and spelling

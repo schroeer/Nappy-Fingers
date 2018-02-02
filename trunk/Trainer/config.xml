@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="de.danielschroeer.nappyfingers" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="de.danielschroeer.nappyfingers" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>nappy fingers</name>
     <description>Strong fingers for changing the baby</description>
     <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>

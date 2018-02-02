@@ -197,7 +197,7 @@ progress#pause_pbar {
     border-radius: 2px 0 0 2px;
 }
 
-#break_pbar::-webkit-progress-bar {
+#rest_pbar::-webkit-progress-bar {
     border-radius: 0 2px 2px 0;
     border-color: rgba(0,0,0,0.4);
     border-width: 0 0 0 1px;
@@ -212,7 +212,7 @@ progress#pause_pbar {
     background-color: #ff7272;
     border-radius: 2px 0 0 2px;
 }
-#break_pbar::-webkit-progress-value {
+#rest_pbar::-webkit-progress-value {
     background-color: #79bd79;
     border-radius: 0 2px 2px 0;
 }

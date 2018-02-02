@@ -2,8 +2,6 @@
 
 "use strict";
 
-// TODO: "break" should be renamed to "rest"
-
 var DEFAULT_SETTINGS = {
     board: 0
 };
@@ -136,7 +134,7 @@ async function runTraining(board, training) {
     const set_description_div = document.getElementById("set_description");
     const time_counter = document.getElementById("time_counter");
     const hold_pbar = document.getElementById("hold_pbar");
-    const break_pbar = document.getElementById("break_pbar");
+    const rest_pbar = document.getElementById("rest_pbar");
     const pause_pbar = document.getElementById("pause_pbar");
     
     for (let i in training.sets) {
@@ -162,7 +160,7 @@ async function runTraining(board, training) {
         pause_pbar.max = set.pause;
         pause_pbar.style.display = "inline-block";
         hold_pbar.style.display = "none";
-        break_pbar.style.display = "none";
+        rest_pbar.style.display = "none";
         document.getElementById("set_counter").textContent = Number(i) + 1 + "/" + training.sets.length;
         document.getElementById("repeat_counter").textContent = "   ";
 
@@ -175,7 +173,7 @@ async function runTraining(board, training) {
                 pause_pbar.value = step + 1;
                 
                 if (set.pause - step == 15) { // 15s vor Ende der Pause: Ankündigung des nächsten Satzes
-                    speak(`Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.left_holds[set.left].name}. Right hand ${board.right_holds[set.right].name}. Repeat ${set.reps} ${((set.reps > 1) ? "times" : "time")}.`);
+                    speak(`Next exercise: ${set.description} for ${set.hold} seconds. Left hand ${board.left_holds[set.left].name}. Right hand ${board.right_holds[set.right].name}. Repeat ${set.repeat} ${((set.repeat > 1) ? "times" : "time")}.`);
 
                     set_title_div.textContent = set.title;
                     set_description_div.textContent = set.description;
@@ -204,22 +202,22 @@ async function runTraining(board, training) {
 
         pause_pbar.style.display = "none";
         hold_pbar.style.display = "inline-block";
-        break_pbar.style.display = "inline-block";
+        rest_pbar.style.display = "inline-block";
         
         hold_pbar.max = set.hold;
-        hold_pbar.style.width = 100 * set.hold / (set.hold + set.break) + "%";
+        hold_pbar.style.width = 100 * set.hold / (set.hold + set.rest) + "%";
 
-        break_pbar.max = set.break;
-        break_pbar.style.width = 100 * set.break / (set.hold + set.break) + "%";
+        rest_pbar.max = set.rest;
+        rest_pbar.style.width = 100 * set.rest / (set.hold + set.rest) + "%";
         
-        for (let rep = 0; rep < set.reps; rep++) {
+        for (let rep = 0; rep < set.repeat; rep++) {
             hold_pbar.value = 0;
-            break_pbar.value = 0;
-            if (rep == set.reps - 1) { // bei letzter Wiederholung Break-Balken weg
-                break_pbar.style.display = "none";
+            rest_pbar.value = 0;
+            if (rep == set.repeat - 1) { // bei letzter Wiederholung rest-Balken weg
+                rest_pbar.style.display = "none";
             }
 
-            document.getElementById("repeat_counter").textContent = Number(rep) + 1 + "/" + set.reps;
+            document.getElementById("repeat_counter").textContent = Number(rep) + 1 + "/" + set.repeat;
             
             console.log(`rep ${rep+1}: hold`);
             speechSynthesis.speak(utter_go);
@@ -233,17 +231,17 @@ async function runTraining(board, training) {
             );
             await completedSound();
 
-            console.log(`rep ${rep+1}: break`);
+            console.log(`rep ${rep+1}: rest`);
             
-            if (rep < set.reps - 1) { // bei letzter Wiederholung keine Break-Pause
+            if (rep < set.repeat - 1) { // bei letzter Wiederholung keine rest-Pause
                 await COUNTER.start(
-                    set.break,
+                    set.rest,
                     1000,
-                    async function breakCountdownStep(step) {
-                        time_counter.textContent = set.break - step;
-                        break_pbar.value = step + 1;
+                    async function restCountdownStep(step) {
+                        time_counter.textContent = set.rest - step;
+                        rest_pbar.value = step + 1;
 
-                        if (set.break - step <= 3) {
+                        if (set.rest - step <= 3) {
                             await ticSound();
                         }
                     }
@@ -339,7 +337,7 @@ function updateMainPage(preselect) {
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': (board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : ""), 'alt': ""});
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': (board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : ""), 'alt': ""});
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
-            addElement(div, 'p', `Hold for ${set.hold} seconds. Rest for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
+            addElement(div, 'p', `Hold for ${set.hold} seconds. Rest for ${set.rest} seconds. Repeat ${set.repeat} times.`, {'class': 'set_details'});
         }
         
         function addElement(node, type, text, atts) {
@@ -359,8 +357,8 @@ function updateMainPage(preselect) {
             let pause = 0, inter = 0, hold = 0;
             for (let set of training.sets) {
                 pause += set.pause;
-                inter += (set.reps - 1) * set.break;
-                hold += set.reps * set.hold;
+                inter += (set.repeat - 1) * set.rest;
+                hold += set.repeat * set.hold;
             }
             return [hold, inter, pause, hold + inter + pause];
         }
@@ -402,8 +400,8 @@ function updateEditPage(training_num) {
             "left":         1,
             "right":        1,
             "hold":         5,
-            "break":        5,
-            "reps":         5,
+            "rest":         5,
+            "repeat":       5,
             "pause":        60,
         });
         storeTrainingsAndSettings();
@@ -510,27 +508,27 @@ function updateEditPage(training_num) {
             storeTrainingsAndSettings();
         });
         
-        const interr = fragment.getElementById('edit_set_break');
-        interr.value = set.break;
+        const interr = fragment.getElementById('edit_set_rest');
+        interr.value = set.rest;
         interr.id += "_" + set_num;
-        interr.addEventListener('change', function changeSetBreak() {
+        interr.addEventListener('change', function changeSetRest() {
             if (this.value < 1) {
                 this.value = 1;
             }
-            TRAININGS[training_num].sets[set_num].break = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].break = ${this.value}.`);
+            TRAININGS[training_num].sets[set_num].rest = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].rest = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
-        const reps = fragment.getElementById('edit_set_reps');
-        reps.value = set.reps;
-        reps.id += "_" + set_num;
-        reps.addEventListener('change', function changeSetReps() {
+        const repeat = fragment.getElementById('edit_set_repeat');
+        repeat.value = set.repeat;
+        repeat.id += "_" + set_num;
+        repeat.addEventListener('change', function changeSetRepeat() {
             if (this.value < 1) {
                 this.value = 1;
             }
-            TRAININGS[training_num].sets[set_num].reps = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].reps = ${this.value}.`);
+            TRAININGS[training_num].sets[set_num].repeat = Number(this.value);
+            console.log(`Setting trainings[${training_num}].sets[${set_num}].repeat = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
@@ -542,8 +540,8 @@ function updateEditPage(training_num) {
                 "left":         1,
                 "right":        1,
                 "hold":         5,
-                "break":        5,
-                "reps":         5,
+                "rest":         5,
+                "repeat":       5,
                 "pause":        60,
             });
             storeTrainingsAndSettings();
