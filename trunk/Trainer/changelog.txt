@@ -1,4 +1,6 @@
 x.x.x
+    Visual improvement of drawer
+    
     Various corrections to grammar and spelling
     
     Changed "break" and "interrupt" to "rest" externally
