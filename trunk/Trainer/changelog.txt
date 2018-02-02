@@ -1,0 +1,8 @@
+x.x.x
+    Various corrections to grammar and spelling
+    
+    Changed "break" and "interrupt" to "rest" externally
+
+
+0.8.0
+    Initial release
