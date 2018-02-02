@@ -86,7 +86,7 @@
                         <input id="edit_set_hold" class="edit-input edit-row6" type="number" min="1" step="1"/>
                         <label for="edit_set_hold" class="edit-label-right edit-row6">s</label>
 
-                        <label for="edit_set_break" class="edit-label edit-row7">Interrupt</label>
+                        <label for="edit_set_break" class="edit-label edit-row7">Rest</label>
                         <input id="edit_set_break" class="edit-input edit-row7" type="number"min="1" step="1"/>
                         <label for="edit_set_break" class="edit-label-right edit-row7">s</label>
 
@@ -115,7 +115,7 @@
         <div id="drawer" class="touch-menu-la">
             <header class="drawer-header"><div class="drawer-header-content"></div></header>
             <div class="menu-items">
-                <a id="a_change_board" href="#"><i class="material-icons md-dark">fitness_center</i>Change board</a>
+                <a id="a_change_board" href="#"><i class="material-icons md-dark">fitness_center</i>Switch hangboard</a>
                 <hr/>
                 <a id="a_export_trainings" href="#" href="#"><i class="material-icons md-dark">file_download</i>Export trainings</a>
                 <a id="a_import_trainings" href="#" href="#"><i class="material-icons md-dark">file_upload</i>Import trainings</a>
@@ -131,6 +131,7 @@
         <script src="js/nappy.js"></script>
         <script src="js/hammer.min.js"></script>
         <script src="js/touch-menu-la.min.js"></script>
+<!--
         <script src="cordova.js"></script>
         <script>
             document.addEventListener('deviceready', function() {
@@ -138,12 +139,11 @@
                 init();
             }, false);
         </script>
-<!--
+-->
         <script>
             window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
             StatusBar = { hide: function() {} };
             init();
         </script>
--->
     </body>
 </html>

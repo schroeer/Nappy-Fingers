@@ -339,7 +339,7 @@ function updateMainPage(preselect) {
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_left', 'src': (board.left_holds[set.left].image ? "images/" + board.left_holds[set.left].image : ""), 'alt': ""});
             addElement(outer, 'img', null, {'class': 'overlay_img overlay_right', 'src': (board.right_holds[set.right].image ? "images/" + board.right_holds[set.right].image : ""), 'alt': ""});
             addElement(div, 'p', set.description.replace(/([^.])$/, '$1.'), {'class': 'set_description'});
-            addElement(div, 'p', `Hold for ${set.hold} seconds. Interrupt for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
+            addElement(div, 'p', `Hold for ${set.hold} seconds. Rest for ${set.break} seconds. Repeat ${set.reps} times.`, {'class': 'set_details'});
         }
         
         function addElement(node, type, text, atts) {
