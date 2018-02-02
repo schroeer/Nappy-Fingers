@@ -1,6 +1,6 @@
 var DEFAULT_TRAININGS = [
     {
-        "title":        "Hang time", // Little Boy
+        "title":        "Hang time",
         "description":  "Much hang time on good holds",
         "board":        "bm1000",
         "sets":         [
