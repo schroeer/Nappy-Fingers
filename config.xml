@@ -5,7 +5,8 @@
     <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-minSdkVersion" value="23" />
+    <preference name="BackgroundColor" value="ffffffff" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="res/android/ldpi.png" />
