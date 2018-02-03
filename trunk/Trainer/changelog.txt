@@ -1,5 +1,6 @@
 x.x.x
     - Change "break" to "rest" and "reps" to "repeat" in trainings JSON
+    - Correct wording in trainings
 
 1.0.1
     - Enhance appearance of drawer

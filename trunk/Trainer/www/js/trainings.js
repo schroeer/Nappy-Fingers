@@ -36,7 +36,7 @@ var DEFAULT_TRAININGS = [
             },
             {
                 "title":        "Three fingers right side",
-                "description":  "Pull up once and stay in locked position",
+                "description":  "Pull up once and stay with bent arms",
                 "left":         1,
                 "right":        9,
                 "hold":         5,
@@ -46,7 +46,7 @@ var DEFAULT_TRAININGS = [
             },
             {
                 "title":        "Three fingers left side",
-                "description":  "Pull up once and stay in locked position",
+                "description":  "Pull up once and stay with bent arms",
                 "left":         9,
                 "right":        1,
                 "hold":         5,
@@ -93,7 +93,7 @@ var DEFAULT_TRAININGS = [
         "sets":         [
             {
                 "title":        "Warm up",
-                "description":  "Pull up once and stay in locked position",
+                "description":  "Pull up once and stay with bent arms",
                 "left":         1,
                 "right":        1,
                 "hold":         7,
@@ -133,7 +133,7 @@ var DEFAULT_TRAININGS = [
             },
             {
                 "title":        "Four fingers pull up 2x and stay",
-                "description":  "Pull up twice, then stay in locked position",
+                "description":  "Pull up twice, then stay with bent arms",
                 "left":         5,
                 "right":        5,
                 "hold":         7,
@@ -230,7 +230,7 @@ var OLD = [
         "sets":         [
             {
                 "title":        "Four fingers jug",
-                "description":  "Hang",
+                "description":  "Hang with straight arms",
                 "left":         1,
                 "right":        1,
                 "hold":         6,
@@ -240,7 +240,7 @@ var OLD = [
             },
             {
                 "title":        "Open three fingers",
-                "description":  "Hang",
+                "description":  "Hang with straight arms",
                 "left":         9,
                 "right":        9,
                 "hold":         6,
@@ -250,7 +250,7 @@ var OLD = [
             },
             {
                 "title":        "Four fingers half-crimp",
-                "description":  "Hang",
+                "description":  "Hang with straight arms",
                 "left":         6,
                 "right":        6,
                 "hold":         6,
@@ -260,7 +260,7 @@ var OLD = [
             },
             {
                 "title":        "Four fingers sloper",
-                "description":  "Hang",
+                "description":  "Hang with straight arms",
                 "left":         3,
                 "right":        3,
                 "hold":         6,
