@@ -1,6 +1,5 @@
-var BOARDS = [
-    {
-        "id":    "bm1000",
+const BOARDS = {
+    "bm1000": {
         "name":  "Beastmaker 1000",
         "image": "bm1000.png",
         "left_holds": {
@@ -111,6 +110,70 @@ var BOARDS = [
                 "image": "bm1000_12.png"
             }
         }
+    },
+    "bm2000": {
+        "name":  "Beastmaker 2000",
+        "image": "bm2000.png",
+        "left_holds": {
+            "01": {
+                "name": "45 degree sloper",
+                "image": "bm2000_l01.png"
+            },
+            "02": {
+                "name": "35 degree sloper",
+                "image": "bm2000_l02.png"
+            },
+            "03": {
+                "name": "20 degree sloper",
+                "image": "bm2000_03.png"
+            },
+            "04": {
+                "name": "sloping deep three finger pocket",
+                "image": "bm2000_l04.png"
+            },
+            "05": {
+                "name": "deep four finger pocket",
+                "image": "bm2000_l05.png"
+            },
+            "06": {
+                "name": "deep sloping mono pocket",
+                "image": "bm2000_l06.png"
+            },
+            "07": {
+                "name": "half-blocked two finger pocket",
+                "image": "bm2000_l07.png"
+            },
+            "08": {
+                "name": "two finger edge",
+                "image": "bm2000_l08.png"
+            },
+            "09": {
+                "name": "very deep four finger pocket",
+                "image": "bm2000_09.png"
+            },
+            "10": {
+                "name": "small four finger edge",
+                "image": "bm2000_l10.png"
+            },
+            "11": {
+                "name": "shallow mono",
+                "image": "bm2000_l11.png"
+            },
+            "12": {
+                "name": "two finger pocket",
+                "image": "bm2000_l12.png"
+            },
+            "13": {
+                "name": "sloping two finger pocket",
+                "image": "bm2000_l13.png"
+            },
+            "14": {
+                "name": "incut edge",
+                "image": "bm2000_14.png"
+            },
+        },
+        "right_holds": {
+        }
     }
-];
+};
 

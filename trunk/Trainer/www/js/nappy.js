@@ -3,10 +3,12 @@
 "use strict";
 
 var DEFAULT_SETTINGS = {
-    board: 0
+    'version': 2,
+    'selectedBoardID': "bm1000",
+    'showDefaultTrainings': true
 };
 
-var SETTINGS, TRAININGS;
+var SETTINGS, CUSTOM_TRAININGS = {};
 
 const COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
@@ -77,7 +79,7 @@ function completedSound() {
 }
 
 function downloadTrainings() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(TRAININGS, null, "  "));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CUSTOM_TRAININGS, null, "  "));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     const date = new Date();
@@ -92,10 +94,11 @@ function uploadTrainings(files) {
     const reader = new FileReader();
     reader.onload = function(event) {
         try {
-            const tr = JSON.parse(event.target.result);
-            if (tr instanceof Array) {
-                TRAININGS = tr;
-                console.log(`Imported ${tr.length} trainings from file "${file.name}"`);
+            const ct = JSON.parse(event.target.result);
+            if (ct.version == DEFAULT_TRAININGS.version) {
+                CUSTOM_TRAININGS = ct;
+                console.log(`Imported custom trainings from file "${file.name}"`);
+                storeTrainingsAndSettings();
                 updateMainPage();
             }
         }
@@ -106,26 +109,39 @@ function uploadTrainings(files) {
 
 function storeTrainingsAndSettings() {
     window.localStorage.setItem('settings', JSON.stringify(SETTINGS));
-    window.localStorage.setItem('trainings', JSON.stringify(TRAININGS));
+    window.localStorage.setItem('trainings', JSON.stringify(CUSTOM_TRAININGS));
     console.log('Stored trainings and settings in local storage');
 }
 
 function loadTrainingsAndSettings() {
     if (window.localStorage.getItem('settings')) {
         SETTINGS = JSON.parse(window.localStorage.getItem('settings'));
-        console.log('Restored settings from storage');
+        if (SETTINGS.version == DEFAULT_SETTINGS.version) {
+            console.log('Restored settings from storage.');
+        }
+        else {
+            SETTINGS = DEFAULT_SETTINGS;
+            console.log('Stored settings outdated. Using defaults.');
+        }
     }
     else {
         SETTINGS = DEFAULT_SETTINGS;
-        console.log('Using default settings');
+        console.log('Using default settings.');
     }
+
     if (window.localStorage.getItem('trainings')) {
-        TRAININGS = JSON.parse(window.localStorage.getItem('trainings'));
-        console.log(`Restored ${TRAININGS.length} trainings from storage`);
+        CUSTOM_TRAININGS = JSON.parse(window.localStorage.getItem('trainings'));
+        if (CUSTOM_TRAININGS.version == DEFAULT_TRAININGS.version) {
+            console.log('Restored custom trainings from storage.');
+        }
+        else {
+            CUSTOM_TRAININGS = { "version": DEFAULT_TRAININGS.version };
+            console.log('Stored custom trainings outdated. Discarding. Sorry for that.');
+        }
     }
     else {
-        TRAININGS = DEFAULT_TRAININGS;
-        console.log('Using default trainings');
+        CUSTOM_TRAININGS = { "version": DEFAULT_TRAININGS.version };
+        console.log('No stored custom trainings found.');
     }
 }
 
@@ -279,38 +295,79 @@ async function runTraining(board, training) {
     }
 }
 
-function updateMainPage(preselect) {
+function getTraining(identifier) {
+    // identifier: e.g. c1
+    const type = identifier.substr(0, 1);
+    const num = identifier.substr(1);
+    let training;
+    if (type == 'c') {
+        training = CUSTOM_TRAININGS[SETTINGS.selectedBoardID][num];
+    }
+    else if (type == 'd') {
+        training = DEFAULT_TRAININGS[SETTINGS.selectedBoardID][num];
+    }
+    return training;
+}
+
+function updateMainPage(identifier) {
     const training_select = document.getElementsByName('training_select')[0];
-    let selected_training = (typeof preselect !== 'undefined') ? preselect : training_select.selectedIndex;
-    if (selected_training == -1)
-        selected_training = 0;
+
+    let selected_training_identifier = (typeof identifier !== 'undefined')
+        ? identifier
+        : training_select.options[training_select.selectedIndex]
+            ? training_select.options[training_select.selectedIndex].value
+            : "d0";
+    if (selected_training_identifier == -1)
+        selected_training_identifier = 0;
     
-    fillTrainingSelect(selected_training);
+    fillTrainingSelect(selected_training_identifier);
     
     training_select.onchange = showTrainingDetails;
 
-    function fillTrainingSelect(selected = 0) {
+    function fillTrainingSelect(selected_training_identifier = 'd0') {
         while (training_select.firstChild) {
             training_select.removeChild(training_select.firstChild);
         }
-        for (let training_num in TRAININGS) {
-            const training = TRAININGS[training_num];
-            if (training.board == BOARDS[SETTINGS.board].id) {
+        if (CUSTOM_TRAININGS[SETTINGS.selectedBoardID] && (CUSTOM_TRAININGS[SETTINGS.selectedBoardID].length > 0)) {
+            const custom_optgroup = document.createElement('optgroup');
+            custom_optgroup.setAttribute('label', 'Custom trainings');
+            for (let training_num in CUSTOM_TRAININGS[SETTINGS.selectedBoardID]) {
+                const training = CUSTOM_TRAININGS[SETTINGS.selectedBoardID][training_num];
                 const opt = document.createElement('option');
-                opt.setAttribute('value', training_num);
+                const value = 'c' + training_num;
+                opt.setAttribute('value', value);
+                if (value == selected_training_identifier) {
+                    opt.defaultSelected = true;
+                }
                 const content = document.createTextNode(training.title);
                 opt.appendChild(content);
-                training_select.appendChild(opt);
+                custom_optgroup.appendChild(opt);
             }
+            training_select.appendChild(custom_optgroup);
         }
-        training_select.selectedIndex = selected;
+        if (SETTINGS.showDefaultTrainings) {
+            const default_optgroup = document.createElement('optgroup');
+            default_optgroup.setAttribute('label', 'Default trainings');
+            for (let training_num in DEFAULT_TRAININGS[SETTINGS.selectedBoardID]) {
+                const training = DEFAULT_TRAININGS[SETTINGS.selectedBoardID][training_num];
+                const opt = document.createElement('option');
+                const value = 'd' + training_num;
+                opt.setAttribute('value', value);
+                if (value == selected_training_identifier) {
+                    opt.defaultSelected = true;
+                }
+                const content = document.createTextNode(training.title);
+                opt.appendChild(content);
+                default_optgroup.appendChild(opt);
+            }
+            training_select.appendChild(default_optgroup);
+        }
         showTrainingDetails();
     }
 
     function showTrainingDetails() {
-        const selected_training_num = training_select.options[training_select.selectedIndex].value;
-        const board = BOARDS[SETTINGS.board];
-        const training = TRAININGS[selected_training_num];
+        const training = getTraining(training_select.options[training_select.selectedIndex].value);
+        const board = BOARDS[SETTINGS.selectedBoardID];
 
         const training_details_header = document.getElementById('training_details_header');
         while (training_details_header.firstChild) {
@@ -365,8 +422,8 @@ function updateMainPage(preselect) {
     }
 }
 
-function updateEditPage(training_num) {
-    const training = TRAININGS[training_num];
+function updateEditPage(identifier) {
+    const training = getTraining(identifier);
 
     const edit_content = document.getElementById('edit_content');
     if (document.getElementById('training_edit')) {
@@ -379,22 +436,22 @@ function updateEditPage(training_num) {
     const title = fragment.getElementById('edit_training_title');
     title.value = training.title;
     title.addEventListener('change', function changedTrainingTitle() {
-        TRAININGS[training_num].title = this.value;
-        console.log(`Setting trainings[${training_num}].title = "${this.value}".`);
+        training.title = this.value;
+        console.log(`Setting trainings[${identifier}].title = "${this.value}".`);
         storeTrainingsAndSettings();
     });
 
     const description = fragment.getElementById('edit_training_description');
     description.value = training.description;
     description.addEventListener('change', function changedTrainingDescription() {
-        TRAININGS[training_num].description = this.value;
-        console.log(`Setting trainings[${training_num}].description = "${this.value}".`);
+        training.description = this.value;
+        console.log(`Setting trainings[${identifier}].description = "${this.value}".`);
         storeTrainingsAndSettings();
     });
 
     const button_add = fragment.querySelector('button[name=add_set]');
     button_add.addEventListener("click", async function addSet() {
-        TRAININGS[training_num].sets.splice(0, 0, {
+        training.sets.splice(0, 0, {
             "title":        "",
             "description":  "",
             "left":         1,
@@ -405,7 +462,7 @@ function updateEditPage(training_num) {
             "pause":        60,
         });
         storeTrainingsAndSettings();
-        updateEditPage(training_num);
+        updateEditPage(identifier);
     });
 
     edit_content.appendChild(fragment);
@@ -431,8 +488,8 @@ function updateEditPage(training_num) {
             if (this.value < 15) {
                 this.value = 15;
             }
-            TRAININGS[training_num].sets[set_num].pause = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].pause = ${this.value}.`);
+            training.sets[set_num].pause = Number(this.value);
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].pause = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
@@ -440,8 +497,8 @@ function updateEditPage(training_num) {
         title.value = set.title;
         title.id += "_" + set_num;
         title.addEventListener('change', function changeSetTitle() {
-            TRAININGS[training_num].sets[set_num].title = this.value;
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].title = "${this.value}".`);
+            training.sets[set_num].title = this.value;
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].title = "${this.value}".`);
             storeTrainingsAndSettings();
         });
 
@@ -449,8 +506,8 @@ function updateEditPage(training_num) {
         description.value = set.description;
         description.id += "_" + set_num;
         description.addEventListener('change', function changeSetDescription() {
-            TRAININGS[training_num].sets[set_num].description = this.value;
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].description = "${this.value}".`);
+            training.sets[set_num].description = this.value;
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].description = "${this.value}".`);
             storeTrainingsAndSettings();
         });
 
@@ -458,41 +515,41 @@ function updateEditPage(training_num) {
         const img_left = fragment.querySelector('img.overlay_left');
         const img_right = fragment.querySelector('img.overlay_right');
         
-        img_board.src = "images/" + BOARDS[SETTINGS.board].image;
+        img_board.src = "images/" + BOARDS[SETTINGS.selectedBoardID].image;
 
         const left = fragment.getElementById('edit_set_left');
         left.id += "_" + set_num;
-        for (let hold_id in BOARDS[SETTINGS.board].left_holds) {
+        for (let hold_id in BOARDS[SETTINGS.selectedBoardID].left_holds) {
             const opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            const content = document.createTextNode(BOARDS[SETTINGS.board].left_holds[hold_id].name);
+            const content = document.createTextNode(BOARDS[SETTINGS.selectedBoardID].left_holds[hold_id].name);
             opt.appendChild(content);
             left.appendChild(opt);
         }
         left.value = set.left;
-        img_left.src = BOARDS[SETTINGS.board].left_holds[set.left].image ? "images/" + BOARDS[SETTINGS.board].left_holds[set.left].image : "";
+        img_left.src = BOARDS[SETTINGS.selectedBoardID].left_holds[set.left].image ? "images/" + BOARDS[SETTINGS.selectedBoardID].left_holds[set.left].image : "";
         left.addEventListener('change', function changeSetLeft() {
-            TRAININGS[training_num].sets[set_num].left = this.value;
-            img_left.src = "images/" + BOARDS[SETTINGS.board].left_holds[this.value].image;
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
+            training.sets[set_num].left = this.value;
+            img_left.src = "images/" + BOARDS[SETTINGS.selectedBoardID].left_holds[this.value].image;
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
             storeTrainingsAndSettings();
         });
 
         const right = fragment.getElementById('edit_set_right');
         right.id += "_" + set_num;
-        for (let hold_id in BOARDS[SETTINGS.board].right_holds) {
+        for (let hold_id in BOARDS[SETTINGS.selectedBoardID].right_holds) {
             const opt = document.createElement('option');
             opt.setAttribute('value', hold_id);
-            const content = document.createTextNode(BOARDS[SETTINGS.board].right_holds[hold_id].name);
+            const content = document.createTextNode(BOARDS[SETTINGS.selectedBoardID].right_holds[hold_id].name);
             opt.appendChild(content);
             right.appendChild(opt);
         }
         right.value = set.right;
-        img_right.src = BOARDS[SETTINGS.board].right_holds[set.right].image ? "images/" + BOARDS[SETTINGS.board].right_holds[set.right].image : "";
+        img_right.src = BOARDS[SETTINGS.selectedBoardID].right_holds[set.right].image ? "images/" + BOARDS[SETTINGS.selectedBoardID].right_holds[set.right].image : "";
         right.addEventListener('change', function changeSetRight() {
-            TRAININGS[training_num].sets[set_num].right = this.value;
-            img_right.src = "images/" + BOARDS[SETTINGS.board].right_holds[this.value].image;
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
+            training.sets[set_num].right = this.value;
+            img_right.src = "images/" + BOARDS[SETTINGS.selectedBoardID].right_holds[this.value].image;
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
             storeTrainingsAndSettings();
         });
 
@@ -503,8 +560,8 @@ function updateEditPage(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            TRAININGS[training_num].sets[set_num].hold = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].hold = ${this.value}.`);
+            training.sets[set_num].hold = Number(this.value);
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].hold = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
@@ -515,8 +572,8 @@ function updateEditPage(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            TRAININGS[training_num].sets[set_num].rest = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].rest = ${this.value}.`);
+            training.sets[set_num].rest = Number(this.value);
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].rest = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
@@ -527,14 +584,14 @@ function updateEditPage(training_num) {
             if (this.value < 1) {
                 this.value = 1;
             }
-            TRAININGS[training_num].sets[set_num].repeat = Number(this.value);
-            console.log(`Setting trainings[${training_num}].sets[${set_num}].repeat = ${this.value}.`);
+            training.sets[set_num].repeat = Number(this.value);
+            console.log(`Setting trainings[${identifier}].sets[${set_num}].repeat = ${this.value}.`);
             storeTrainingsAndSettings();
         });
         
         const button_add = fragment.querySelector('button[name=add_set]');
         button_add.addEventListener("click", async function addSet() {
-            TRAININGS[training_num].sets.splice(Number(set_num) + 1, 0, {
+            training.sets.splice(Number(set_num) + 1, 0, {
                 "title":        "",
                 "description":  "",
                 "left":         1,
@@ -545,14 +602,14 @@ function updateEditPage(training_num) {
                 "pause":        60,
             });
             storeTrainingsAndSettings();
-            updateEditPage(training_num);
+            updateEditPage(identifier);
         });
         
         const button_delete = fragment.querySelector('button[name=delete_set]');
         button_delete.addEventListener("click", async function deleteSet() {
-            TRAININGS[training_num].sets.splice(set_num, 1);
+            training.sets.splice(set_num, 1);
             storeTrainingsAndSettings();
-            updateEditPage(training_num);
+            updateEditPage(identifier);
         });
         
         form.appendChild(fragment);
@@ -563,66 +620,67 @@ function navigateTo(page) {
     window.location.hash = page;
 }
 
-function handleRouting(event) {
-    let match = location.hash.match(/#?([^_]+)_?(\d*)/);
-    const new_page = match ? match[1] : "";
-    const new_num = match ? match[2] : null;
-    let old_page = "", old_num = null;
+async function handleRouting(event) {
+    let match = location.hash.match(/#?([^_]+)?(_([cd]\d+)){0,1}/);
+    const new_page = match[1] || "";
+    const new_identifier = match[3] || null;
+    let old_page = "", old_identifier = null;
     if (event) {
-        match = event.oldURL.match(/[^#]*#?([^_]+)_?(\d*)/);
-        old_page = match ? match[1] : "";
-        old_num = match ? match[2] : null;
+    match = event.oldURL.match(/(.*\/)*#?([^_]+)?(_([cd]\d+)){0,1}/);
+        old_page = match[2] || "";
+        old_identifier = match[4] || null;
     }
-    console.log(`Navigating to ${new_page}`);
+    console.log(`Navigating from ${old_page} to ${new_page}`);
     if (old_page == "run") {
         // TODO: are you sure?
         COUNTER.stop();
     }
     window.scrollTo(0,0);
+    document.getElementById("toolbar_icon_back").style.display = "none";
+    document.getElementById("toolbar_icon_menu").style.display = "none";
+    document.getElementById("main_content").style.display = "none";
+    document.getElementById("run_content").style.display = "none";
+    document.getElementById("edit_content").style.display = "none";
+    document.getElementById("about_content").style.display = "none";
     switch (new_page) {
         case "":
             updateMainPage();
-            document.getElementById("toolbar_title").innerText = "nappy fingers";
-            document.getElementById("toolbar_icon_back").style.display = "none";
+            document.getElementById("toolbar_title").innerText = "Nappy Fingers";
             document.getElementById("toolbar_icon_menu").style.display = "inline";
             document.getElementById("main_content").style.display = "block";
-            document.getElementById("run_content").style.display = "none";
-            document.getElementById("edit_content").style.display = "none";
-            document.getElementById("about_content").style.display = "none";
             break;
         case "edit":
-            updateEditPage(new_num);
-            document.getElementById("toolbar_title").innerText = TRAININGS[new_num].title;
+            updateEditPage(new_identifier);
+            document.getElementById("toolbar_title").innerText = getTraining(new_identifier).title;
             document.getElementById("toolbar_icon_back").style.display = "inline";
-            document.getElementById("toolbar_icon_menu").style.display = "none";
-            document.getElementById("main_content").style.display = "none";
-            document.getElementById("run_content").style.display = "none";
             document.getElementById("edit_content").style.display = "block";
-            document.getElementById("about_content").style.display = "none";
             break;
         case "run":
-            document.getElementById("toolbar_title").innerText = TRAININGS[new_num].title;
+            let training = getTraining(new_identifier);
+            document.getElementById("toolbar_title").innerText = training.title;
             document.getElementById("toolbar_icon_back").style.display = "inline";
-            document.getElementById("toolbar_icon_menu").style.display = "none";
-            document.getElementById("main_content").style.display = "none";
             document.getElementById("run_content").style.display = "block";
-            document.getElementById("edit_content").style.display = "none";
-            document.getElementById("about_content").style.display = "none";
+            try {
+                window.plugins.insomnia.keepAwake();
+                await runTraining(BOARDS[SETTINGS.selectedBoardID], training);
+                navigateTo("");
+            }
+            catch (err) {
+                console.log(`Training aborted (${err})`);
+            }
+            finally {
+                window.plugins.insomnia.allowSleepAgain();
+            }
             break;
         case "about":
             document.getElementById("toolbar_title").innerText = "About";
             document.getElementById("toolbar_icon_back").style.display = "inline";
-            document.getElementById("toolbar_icon_menu").style.display = "none";
-            document.getElementById("main_content").style.display = "none";
-            document.getElementById("run_content").style.display = "none";
-            document.getElementById("edit_content").style.display = "none";
             document.getElementById("about_content").style.display = "block";
             break;
     }
 }
 
 function init() {
-    const board_select = document.getElementsByName('board_select')[0];
     const training_select = document.getElementsByName('training_select')[0];
     
     StatusBar.hide();
@@ -631,53 +689,43 @@ function init() {
 
     window.addEventListener('hashchange', handleRouting);
 
-    window.addEventListener("backbutton", function popstate(event) {
-        console.log("backbutton event " + event);
-    }, false);
-
     const start_button = document.getElementsByName('start')[0];
-    start_button.addEventListener("click", async function startTraining() {
-        const selected_training_num = training_select.options[training_select.selectedIndex].value;
-        navigateTo("run_" + selected_training_num);
-        try {
-            window.plugins.insomnia.keepAwake();
-            await runTraining(BOARDS[SETTINGS.board], TRAININGS[selected_training_num]);
-            navigateTo("");
-        }
-        catch (err) {
-            console.log(`Training aborted (${err})`);
-        }
-        finally {
-            window.plugins.insomnia.allowSleepAgain();
-        }
+    start_button.addEventListener("click", function startTraining() {
+        const selected_training_identifier = training_select.options[training_select.selectedIndex].value;
+        navigateTo("run_" + selected_training_identifier);
     });
 
     const edit_button = document.getElementsByName('edit')[0];
-    edit_button.addEventListener("click", async function editTraining() {
-        const selected_training_num = training_select.options[training_select.selectedIndex].value;
-        navigateTo(`edit_${selected_training_num}`);
+    edit_button.addEventListener("click", function editTraining() {
+        const selected_training_identifier = training_select.options[training_select.selectedIndex].value;
+        navigateTo(`edit_${selected_training_identifier}`);
     });
 
     const clone_button = document.getElementsByName('clone')[0];
-    clone_button.addEventListener("click", async function cloneTraining() {
-        const selected_training_num = Number(training_select.options[training_select.selectedIndex].value);
-        TRAININGS.splice(selected_training_num, 0, JSON.parse(JSON.stringify(TRAININGS[selected_training_num])));
-        TRAININGS[selected_training_num + 1].title += " (copy)";
+    clone_button.addEventListener("click", function cloneTraining() {
+        const selected_training_identifier = training_select.options[training_select.selectedIndex].value;
+        let training = getTraining(selected_training_identifier);
+        let clone = JSON.parse(JSON.stringify(training));
+        clone.title += " (copy)";
+        if (!CUSTOM_TRAININGS[SETTINGS.selectedBoardID]) {
+            CUSTOM_TRAININGS[SETTINGS.selectedBoardID] = [];
+        }
+        CUSTOM_TRAININGS[SETTINGS.selectedBoardID].push(clone);
         storeTrainingsAndSettings();
-        updateMainPage(selected_training_num + 1);
+        let new_identifier = "c" + CUSTOM_TRAININGS[SETTINGS.selectedBoardID].indexOf(clone);
+        updateMainPage(new_identifier);
         window.scrollTo(0,0);
     });
 
     const delete_button = document.getElementsByName('delete')[0];
-    delete_button.addEventListener("click", async function editTraining() {
-        if (TRAININGS.length > 1) {
-            const selected_training_num = training_select.options[training_select.selectedIndex].value;
-            // TODO: confirm
-            TRAININGS.splice(selected_training_num, 1);
-            storeTrainingsAndSettings();
-            updateMainPage(0);
-            window.scrollTo(0,0);
-        }
+    delete_button.addEventListener("click", function editTraining() {
+        const selected_training_identifier = training_select.options[training_select.selectedIndex].value;
+        // TODO: confirm
+        const num = selected_training_identifier.substr(1);
+        CUSTOM_TRAININGS[SETTINGS.selectedBoardID].splice(num, 1);
+        storeTrainingsAndSettings();
+        updateMainPage();
+        window.scrollTo(0,0);
         // TODO: else cannot delete last training
         // TODO: delete button disablen
     });
@@ -702,14 +750,6 @@ function init() {
         event.preventDefault();
         TouchMenu.close();
         document.getElementById("fileElem").click();
-    }, false);
-    document.getElementById("a_restore_trainings").addEventListener("click", function restoreTrainings(event) {
-        event.preventDefault();
-        TouchMenu.close();
-        TRAININGS = DEFAULT_TRAININGS;
-        console.log('Restored default trainings');
-        storeTrainingsAndSettings();
-        updateMainPage();
     }, false);
     document.getElementById('a_about').addEventListener('click', function(event){
         event.preventDefault();
