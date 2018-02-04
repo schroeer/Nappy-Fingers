@@ -324,7 +324,7 @@ button.button_flat {
     color: #007ac1;
     height: 36px;
     padding: 8px;
-    min-width: 88px;
+    min-width: 64px; /* maybe 88 */
     border: none;
     border-radius: 2px;
     background-color: transparent;
@@ -332,6 +332,10 @@ button.button_flat {
     text-transform: uppercase;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
+}
+
+button.button_flat:disabled {
+    color: rgba(0, 0, 0, 0.38);
 }
 
 button.button_wide:active {
@@ -364,12 +368,16 @@ button.button_round:active {
     box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12); 
 }
 
-button[name=start] {
+button.button_round:disabled {
+    display: none;
+}
+
+button.button_round[name=start] {
     bottom: 16px;
     right: 16px;
 }
 
-button[name=edit] {
+button.button_round[name=edit] {
     bottom: 88px;
     right: 16px;
 }

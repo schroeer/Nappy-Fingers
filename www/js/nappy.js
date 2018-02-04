@@ -316,54 +316,68 @@ function updateMainPage(identifier) {
         ? identifier
         : training_select.options[training_select.selectedIndex]
             ? training_select.options[training_select.selectedIndex].value
-            : "d0";
-    if (selected_training_identifier == -1)
-        selected_training_identifier = 0;
-    
-    fillTrainingSelect(selected_training_identifier);
-    
-    training_select.onchange = showTrainingDetails;
+            : "c0"; // falls es gar keine custom gibt, wird unten keines ausgewählt, dann impilizit das erste von default
 
-    function fillTrainingSelect(selected_training_identifier = 'd0') {
-        while (training_select.firstChild) {
-            training_select.removeChild(training_select.firstChild);
-        }
-        if (CUSTOM_TRAININGS[SETTINGS.selectedBoardID] && (CUSTOM_TRAININGS[SETTINGS.selectedBoardID].length > 0)) {
-            const custom_optgroup = document.createElement('optgroup');
-            custom_optgroup.setAttribute('label', 'Custom trainings');
-            for (let training_num in CUSTOM_TRAININGS[SETTINGS.selectedBoardID]) {
-                const training = CUSTOM_TRAININGS[SETTINGS.selectedBoardID][training_num];
-                const opt = document.createElement('option');
-                const value = 'c' + training_num;
-                opt.setAttribute('value', value);
-                if (value == selected_training_identifier) {
-                    opt.defaultSelected = true;
-                }
-                const content = document.createTextNode(training.title);
-                opt.appendChild(content);
-                custom_optgroup.appendChild(opt);
+    // Remove select options
+    while (training_select.firstChild) {
+        training_select.removeChild(training_select.firstChild);
+    }
+    
+    // Populate select options
+    if (CUSTOM_TRAININGS[SETTINGS.selectedBoardID] && (CUSTOM_TRAININGS[SETTINGS.selectedBoardID].length > 0)) {
+        const custom_optgroup = document.createElement('optgroup');
+        custom_optgroup.setAttribute('label', 'Custom trainings');
+        for (let training_num in CUSTOM_TRAININGS[SETTINGS.selectedBoardID]) {
+            const training = CUSTOM_TRAININGS[SETTINGS.selectedBoardID][training_num];
+            const opt = document.createElement('option');
+            const value = 'c' + training_num;
+            opt.setAttribute('value', value);
+            if (value == selected_training_identifier) {
+                opt.defaultSelected = true;
             }
-            training_select.appendChild(custom_optgroup);
+            const content = document.createTextNode(training.title);
+            opt.appendChild(content);
+            custom_optgroup.appendChild(opt);
         }
-        if (SETTINGS.showDefaultTrainings) {
-            const default_optgroup = document.createElement('optgroup');
-            default_optgroup.setAttribute('label', 'Default trainings');
-            for (let training_num in DEFAULT_TRAININGS[SETTINGS.selectedBoardID]) {
-                const training = DEFAULT_TRAININGS[SETTINGS.selectedBoardID][training_num];
-                const opt = document.createElement('option');
-                const value = 'd' + training_num;
-                opt.setAttribute('value', value);
-                if (value == selected_training_identifier) {
-                    opt.defaultSelected = true;
-                }
-                const content = document.createTextNode(training.title);
-                opt.appendChild(content);
-                default_optgroup.appendChild(opt);
+        training_select.appendChild(custom_optgroup);
+    }
+    if (SETTINGS.showDefaultTrainings) {
+        const default_optgroup = document.createElement('optgroup');
+        default_optgroup.setAttribute('label', 'Default trainings');
+        for (let training_num in DEFAULT_TRAININGS[SETTINGS.selectedBoardID]) {
+            const training = DEFAULT_TRAININGS[SETTINGS.selectedBoardID][training_num];
+            const opt = document.createElement('option');
+            const value = 'd' + training_num;
+            opt.setAttribute('value', value);
+            if (value == selected_training_identifier) {
+                opt.defaultSelected = true;
             }
-            training_select.appendChild(default_optgroup);
+            const content = document.createTextNode(training.title);
+            opt.appendChild(content);
+            default_optgroup.appendChild(opt);
+        }
+        training_select.appendChild(default_optgroup);
+    }
+
+    // Select change handler
+    training_select.onchange = function selectTraining() {
+        const identifier = training_select.options[training_select.selectedIndex].value;
+        const type = identifier.substr(0, 1);
+        const edit_button = document.getElementsByName('edit')[0];
+        const delete_button = document.getElementsByName('delete')[0];
+        if (type == "d") {
+            edit_button.disabled = true;
+            delete_button.disabled = true;
+        }
+        else {
+            edit_button.disabled = false;
+            delete_button.disabled = false;
         }
         showTrainingDetails();
     }
+
+    //  Activate/deactivate buttons and call showTrainingDetails()
+    training_select.onchange();
 
     function showTrainingDetails() {
         const training = getTraining(training_select.options[training_select.selectedIndex].value);
@@ -711,6 +725,7 @@ function init() {
             CUSTOM_TRAININGS[SETTINGS.selectedBoardID] = [];
         }
         CUSTOM_TRAININGS[SETTINGS.selectedBoardID].push(clone);
+        console.log(`Cloning training ${clone.title}`)
         storeTrainingsAndSettings();
         let new_identifier = "c" + CUSTOM_TRAININGS[SETTINGS.selectedBoardID].indexOf(clone);
         updateMainPage(new_identifier);
@@ -722,9 +737,10 @@ function init() {
         const selected_training_identifier = training_select.options[training_select.selectedIndex].value;
         // TODO: confirm
         const num = selected_training_identifier.substr(1);
+        console.log(`Deleting training ${CUSTOM_TRAININGS[SETTINGS.selectedBoardID][num].title}`)
         CUSTOM_TRAININGS[SETTINGS.selectedBoardID].splice(num, 1);
         storeTrainingsAndSettings();
-        updateMainPage();
+        updateMainPage('c0');
         window.scrollTo(0,0);
         // TODO: else cannot delete last training
         // TODO: delete button disablen

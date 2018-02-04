@@ -1,7 +1,16 @@
-x.x.x
+    - Fix bug that prevented export of trainings
+      (liegt an WebView)
+
+1.1.0
+    - Completely rework handling of custom trainings and default trainings
+      - Default trainings cannot be edited or deleted
+      - Default trainings are not exported and are not overwritten on import
+      - Clone default training to modify interrupt
+      - Remove now unnecessary function "Restore default trainings"
+    - Move button "edit" to flat buttons at the top
     - Change "break" to "rest" and "reps" to "repeat" in trainings JSON
     - Correct wording in trainings
-    - Changed "nappy fingers" to "Nappy Fingers"
+    - Change "nappy fingers" to "Nappy Fingers"
 
 1.0.1
     - Enhance appearance of drawer
