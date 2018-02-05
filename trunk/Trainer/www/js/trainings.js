@@ -2,6 +2,52 @@ const DEFAULT_TRAININGS = {
     "version": 2,
     "bm1000": [
         {
+            "title":        "Warm up",
+            "description":  "Proper warm-up is important to avoid injuries",
+            "sets":         [
+                {
+                    "title":        "Jug pull ups",
+                    "description":  "Pull up twice",
+                    "left":         1,
+                    "right":        1,
+                    "hold":         4,
+                    "rest":         3,
+                    "repeat":       3,
+                    "pause":        15,
+                },
+                {
+                    "title":        "Jug hang",
+                    "description":  "Hang on straight arms",
+                    "left":         1,
+                    "right":        1,
+                    "hold":         10,
+                    "rest":         5,
+                    "repeat":       5,
+                    "pause":        20,
+                },
+                {
+                    "title":        "Four fingers lockoff",
+                    "description":  "Pull up hang with bent arms",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         6,
+                    "rest":         4,
+                    "repeat":       5,
+                    "pause":        30,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         5,
+                    "rest":         3,
+                    "repeat":       5,
+                    "pause":        30,
+                }
+            ]
+        },
+        {
             "title":        "Hang time",
             "description":  "Much hang time on good holds",
             "sets":         [
