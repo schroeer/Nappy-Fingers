@@ -137,12 +137,12 @@ p {
     line-height: 20px;    
 }
 
-h2#set_title {
+h2#exercise_title {
     margin: 8px 0 0 0;
     text-align: center;
 }
 
-p#set_description {
+p#exercise_description {
     margin: 8px 0 0 0;
     text-align: center;
 }
@@ -152,7 +152,7 @@ div#counter {
     text-align: center;
 }
 
-span#set_counter {
+span#exercise_counter {
     width: 25%;
     display: inline-block;
     vertical-align: middle;
@@ -252,17 +252,17 @@ div#pause_overlay {
     transform: translate(-50%, -50%);
 }
 
-div#training_details_header {
+div#program_details_header {
     padding: 0 8px;
     margin: 16px 0 0 0;
 }
 
-div#training_details_sets {
+div#program_details_exercises {
     padding: 0 8px;
     margin: 0;
 }
 
-div.training_pause {
+div.program_pause {
     border: none;
     border-radius: 2px;
     background-color: #edf5e8;
@@ -270,7 +270,7 @@ div.training_pause {
     margin: 8px 0 0 0;
 }    
 
-div.training_set {
+div.program_exercise {
     border: none;
     border-radius: 2px;
     background-color: #f3f3f3;
@@ -278,7 +278,7 @@ div.training_set {
     margin: 8px 0 0 0;
 }
 
-.set_details {
+.exercise_details {
     clear: both;
 }
 
@@ -466,7 +466,7 @@ div.edit_pause {
     grid-gap: 8px 8px;
 }
 
-div.edit_set {
+div.edit_exercise {
     border-radius: 2px;
     background-color: #f3f3f3;
     padding: 8px;
@@ -477,7 +477,7 @@ div.edit_set {
     grid-gap: 8px 8px;
 }
 
-.edit_set_number {
+.edit_exercise_number {
     font-size: 56px;
     color: darkgrey;
 }

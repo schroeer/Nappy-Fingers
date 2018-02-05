@@ -1,10 +1,10 @@
-const DEFAULT_TRAININGS = {
+const DEFAULT_PROGRAMS = {
     "version": 2,
     "bm1000": [
         {
             "title":        "Warm up",
             "description":  "Proper warm-up is important to avoid injuries",
-            "sets":         [
+            "exercises":    [
                 {
                     "title":        "Jug pull ups",
                     "description":  "Pull up twice",
@@ -50,7 +50,7 @@ const DEFAULT_TRAININGS = {
         {
             "title":        "Hang time",
             "description":  "Much hang time on good holds",
-            "sets":         [
+            "exercises":    [
                 {
                     "title":        "Warm up",
                     "description":  "Hang on straight arms",
@@ -136,7 +136,7 @@ const DEFAULT_TRAININGS = {
         {
             "title":        "Pocket pull ups",
             "description":  "Pull ups on good finger pockets",
-            "sets":         [
+            "exercises":    [
                 {
                     "title":        "Warm up",
                     "description":  "Pull up once and stay with bent arms",
@@ -202,7 +202,7 @@ const DEFAULT_TRAININGS = {
         {
             "title":        "Just hang",
             "description":  "Boring hangs on good and medium pockets",
-            "sets":         [
+            "exercises":    [
                 {
                     "title":        "Warm up",
                     "description":  "Hang on straight arms",
@@ -272,7 +272,7 @@ var OLD = [
     {
         "title":        "Ralfi Beginner", // https://ralfisordinarylife.files.wordpress.com/2016/02/hangboard-training-plan-beginner.pdf
         "description":  "Hangboard training plan for beginners",
-        "sets":         [
+        "exercises":    [
             {
                 "title":        "Four fingers jug",
                 "description":  "Hang with straight arms",
@@ -318,7 +318,7 @@ var OLD = [
     {
         "title":        "Short test",
         "description":  "Not a proper training",
-        "sets":         [
+        "exercises":    [
             {
                 "title":        "Evil holds",
                 "description":  "Pull up once",
