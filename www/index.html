@@ -14,14 +14,14 @@
         <h1 class="toolbar"><span id="toolbar_icon_menu"><i class="material-icons md-dark">menu</i></span><a href="#" id="toolbar_icon_back" onclick="window.history.back();return false"><i class="material-icons md-dark">arrow_back</i></a><span id="toolbar_title">Nappy Fingers</span></h1>
         <div id="content">
             <div id="main_content">
-                <select class="big_select" name="training_select"></select>
-                <div id="training_details_header"></div>
+                <select class="big_select" name="program_select"></select>
+                <div id="program_details_header"></div>
                 <div class="button_container">
                     <button class="button_flat" name="clone">Clone</button>
                     <button class="button_flat" name="edit">Edit</button>
                     <button class="button_flat" name="delete">Delete</button>
                 </div>
-                <div id="training_details_sets"></div>
+                <div id="program_details_exercises"></div>
                 <button class="button_round" name="start"><i class="material-icons md-light md-36">play_arrow</i></button>
             </div>
             <div id="run_content">
@@ -32,9 +32,9 @@
                         <img class="overlay_img overlay_right" src="" alt=""/>
                     </div>
                 </div>
-                <h2 id="set_title"></h2>
-                <p id="set_description"></p>
-                <div id="counter"><span id="set_counter"></span><span id="time_counter"></span><span id="repeat_counter"></span></div>
+                <h2 id="exercise_title"></h2>
+                <p id="exercise_description"></p>
+                <div id="counter"><span id="exercise_counter"></span><span id="time_counter"></span><span id="repeat_counter"></span></div>
                 <div id="pbars">
                     <progress id="hold_pbar" max="7" value="0"></progress><progress id="rest_pbar" max="3" value="0"></progress>
                     <progress id="pause_pbar" max="7" value="0"></progress>
@@ -44,69 +44,69 @@
             </div>
             <div id="edit_content">
                 <template id="template_edit">
-                    <form id="training_edit" onsubmit="return false;">
+                    <form id="program_edit" onsubmit="return false;">
                         <div class="edit_header">
-                            <label for="edit_training_title" class="edit-label edit-row1">Title</label>
-                            <input id="edit_training_title" class="edit-input edit-row1" type="text""/>
+                            <label for="edit_program_title" class="edit-label edit-row1">Title</label>
+                            <input id="edit_program_title" class="edit-input edit-row1" type="text""/>
 
-                            <label for="edit_training_description" class="edit-label edit-row2">Description</label>
-                            <textarea id="edit_training_description" class="edit-input edit-row2"></textarea>
+                            <label for="edit_program_description" class="edit-label edit-row2">Description</label>
+                            <textarea id="edit_program_description" class="edit-input edit-row2"></textarea>
                         </div>
-                        <button class="button_wide button_add" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
+                        <button class="button_wide button_add" name="add_exercise"><i class="material-icons md-dark">add</i>Add Exercise</button>
                     </form>
                 </template>
-                <template id="template_edit_set">
+                <template id="template_edit_exercise">
                     <div class="edit_pause">
-                        <label for="edit_set_pause" class="edit-label edit-row1">Pause</label>
-                        <input id="edit_set_pause" class="edit-input edit-row1" type="number" step="1" min="15"/>
-                        <label for="edit_set_pause" class="edit-label-right edit-row1">s</label>
+                        <label for="edit_exercise_pause" class="edit-label edit-row1">Pause</label>
+                        <input id="edit_exercise_pause" class="edit-input edit-row1" type="number" step="1" min="15"/>
+                        <label for="edit_exercise_pause" class="edit-label-right edit-row1">s</label>
                     </div>
 
-                    <div class="edit_set">
-                        <div class="edit_set_number edit-label edit-row1"></div>
+                    <div class="edit_exercise">
+                        <div class="edit_exercise_number edit-label edit-row1"></div>
                         <div class="board_inner_container edit-input-big edit-row1">
                             <img class="board_img" src="" alt="">
                             <img class="overlay_img overlay_left" src="" alt="">
                             <img class="overlay_img overlay_right" src="" alt="">
                         </div>
 
-                        <label for="edit_set_title" class="edit-label edit-row2">Title</label>
-                        <input id="edit_set_title" class="edit-input-big edit-row2" type="text"/>
+                        <label for="edit_exercise_title" class="edit-label edit-row2">Title</label>
+                        <input id="edit_exercise_title" class="edit-input-big edit-row2" type="text"/>
 
-                        <label for="edit_set_description" class="edit-label edit-row3">Description</label>
-                        <textarea id="edit_set_description" class="edit-input-big edit-row3"></textarea>
+                        <label for="edit_exercise_description" class="edit-label edit-row3">Description</label>
+                        <textarea id="edit_exercise_description" class="edit-input-big edit-row3"></textarea>
 
-                        <label for="edit_set_left" class="edit-label edit-row4">Left hand</label>
-                        <select id="edit_set_left" class="edit-input-big edit-row4"></select>
+                        <label for="edit_exercise_left" class="edit-label edit-row4">Left hand</label>
+                        <select id="edit_exercise_left" class="edit-input-big edit-row4"></select>
 
-                        <label for="edit_set_right" class="edit-label edit-row5">Right hand</label>
-                        <select id="edit_set_right" class="edit-input-big edit-row5"></select>
+                        <label for="edit_exercise_right" class="edit-label edit-row5">Right hand</label>
+                        <select id="edit_exercise_right" class="edit-input-big edit-row5"></select>
 
-                        <label for="edit_set_hold" class="edit-label edit-row6">Hold</label>
-                        <input id="edit_set_hold" class="edit-input edit-row6" type="number" min="1" step="1"/>
-                        <label for="edit_set_hold" class="edit-label-right edit-row6">s</label>
+                        <label for="edit_exercise_hold" class="edit-label edit-row6">Hold</label>
+                        <input id="edit_exercise_hold" class="edit-input edit-row6" type="number" min="1" step="1"/>
+                        <label for="edit_exercise_hold" class="edit-label-right edit-row6">s</label>
 
-                        <label for="edit_set_rest" class="edit-label edit-row7">Rest</label>
-                        <input id="edit_set_rest" class="edit-input edit-row7" type="number"min="1" step="1"/>
-                        <label for="edit_set_rest" class="edit-label-right edit-row7">s</label>
+                        <label for="edit_exercise_rest" class="edit-label edit-row7">Rest</label>
+                        <input id="edit_exercise_rest" class="edit-input edit-row7" type="number"min="1" step="1"/>
+                        <label for="edit_exercise_rest" class="edit-label-right edit-row7">s</label>
 
-                        <label for="edit_set_repeat" class="edit-label edit-row8">Repeat</label>
-                        <input id="edit_set_repeat" class="edit-input edit-row8" type="number" min="1" step="1"/>
-                        <label for="edit_set_repeat" class="edit-label-right edit-row8">times</label>
+                        <label for="edit_exercise_repeat" class="edit-label edit-row8">Repeat</label>
+                        <input id="edit_exercise_repeat" class="edit-input edit-row8" type="number" min="1" step="1"/>
+                        <label for="edit_exercise_repeat" class="edit-label-right edit-row8">times</label>
 
-                        <button name="delete_set" class="edit-span edit-row9 button_wide button_delete"><i class="material-icons md-dark">delete</i>Delete Exercise</button>
+                        <button name="delete_exercise" class="edit-span edit-row9 button_wide button_delete"><i class="material-icons md-dark">delete</i>Delete Exercise</button>
                     </div>
 
-                    <button class="button_add button_wide" name="add_set"><i class="material-icons md-dark">add</i>Add Exercise</button>
+                    <button class="button_add button_wide" name="add_exercise"><i class="material-icons md-dark">add</i>Add Exercise</button>
                 </template>
             </div>
             <div id="about_content">
                 <h2>Nappy Fingers</h2>
                 <b>Strong fingers for changing the baby</b>
                 <p>Finger strength is important for hard climbing. This app supports you in your hangboard training on the Beastmaker 1000. Other hangboards will be supported soon, too.</p>
-                <p>Training on hangboards (fingerboards) means executing sets of short hangs of a few seconds, with even shorter rests in between. For example, a set may consist of 6 hangs of 7 seconds each, with rests of 3 seconds. All 6 repeats are done on the same grip type. Afterwards you rest for some minutes. Then you move on to the next set. A complete training can involve 8 such sets, for example.</p>
-                <p>Nappy Fingers will guide you through the training with detailed instructions, using spoken language, pictures and descriptive texts.</p>
-                <p>The app comes with a number of built-in trainings that you can follow. You can modify these training and create new ones according to your own preferences with an integrated editor. There is also an option for exporting and importing the trainings specs as a JSON file for editing with a normal text editor.</p>
+                <p>Training on hangboards (fingerboards) means executing sets of short hangs of a few seconds, with even shorter rests in between. For example, a set may consist of 6 hangs of 7 seconds each, with rests of 3 seconds. All 6 repeats are done on the same grip type. Afterwards you rest for some minutes. Then you move on to the next set. A complete program can involve 8 such sets, for example.</p>
+                <p>Nappy Fingers will guide you through the program with detailed instructions, using spoken language, pictures and descriptive texts.</p>
+                <p>The app comes with a number of built-in programs that you can follow. You can modify these program and create new ones according to your own preferences with an integrated editor. There is also an option for exporting and importing the programs specs as a JSON file for editing with a normal text editor.</p>
                 <p>I got myself a hangboard and wrote this app when we had our first baby. There was less time for actual climbing but still enough room for an occasional hangboard session between changing the diapers.</p>
                 <p>I have taken great inspiration from <a href="https://play.google.com/store/apps/details?id=t72.beastmakertrainingpro" target="_blank">Beastmaker 1000 training PRO</a> by TankT72. Thank you.</p>
                 <p>&copy; 2018 Daniel Schröer <a href="mailto:danielschroeer@gmail.com">&lt;danielschroeer@gmail.com&gt;</a></p>
@@ -117,15 +117,15 @@
             <div class="menu-items">
                 <a id="a_switch_board" href="#"><i class="material-icons md-dark">fitness_center</i>Switch hangboard</a>
                 <hr/>
-                <a id="a_export_trainings" href="#" href="#"><i class="material-icons md-dark">file_download</i>Export custom trainings</a>
-                <a id="a_import_trainings" href="#" href="#"><i class="material-icons md-dark">file_upload</i>Import custom trainings</a>
+                <a id="a_export_programs" href="#" href="#"><i class="material-icons md-dark">file_download</i>Export custom programs</a>
+                <a id="a_import_programs" href="#" href="#"><i class="material-icons md-dark">file_upload</i>Import custom programs</a>
                 <hr/>
                 <a id="a_about" href="#" href="#"><i class="material-icons md-dark">info</i>About</a>
             </div>
-            <input type="file" id="fileElem" multiple accept="application/json" style="display:none" onchange="uploadTrainings(this.files)">
+            <input type="file" id="fileElem" multiple accept="application/json" style="display:none" onchange="uploadPrograms(this.files)">
         </div>
         <script src="js/boards.js"></script>
-        <script src="js/trainings.js"></script>
+        <script src="js/programs.js"></script>
         <script src="js/sound.js"></script>
         <script src="js/nappy.js"></script>
         <script src="js/hammer.min.js"></script>
