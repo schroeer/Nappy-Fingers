@@ -11,6 +11,7 @@
     - Change "break" to "rest" and "reps" to "repeat" in trainings JSON
     - Correct wording in trainings
     - Change "nappy fingers" to "Nappy Fingers"
+    - Add warm-up routine
 
 1.0.1
     - Enhance appearance of drawer

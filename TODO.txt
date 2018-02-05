@@ -1,20 +1,31 @@
-DEFAULT_TRAININGS und CUSTOM_TRAININGS
+-   Rework of DEFAULT_TRAININGS und CUSTOM_TRAININGS
 
-DEFAULT_TRAININGS brauchen keine Version
+    DEFAULT_TRAININGS brauchen keine Version
 
-DEFAULT_TRAININGS können nicht gelöscht werden und nicht bearbeitet,
-nur geclont (-> CUSTOM_TRAININGS)
-(dafür Option, sie nicht anzeigen zu lassen)
+    DEFAULT_TRAININGS können nicht gelöscht werden und nicht bearbeitet,
+    nur geclont (-> CUSTOM_TRAININGS)
+    (dafür Option, sie nicht anzeigen zu lassen)
 
-Dadurch bei jedem Start DEFAULT_TRAININGS aktuell wie integriert
+    Dadurch bei jedem Start DEFAULT_TRAININGS aktuell wie integriert
 
-Im Storage werden nur CUSTOM_TRAININGS abgelegt und daraus wiederhergestellt
-(dazu braucht es Versionsnummer)
+    Im Storage werden nur CUSTOM_TRAININGS abgelegt und daraus wiederhergestellt
+    (dazu braucht es Versionsnummer)
 
-Import/Export genauso
+    Import/Export genauso
 
-Beide Listen getrennt halten. Ausgewähltes Training mit Buchstaben-Präfix c/d.
-Z.B. c0: Erstes item aus Liste zum BoardId von CUSTOM_TRAININGS.
+    Beide Listen getrennt halten. Ausgewähltes Training mit Buchstaben-Präfix c/d.
+    Z.B. c0: Erstes item aus Liste zum BoardId von CUSTOM_TRAININGS.
+
+    BOARDS als Hash mit id
 
 
-BOARDS als Hash mit id
+-   Check InAppBrowser for DataURL download
+
+-   Rename "training" to 
+        routine     wohl unpassend
+        practice
+        workout     passt schlecht bei z.B. Warm up
+        program     Favorit
+
+-   Rename "set" to
+        exercise

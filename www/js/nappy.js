@@ -677,7 +677,8 @@ async function handleRouting(event) {
             try {
                 window.plugins.insomnia.keepAwake();
                 await runTraining(BOARDS[SETTINGS.selectedBoardID], training);
-                navigateTo("");
+                //navigateTo(""); // TODO: sollte 'back' sein
+                history.back();
             }
             catch (err) {
                 console.log(`Training aborted (${err})`);
