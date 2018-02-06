@@ -58,7 +58,7 @@
 
     --text-primary-on-light: rgba(0, 0, 0, 0.87);
     --text-secondary-on-light: rgba(0, 0, 0, 0.54);
-    --text-hint-on-light: rgba(0, 0, 0, 0.38);
+    --text-hint-on-light: rgba(0, 0, 0, 0.45);
     --text-disabled-on-light: rgba(0, 0, 0, 0.38);
     --text-icon-on-light: rgba(0, 0, 0, 0.38);
 
@@ -516,6 +516,10 @@ select.big_select {
 
 input[type='number'] {
     text-align: right;
+}
+
+label {
+    color: var(--text-hint-on-light);
 }
 
 div.edit_header {
