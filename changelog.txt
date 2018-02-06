@@ -14,6 +14,7 @@
     - Correct wording in programs
     - Change "nappy fingers" to "Nappy Fingers"
     - Add warm-up program
+    - Restrict supported Android versions
 
 1.0.1
     - Enhance appearance of drawer
