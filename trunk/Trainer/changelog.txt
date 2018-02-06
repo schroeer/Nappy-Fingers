@@ -2,19 +2,19 @@
       (liegt an WebView)
 
 1.1.0
+    - Restrict supported Android versions
+    - Change title "nappy fingers" to "Nappy Fingers"
+    - Rename "training" to "program"
+    - Rename "set" to "execise"
+    - Rename "break" to "rest" and "reps" to "repeat" in program JSON
     - Completely rework handling of custom programs and default programs
       - Default programs cannot be edited or deleted
       - Default programs are not exported and are not overwritten on import
       - Clone default training to modify interrupt
       - Remove now unnecessary function "Restore default programs"
+    - Better wording in programs
     - Move button "edit" to flat buttons at the top
-    - Rename "training" to "program"
-    - Rename "set" to "execise"
-    - Rename "break" to "rest" and "reps" to "repeat" in program JSON
-    - Correct wording in programs
-    - Change "nappy fingers" to "Nappy Fingers"
     - Add warm-up program
-    - Restrict supported Android versions
 
 1.0.1
     - Enhance appearance of drawer

@@ -326,7 +326,7 @@ function updateMainPage(identifier) {
     // Populate select options
     if (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0)) {
         const custom_optgroup = document.createElement('optgroup');
-        custom_optgroup.setAttribute('label', 'Custom programs');
+        custom_optgroup.setAttribute('label', 'Your programs'.toUpperCase());
         for (let program_num in CUSTOM_PROGRAMS[SETTINGS.selectedBoardID]) {
             const program = CUSTOM_PROGRAMS[SETTINGS.selectedBoardID][program_num];
             const opt = document.createElement('option');
@@ -343,7 +343,7 @@ function updateMainPage(identifier) {
     }
     if (SETTINGS.showDefaultPrograms) {
         const default_optgroup = document.createElement('optgroup');
-        default_optgroup.setAttribute('label', 'Default programs');
+        default_optgroup.setAttribute('label', 'Built-in programs'.toUpperCase());
         for (let program_num in DEFAULT_PROGRAMS[SETTINGS.selectedBoardID]) {
             const program = DEFAULT_PROGRAMS[SETTINGS.selectedBoardID][program_num];
             const opt = document.createElement('option');
@@ -635,14 +635,14 @@ function navigateTo(page) {
 }
 
 async function handleRouting(event) {
-    let match = location.hash.match(/#?([^_]+)?(_([cd]\d+)){0,1}/);
+    let match = location.hash.match(/[^#]*#?([^_]+)?(_([cd]\d+)){0,1}/);
     const new_page = match[1] || "";
     const new_identifier = match[3] || null;
     let old_page = "", old_identifier = null;
     if (event) {
-    match = event.oldURL.match(/(.*\/)*#?([^_]+)?(_([cd]\d+)){0,1}/);
-        old_page = match[2] || "";
-        old_identifier = match[4] || null;
+    match = event.oldURL.match(/[^#]*#?([^_]+)?(_([cd]\d+)){0,1}/);
+        old_page = match[1] || "";
+        old_identifier = match[3] || null;
     }
     console.log(`Navigating from ${old_page} to ${new_page}`);
     if (old_page == "run") {
@@ -758,7 +758,7 @@ function init() {
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(event){
 		TouchMenu.toggle();
 	}, false);
-    document.getElementById('a_export_programs').addEventListener('click', function(event){
+/*     document.getElementById('a_export_programs').addEventListener('click', function(event){
         event.preventDefault();
         TouchMenu.close();
         downloadPrograms();
@@ -768,7 +768,7 @@ function init() {
         TouchMenu.close();
         document.getElementById("fileElem").click();
     }, false);
-    document.getElementById('a_about').addEventListener('click', function(event){
+ */    document.getElementById('a_about').addEventListener('click', function(event){
         event.preventDefault();
         TouchMenu.close();
         navigateTo('about');
