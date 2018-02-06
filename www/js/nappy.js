@@ -3,7 +3,7 @@
 "use strict";
 
 var DEFAULT_SETTINGS = {
-    'version': 2,
+    'version': 3,
     'selectedBoardID': "bm1000",
     'showDefaultPrograms': true
 };
@@ -316,7 +316,9 @@ function updateMainPage(identifier) {
         ? identifier
         : program_select.options[program_select.selectedIndex]
             ? program_select.options[program_select.selectedIndex].value
-            : "c0"; // falls es gar keine custom gibt, wird unten keines ausgewählt, dann impilizit das erste von default
+            : (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0))
+                ? "c0"
+                : "d0";
 
     // Remove select options
     while (program_select.firstChild) {

@@ -1,5 +1,5 @@
 const DEFAULT_PROGRAMS = {
-    "version": 2,
+    "version": 3,
     "bm1000": [
         {
             "title":        "Warm up",
