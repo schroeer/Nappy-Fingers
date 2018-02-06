@@ -5,7 +5,7 @@
     - Restrict supported Android versions
     - Change title "nappy fingers" to "Nappy Fingers"
     - Rename "training" to "program"
-    - Rename "set" to "execise"
+    - Rename "set" to "exercise"
     - Rename "break" to "rest" and "reps" to "repeat" in program JSON
     - Completely rework handling of custom programs and default programs
       - Default programs cannot be edited or deleted
