@@ -1,3 +1,85 @@
+:root {
+    --primary: #9bcdff;
+    --primary-light: #d9ecff;
+    --primary-dark: #007ac1;
+
+    --secondary: #79bd79;
+    --secondary-light: #edf5e8;
+    --secondary-dark: #004040;
+    
+    --color-hold: #ff7272;
+    --color-rest: #79bd79;
+    
+    --card-back: #f3f3f3;
+    
+    --background: #fff;
+
+    --text-primary-on-primary: rgba(0, 0, 0, 0.87);
+    --text-secondary-on-primary: rgba(255, 255, 255, 0.7);
+    --text-hint-on-primary: rgba(255, 255, 255, 0.5);
+    --text-disabled-on-primary: rgba(255, 255, 255, 0.5);
+    --text-icon-on-primary: rgba(255, 255, 255, 0.5);
+
+    --text-primary-on-primary-light: rgba(0, 0, 0, 0.87);
+    --text-secondary-on-primary-light: rgba(0, 0, 0, 0.54);
+    --text-hint-on-primary-light: rgba(0, 0, 0, 0.38);
+    --text-disabled-on-primary-light: rgba(0, 0, 0, 0.38);
+    --text-icon-on-primary-light: rgba(0, 0, 0, 0.38);
+
+    --text-primary-on-primary-dark: white;
+    --text-secondary-on-primary-dark: rgba(255, 255, 255, 0.7);
+    --text-hint-on-primary-dark: rgba(255, 255, 255, 0.5);
+    --text-disabled-on-primary-dark: rgba(255, 255, 255, 0.5);
+    --text-icon-on-primary-dark: rgba(255, 255, 255, 0.5);
+
+    --text-primary-on-secondary: white;
+    --text-secondary-on-secondary: rgba(255, 255, 255, 0.7);
+    --text-hint-on-secondary: rgba(255, 255, 255, 0.5);
+    --text-disabled-on-secondary: rgba(255, 255, 255, 0.5);
+    --text-icon-on-secondary: rgba(255, 255, 255, 0.5);
+
+    --text-primary-on-secondary-light: rgba(0, 0, 0, 0.87);
+    --text-secondary-on-secondary-light: rgba(0, 0, 0, 0.54);
+    --text-hint-on-secondary-light: rgba(0, 0, 0, 0.38);
+    --text-disabled-on-secondary-light: rgba(0, 0, 0, 0.38);
+    --text-icon-on-secondary-light: rgba(0, 0, 0, 0.38);
+
+    --text-primary-on-secondary-dark: white;
+    --text-secondary-on-secondary-dark: rgba(255, 255, 255, 0.7);
+    --text-hint-on-secondary-dark: rgba(255, 255, 255, 0.5);
+    --text-disabled-on-secondary-dark: rgba(255, 255, 255, 0.5);
+    --text-icon-on-secondary-dark: rgba(255, 255, 255, 0.5);
+
+    --text-primary-on-background: rgba(0, 0, 0, 0.87);
+    --text-secondary-on-background: rgba(0, 0, 0, 0.54);
+    --text-hint-on-background: rgba(0, 0, 0, 0.38);
+    --text-disabled-on-background: rgba(0, 0, 0, 0.38);
+    --text-icon-on-background: rgba(0, 0, 0, 0.38);
+
+    --text-primary-on-light: rgba(0, 0, 0, 0.87);
+    --text-secondary-on-light: rgba(0, 0, 0, 0.54);
+    --text-hint-on-light: rgba(0, 0, 0, 0.38);
+    --text-disabled-on-light: rgba(0, 0, 0, 0.38);
+    --text-icon-on-light: rgba(0, 0, 0, 0.38);
+
+    --text-primary-on-dark: white;
+    --text-secondary-on-dark: rgba(255, 255, 255, 0.7);
+    --text-hint-on-dark: rgba(255, 255, 255, 0.5);
+    --text-disabled-on-dark: rgba(255, 255, 255, 0.5);
+    --text-icon-on-dark: rgba(255, 255, 255, 0.5);
+
+    --shadow-button: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);/* 2dp */
+    --shadow-button-active: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12); /* 8dp */
+
+    --shadow-round-button: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); /* 6dp */
+    --shadow-round-button-active: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12); /* 12dp */
+
+    --shadow-drawer: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12); /* 16dp */
+    --shadow-toolbar: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); /* 4dp */
+    --shadow-snackbar: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); /* 6dp */
+    --shadow-dialog: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12); /* 24dp */
+}
+
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
@@ -66,7 +148,8 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.87);
+    background-color: var(--background);
+    color: var(--text-primary-on-background);
 }
 
 h1.toolbar {
@@ -83,15 +166,13 @@ h1.toolbar {
     align-items: center;
     box-sizing: border-box;    
     z-index: 1;
-    background-color: #9bcdff;
+    background-color: var(--primary);
     background-image: url(../images/daniellogo.png);
-    background-image: url(../images/daniellogo.png), linear-gradient(to bottom, #afd7ff 0%,#9bcdff 50%,#82c0ff 100%);
+    background-image: url(../images/daniellogo.png), linear-gradient(to bottom, #afd7ff 0%,var(--primary) 50%,#82c0ff 100%);
     background-repeat: no-repeat;
     background-position: center right;
     border-radius: 0px;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), /* 2dp */
-                0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-                0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-toolbar);
 }
 
 h1.toolbar #toolbar_icon_back {
@@ -110,7 +191,7 @@ h1.toolbar span#toolbar_title {
     font-weight: 500;
     line-height: 24px;
     display: inline-block;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--text-primary-on-primary);
     white-space: nowrap;
     max-width: calc(100% - 56px - 85px);
     text-overflow: ellipsis;
@@ -161,7 +242,7 @@ span#exercise_counter {
 
 span#time_counter {
     font-size: 70px;
-    color: #007ac1;
+    color: var(--primary-dark);
     width: 50%;
     vertical-align: middle;
     display: inline-block;
@@ -189,7 +270,7 @@ progress#pause_pbar {
 }
 
 ::-webkit-progress-bar {
-    background-color: #f3f3f3;
+    background-color: var(--card-back);
     border: none;
 }
 
@@ -209,15 +290,15 @@ progress#pause_pbar {
 }
 
 #hold_pbar::-webkit-progress-value {
-    background-color: #ff7272;
+    background-color: var(--color-hold);
     border-radius: 2px 0 0 2px;
 }
 #rest_pbar::-webkit-progress-value {
-    background-color: #79bd79;
+    background-color: var(--color-rest);
     border-radius: 0 2px 2px 0;
 }
 #pause_pbar::-webkit-progress-value {
-    background-color: #007ac1;
+    background-color: var(--primary-dark);
     border-radius: 2px;
 }
 
@@ -265,7 +346,7 @@ div#program_details_exercises {
 div.program_pause {
     border: none;
     border-radius: 2px;
-    background-color: #edf5e8;
+    background-color: var(--secondary-light);
     padding: 8px;
     margin: 8px 0 0 0;
 }    
@@ -273,7 +354,7 @@ div.program_pause {
 div.program_exercise {
     border: none;
     border-radius: 2px;
-    background-color: #f3f3f3;
+    background-color: var(--card-back);
     padding: 8px;
     margin: 8px 0 0 0;
 }
@@ -293,23 +374,19 @@ button.button_wide {
     width: calc(100% - 16px);
     border: none;
     border-radius: 2px;
-    background-color: #d9ecff;
+    background-color: var(--primary-light);
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--text-primary-on-primary-light);
     text-transform: uppercase;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), /* 2dp */
-                0 2px 2px 0 rgba(0,0,0,.14),
-                0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: var(--shadow-button);
     transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
     will-change: box-shadow;
 }
 
 button.button_wide:active {
-    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),
-                0 8px 10px 1px rgba(0,0,0,.14),
-                0 3px 14px 2px rgba(0,0,0,.12);
+    box-shadow: var(--shadow-button-active);
     outline: none;
 }
 
@@ -321,10 +398,10 @@ button.button_wide .material-icons {
 }
 
 button.button_flat {
-    color: #007ac1;
+    color: var(--primary-dark);
     height: 36px;
     padding: 8px;
-    min-width: 64px; /* maybe 88 */
+    min-width: 76px; /* maybe 64, 88 */
     border: none;
     border-radius: 2px;
     background-color: transparent;
@@ -335,11 +412,11 @@ button.button_flat {
 }
 
 button.button_flat:disabled {
-    color: rgba(0, 0, 0, 0.38);
+    color: var(--text-disabled-on-background);
 }
 
 button.button_wide:active {
-    background-color: #999999;
+    background-color: var(--secondary-light);
 }
 
 button.button_flat .material-icons {
@@ -359,13 +436,11 @@ button.button_round {
     background-color: #007ac1;
     text-align: center;
     display: inline-block;
-    -webkit-box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-round-button);
 }
 
 button.button_round:active {
-    -webkit-box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
-    box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12); 
+    box-shadow: var(--shadow-round-button-active); 
 }
 
 button.button_round:disabled {
@@ -432,13 +507,11 @@ select.big_select {
     padding: 16px 8px;
     border: none;
     border-radius: 0px;
-    background-color: #d9ecff;
-    color: rgba(0, 0, 0, 0.87);
+    background-color: var(--primary-light);
+    color: var(--text-primary-on-primary-light);
     font-size: 14px;
     font-weight: 500;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
-                0 2px 2px 0 rgba(0,0,0,.14),
-                0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: var(--shadow-button);
 }
 
 input[type='number'] {
@@ -457,7 +530,7 @@ div.edit_header {
 
 div.edit_pause {
     border-radius: 2px;
-    background-color: #edf5e8;
+    background-color: var(--secondary-light);
     padding: 8px;
     margin: 8px 8px 0 8px;
     display: grid;
@@ -468,7 +541,7 @@ div.edit_pause {
 
 div.edit_exercise {
     border-radius: 2px;
-    background-color: #f3f3f3;
+    background-color: var(--card-back);
     padding: 8px;
     margin: 8px 8px 0 8px;
     display: grid;
@@ -479,7 +552,7 @@ div.edit_exercise {
 
 .edit_exercise_number {
     font-size: 56px;
-    color: darkgrey;
+    color: var(--text-secondary-on-light);
 }
 
 .edit-label {
@@ -564,7 +637,7 @@ div.edit_exercise {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: #007ac1;
+    background-color: var(--primary-dark);
     background-image: url(../images/nappy.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -593,7 +666,7 @@ div.edit_exercise {
     height: 48px;
     font-size: 14px;
     font-weight: 500;
-    color: rgba(0,0,0,0.87);
+    color: var(--text-primary-on-background);
     line-height: 24px;
     text-decoration: none;
     display: flex;
