@@ -3,7 +3,7 @@ const DEFAULT_PROGRAMS = {
     "bm1000": [
         {
             "title":        "Warm up",
-            "description":  "Proper warm-up is important to avoid injuries",
+            "description":  "Properly warming up is very important to avoid injuries",
             "exercises":    [
                 {
                     "title":        "Jug pull ups",
