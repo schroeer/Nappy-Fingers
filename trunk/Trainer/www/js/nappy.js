@@ -391,7 +391,7 @@ function updateMainPage(identifier) {
         addElement(program_details_header, 'h2', program.title, {'class': 'program_title'});
         addElement(program_details_header, 'p', program.description.replace(/([^.])$/, '$1.'), {'class': 'program_description'});
         const times = calculateTimes(program);
-        addElement(program_details_header, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'program_description'});
+        addElement(program_details_header, 'p', `Total time: ${Math.floor(times[3] / 60)}:${(times[3] % 60).toString().padStart(2, "0")} min. Hang time: ${Math.floor(times[0] / 60)}:${(times[0] % 60).toString().padStart(2, "0")} min.`, {'class': 'program_times'});
         
         const program_details_exercises = document.getElementById('program_details_exercises');
         while (program_details_exercises.firstChild) {
