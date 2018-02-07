@@ -312,6 +312,11 @@ function getProgram(identifier) {
 function updateMainPage(identifier) {
     const program_select = document.getElementsByName('program_select')[0];
 
+    // Remove select options
+    while (program_select.firstChild) {
+        program_select.removeChild(program_select.firstChild);
+    }
+    
     let selected_program_identifier = (typeof identifier !== 'undefined')
         ? identifier
         : program_select.options[program_select.selectedIndex]
@@ -320,11 +325,6 @@ function updateMainPage(identifier) {
                 ? "c0"
                 : "d0";
 
-    // Remove select options
-    while (program_select.firstChild) {
-        program_select.removeChild(program_select.firstChild);
-    }
-    
     // Populate select options
     if (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0)) {
         const custom_optgroup = document.createElement('optgroup');
@@ -342,6 +342,9 @@ function updateMainPage(identifier) {
             custom_optgroup.appendChild(opt);
         }
         program_select.appendChild(custom_optgroup);
+    }
+    else if (!SETTINGS.showDefaultPrograms) {
+        SETTINGS.showDefaultPrograms = true;
     }
     if (SETTINGS.showDefaultPrograms) {
         const default_optgroup = document.createElement('optgroup');
