@@ -643,7 +643,6 @@ div.edit_exercise {
     left: 0;
     background-color: var(--primary-dark);
     background-image: url(../images/nappy.png);
-    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     display: flex;

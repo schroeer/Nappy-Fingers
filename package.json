@@ -1,0 +1,27 @@
+{
+  "name": "de.danielschroeer.nappyfingers",
+  "version": "1.1.2",
+  "displayName": "nappy fingers",
+  "cordova": {
+    "platforms": [
+      "browser",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-insomnia": {},
+      "phonegap-plugin-speech-synthesis": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-file": {}
+    }
+  },
+  "dependencies": {
+    "cordova-android": "^7.0.0",
+    "cordova-browser": "~5.0.3",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-insomnia": "~4.3.0",
+    "cordova-plugin-statusbar": "^2.4.1",
+    "cordova-plugin-whitelist": "~1.2.1",
+    "phonegap-plugin-speech-synthesis": "https://github.com/macdonst/SpeechSynthesisPlugin.git"
+  }
+}

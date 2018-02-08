@@ -115,39 +115,43 @@ const BOARDS = {
         "name":  "Beastmaker 2000",
         "image": "bm2000.png",
         "left_holds": {
-            "01": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
+            "1": {
                 "name": "45 degree sloper",
                 "image": "bm2000_l01.png"
             },
-            "02": {
+            "2": {
                 "name": "35 degree sloper",
                 "image": "bm2000_l02.png"
             },
-            "03": {
+            "3": {
                 "name": "20 degree sloper",
-                "image": "bm2000_03.png"
+                "image": "bm2000_l03.png"
             },
-            "04": {
+            "4": {
                 "name": "sloping deep three finger pocket",
                 "image": "bm2000_l04.png"
             },
-            "05": {
+            "5": {
                 "name": "deep four finger pocket",
                 "image": "bm2000_l05.png"
             },
-            "06": {
+            "6": {
                 "name": "deep sloping mono pocket",
                 "image": "bm2000_l06.png"
             },
-            "07": {
+            "7": {
                 "name": "half-blocked two finger pocket",
                 "image": "bm2000_l07.png"
             },
-            "08": {
+            "8": {
                 "name": "two finger edge",
                 "image": "bm2000_l08.png"
             },
-            "09": {
+            "9": {
                 "name": "very deep four finger pocket",
                 "image": "bm2000_09.png"
             },
@@ -170,9 +174,69 @@ const BOARDS = {
             "14": {
                 "name": "incut edge",
                 "image": "bm2000_14.png"
-            },
+            }
         },
         "right_holds": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
+            "1": {
+                "name": "45 degree sloper",
+                "image": "bm2000_r01.png"
+            },
+            "2": {
+                "name": "35 degree sloper",
+                "image": "bm2000_r02.png"
+            },
+            "3": {
+                "name": "20 degree sloper",
+                "image": "bm2000_r03.png"
+            },
+            "4": {
+                "name": "sloping deep three finger pocket",
+                "image": "bm2000_r04.png"
+            },
+            "5": {
+                "name": "deep four finger pocket",
+                "image": "bm2000_r05.png"
+            },
+            "6": {
+                "name": "deep sloping mono pocket",
+                "image": "bm2000_r06.png"
+            },
+            "7": {
+                "name": "half-blocked two finger pocket",
+                "image": "bm2000_r07.png"
+            },
+            "8": {
+                "name": "two finger edge",
+                "image": "bm2000_r08.png"
+            },
+            "9": {
+                "name": "very deep four finger pocket",
+                "image": "bm2000_09.png"
+            },
+            "10": {
+                "name": "small four finger edge",
+                "image": "bm2000_r10.png"
+            },
+            "11": {
+                "name": "shallow mono",
+                "image": "bm2000_r11.png"
+            },
+            "12": {
+                "name": "two finger pocket",
+                "image": "bm2000_r12.png"
+            },
+            "13": {
+                "name": "sloping two finger pocket",
+                "image": "bm2000_r13.png"
+            },
+            "14": {
+                "name": "incut edge",
+                "image": "bm2000_14.png"
+            }
         }
     }
 };

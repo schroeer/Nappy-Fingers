@@ -265,6 +265,54 @@ const DEFAULT_PROGRAMS = {
                 }
             ]
         }
+    ],
+    "bm2000": [
+        {
+            "title":        "Warm up",
+            "description":  "Properly warming up is very important to avoid injuries",
+            "exercises":    [
+                {
+                    "title":        "Jug pull ups",
+                    "description":  "Pull up twice",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         4,
+                    "rest":         3,
+                    "repeat":       3,
+                    "pause":        15,
+                },
+                {
+                    "title":        "Jug hang",
+                    "description":  "Hang on straight arms",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         10,
+                    "rest":         5,
+                    "repeat":       5,
+                    "pause":        20,
+                },
+                {
+                    "title":        "Four fingers lockoff",
+                    "description":  "Pull up hang with bent arms",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         6,
+                    "rest":         4,
+                    "repeat":       5,
+                    "pause":        30,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         5,
+                    "right":        5,
+                    "hold":         5,
+                    "rest":         3,
+                    "repeat":       5,
+                    "pause":        30,
+                }
+            ]
+        }
     ]
 };
 
@@ -342,4 +390,4 @@ var OLD = [
 
         ]
     }
-]
+];
