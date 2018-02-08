@@ -1,6 +1,14 @@
     - Fix bug that prevented export of programs
       (liegt an WebView)
 
+    - Support for Beastmaker 2000
+
+1.1.2
+    - New icon, because App was still rejected
+
+1.1.1
+    - Google rejected the last update
+
 1.1.0
     - Restrict supported Android versions
     - Change title "nappy fingers" to "Nappy Fingers"
