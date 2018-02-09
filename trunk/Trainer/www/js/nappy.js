@@ -636,11 +636,13 @@ function updateEditPage(identifier) {
 }
 
 function selectBoard(event) {
-    console.log(`Select ${event.target.value}`);
     document.querySelectorAll('div.hangboard_option').forEach(function(i) {
         i.classList.remove("checked");
     });
     event.target.parentElement.classList.add("checked");
+    SETTINGS.selectedBoardID = event.target.value;
+    console.log(`Select ${event.target.value}`);
+    storeProgramsAndSettings();
 }
 
 function navigateTo(page) {
@@ -669,6 +671,7 @@ async function handleRouting(event) {
     document.getElementById("run_content").style.display = "none";
     document.getElementById("edit_content").style.display = "none";
     document.getElementById("about_content").style.display = "none";
+    document.getElementById("hangboard_selector_content").style.display = "none";
     switch (new_page) {
         case "":
             updateMainPage();
@@ -704,6 +707,11 @@ async function handleRouting(event) {
             document.getElementById("toolbar_title").innerText = "About";
             document.getElementById("toolbar_icon_back").style.display = "inline";
             document.getElementById("about_content").style.display = "block";
+            break;
+        case "switch":
+            document.getElementById("toolbar_title").innerText = "Hangboard";
+            document.getElementById("toolbar_icon_back").style.display = "inline";
+            document.getElementById("hangboard_selector_content").style.display = "block";
             break;
     }
 }
@@ -785,10 +793,44 @@ function init() {
         event.preventDefault();
         TouchMenu.close();
         navigateTo('about');
+    }, false);
+    document.getElementById('a_switch_board').addEventListener('click', function(event){
+        event.preventDefault();
+        TouchMenu.close();
+        navigateTo('switch');
 	}, false);
     document.getElementById('drawer').style.display = "block";
     
-    document.getElementById('settings_edit').onchange = selectBoard;
+    // Prepare hangboard selector
+    const hs = document.getElementById('hangboard_select');
+    hs.onchange = selectBoard;
+    for (let bid in BOARDS) {
+        const div = document.createElement('div');
+        div.setAttribute('class', 'hangboard_option');
+        const radio = document.createElement('input');
+        radio.setAttribute('type', 'radio');
+        radio.setAttribute('name', 'hangboard');
+        radio.setAttribute('value', bid);
+        radio.setAttribute('id', 'radio_' + bid);
+        if (bid == SETTINGS.selectedBoardID) {
+            div.classList.add("checked");
+            radio.setAttribute('checked', 'checked');
+        }
+        div.appendChild(radio);
+        const label = document.createElement('label');
+        label.setAttribute('for', 'radio_' + bid);
+        const span = document.createElement('span');
+        const tn = document.createTextNode(BOARDS[bid].name);
+        span.appendChild(tn);
+        label.appendChild(span);
+        const img = document.createElement('img');
+        img.setAttribute('class', 'board_img');
+        img.setAttribute('src', 'images/' + BOARDS[bid].image);
+        img.setAttribute('alt', BOARDS[bid].name);
+        label.appendChild(img);
+        div.appendChild(label);
+        hs.appendChild(div);
+    }
 
     handleRouting();
 }

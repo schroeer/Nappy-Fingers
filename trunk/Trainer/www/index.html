@@ -111,34 +111,19 @@
                 <p>I have taken great inspiration from <a href="https://play.google.com/store/apps/details?id=t72.beastmakertrainingpro" target="_blank">Beastmaker 1000 training PRO</a> by TankT72. Thank you.</p>
                 <p>&copy; 2018 Daniel Schröer <a href="mailto:danielschroeer@gmail.com">&lt;danielschroeer@gmail.com&gt;</a></p>
             </div>
-            <div id="settings_content">
-                <form id="settings_edit" onsubmit="return false;">
-                    <div class="hangboard_option checked">
-                        <input type="radio" name="hangboard" id="radio_bm1000" value="bm1000" checked/>
-                        <label for="radio_bm1000">
-                            <span>Beastmaker 1000</span>
-                            <img class="board_img" src="images/bm1000.png" alt="Beastmaker 1000">
-                        </label>
-                    </div>
-                    <div class="hangboard_option">
-                        <input type="radio" name="hangboard" id="radio_bm2000" value="bm2000"/>
-                        <label for="radio_bm2000">
-                            <span>Beastmaker 2000</span>
-                            <img class="board_img" src="images/bm2000.png" alt="Beastmaker 2000">
-                        </label>
-                    </div>
-                </form>
+            <div id="hangboard_selector_content">
+                <form id="hangboard_select" onsubmit="return false;"></form>
             </div>
         </div>
         <div id="drawer" class="touch-menu-la">
             <header class="drawer-header"><div class="drawer-header-content"></div></header>
             <div class="menu-items">
-<!--                <a id="a_switch_board" href="#"><i class="material-icons md-dark">fitness_center</i>Switch hangboard</a>
+                <a id="a_switch_board" href="#"><i class="material-icons md-dark">fitness_center</i>Switch hangboard</a>
+<!--                <hr/>
+                <a id="a_export_programs" href="#"><i class="material-icons md-dark">file_download</i>Export custom programs</a>
+                <a id="a_import_programs" href="#"><i class="material-icons md-dark">file_upload</i>Import custom programs</a>
                 <hr/>
-                <a id="a_export_programs" href="#" href="#"><i class="material-icons md-dark">file_download</i>Export custom programs</a>
-                <a id="a_import_programs" href="#" href="#"><i class="material-icons md-dark">file_upload</i>Import custom programs</a>
-                <hr/>
--->                <a id="a_about" href="#" href="#"><i class="material-icons md-dark">info</i>About</a>
+-->                <a id="a_about" href="#"><i class="material-icons md-dark">info</i>About</a>
             </div>
             <input type="file" id="fileElem" multiple accept="application/json" style="display:none" onchange="uploadPrograms(this.files)">
         </div>

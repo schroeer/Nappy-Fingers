@@ -683,25 +683,24 @@ div.edit_exercise {
     padding: 0 32px 0 0;
 }
 
-form#settings_edit input[type=radio] {
+form#hangboard_select input[type=radio] {
     display: none;
 }
 
 div.hangboard_option {
-    margin: 0 8px 0 8px;
+    margin: 8px 8px 0 8px;
     border: none;
     background-color: var(--card-back);
     padding: 16px 8px;
     box-shadow: var(--shadow-card);
+    transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+    transition: background-color .28s;
+    will-change: box-shadow, background-color;
 }
 
 div.hangboard_option.checked {
     background-color: var(--primary-light);
     box-shadow: var(--shadow-card-active);
-}
-
-div.hangboard_option + div.hangboard_option {
-    margin: 8px 8px 0 8px;
 }
 
 div.hangboard_option label span {

@@ -1,10 +1,11 @@
     - Fix bug that prevented export of programs
       (liegt an WebView)
 
+    - Enable to switch hangboard
     - Support for Beastmaker 2000
 
 1.1.2
-    - New icon, because App was still rejected
+    - New icon, because app was still rejected
 
 1.1.1
     - Google rejected the last update
