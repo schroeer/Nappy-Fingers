@@ -635,6 +635,14 @@ function updateEditPage(identifier) {
     }
 }
 
+function selectBoard(event) {
+    console.log(`Select ${event.target.value}`);
+    document.querySelectorAll('div.hangboard_option').forEach(function(i) {
+        i.classList.remove("checked");
+    });
+    event.target.parentElement.classList.add("checked");
+}
+
 function navigateTo(page) {
     window.location.hash = page;
 }
@@ -779,6 +787,8 @@ function init() {
         navigateTo('about');
 	}, false);
     document.getElementById('drawer').style.display = "block";
+    
+    document.getElementById('settings_edit').onchange = selectBoard;
 
     handleRouting();
 }
