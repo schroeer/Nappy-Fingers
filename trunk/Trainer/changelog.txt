@@ -1,8 +1,7 @@
-    - Fix bug that prevented export of programs
-      (liegt an WebView)
-
-    - Enable to switch hangboard
+1.2.0
     - Support for Beastmaker 2000
+    - Enable to switch hangboard
+    - Re-enable import and export of custom programs
 
 1.1.2
     - New icon, because app was still rejected

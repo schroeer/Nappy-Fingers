@@ -103,7 +103,7 @@
             <div id="about_content">
                 <h2>Nappy Fingers</h2>
                 <b>Strong fingers for changing the baby</b>
-                <p>Finger strength is important for hard climbing. This app supports you in your hangboard training on the Beastmaker 1000. Other hangboards will be supported soon, too.</p>
+                <p>Finger strength is important for hard climbing. This app supports you in your hangboard training on the Beastmaker 1000 and the Beastmaker 2000. Other hangboards will be supported eventually.</p>
                 <p>Training on hangboards (fingerboards) means executing sets of short hangs of a few seconds, with even shorter rests in between. For example, a set may consist of 6 hangs of 7 seconds each, with rests of 3 seconds. All 6 repeats are done on the same grip type. Afterwards you rest for some minutes. Then you move on to the next set. A complete program can involve 8 such sets, for example.</p>
                 <p>Nappy Fingers will guide you through the program with detailed instructions, using spoken language, pictures and descriptive texts.</p>
                 <p>The app comes with a number of built-in programs that you can follow. You can modify these program and create new ones according to your own preferences with an integrated editor. There is also an option for exporting and importing the programs specs as a JSON file for editing with a normal text editor.</p>
@@ -119,11 +119,11 @@
             <header class="drawer-header"><div class="drawer-header-content"></div></header>
             <div class="menu-items">
                 <a id="a_switch_board" href="#"><i class="material-icons md-dark">fitness_center</i>Switch hangboard</a>
-<!--                <hr/>
+                <hr/>
                 <a id="a_export_programs" href="#"><i class="material-icons md-dark">file_download</i>Export custom programs</a>
                 <a id="a_import_programs" href="#"><i class="material-icons md-dark">file_upload</i>Import custom programs</a>
                 <hr/>
--->                <a id="a_about" href="#"><i class="material-icons md-dark">info</i>About</a>
+                <a id="a_about" href="#"><i class="material-icons md-dark">info</i>About</a>
             </div>
             <input type="file" id="fileElem" multiple accept="application/json" style="display:none" onchange="uploadPrograms(this.files)">
         </div>
@@ -135,17 +135,22 @@
         <script src="js/touch-menu-la.js"></script>
         <script src="cordova.js"></script>
         <script>
-            document.addEventListener('deviceready', function() {
-                console.log('Received "deviceready"');
+            var APP = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            var exportPrograms;
+            if ( APP ) {
+                exportPrograms = saveProgramsAsFile;
+                document.addEventListener('deviceready', function() {
+                    console.log('Running as app');
+                    init();
+                }, false);
+            }
+            else {
+                console.log('Running in browser');
+                exportPrograms = downloadPrograms;
+                window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
+                StatusBar = { hide: function() {} };
                 init();
-            }, false);
+            }  
         </script>
-<!--
-        <script>
-            window.plugins = { insomnia: { keepAwake: function() {}, allowSleepAgain: function() {} } };
-            StatusBar = { hide: function() {} };
-            init();
-        </script>
--->
     </body>
 </html>

@@ -89,6 +89,41 @@ function downloadPrograms() {
     downloadAnchorNode.remove();
 }
 
+function saveProgramsAsFile() {
+    const date = new Date();
+    const filename = `programs_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
+
+    window.resolveLocalFileSystemURL(
+        cordova.file.externalRootDirectory,
+        function (dirEntry) {
+            dirEntry.getFile(
+                filename,
+                {create: true, exclusive: false},
+                writeFile,
+                function(e) { console.log('Error', e)}
+            );
+        },
+        function(e) { console.log('Error', e) }
+    );
+    
+    function writeFile(fileEntry) {
+        // Create a FileWriter object for our FileEntry (log.txt).
+        fileEntry.createWriter(function (fileWriter) {
+    
+            fileWriter.onwriteend = function() {
+                console.log("Successful file write...");
+                // TODO: report success
+            };
+    
+            fileWriter.onerror = function (e) {
+                console.log("Failed file write: " + e.toString());
+            };
+    
+            fileWriter.write(JSON.stringify(CUSTOM_PROGRAMS, null, "  "));
+        });
+    }
+}
+
 function uploadPrograms(files) {
     const file = files[0];
     const reader = new FileReader();
@@ -779,17 +814,17 @@ function init() {
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(event){
 		TouchMenu.toggle();
 	}, false);
-/*     document.getElementById('a_export_programs').addEventListener('click', function(event){
+     document.getElementById('a_export_programs').addEventListener('click', function(event){
         event.preventDefault();
         TouchMenu.close();
-        downloadPrograms();
+        exportPrograms();
 	}, false);
     document.getElementById("a_import_programs").addEventListener("click", function(event) {
         event.preventDefault();
         TouchMenu.close();
         document.getElementById("fileElem").click();
     }, false);
- */    document.getElementById('a_about').addEventListener('click', function(event){
+    document.getElementById('a_about').addEventListener('click', function(event){
         event.preventDefault();
         TouchMenu.close();
         navigateTo('about');
