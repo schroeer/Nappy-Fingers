@@ -26,8 +26,8 @@ const DEFAULT_PROGRAMS = {
                     "pause":        20,
                 },
                 {
-                    "title":        "Four fingers lockoff",
-                    "description":  "Pull up hang with bent arms",
+                    "title":        "Four fingers lock off",
+                    "description":  "Pull up and lock off with bent arms",
                     "left":         5,
                     "right":        5,
                     "hold":         6,
@@ -264,6 +264,62 @@ const DEFAULT_PROGRAMS = {
                     "pause":        120,
                 }
             ]
+        },
+        {
+            "title": "Maximum strength",
+            "description": "Maximum finger strength training",
+            "exercises": [
+                {
+                    "title": "Four fingers open hand",
+                    "description": "Four fingers open hand. Hang on straight arms with shoulders engaged",
+                    "left": "5",
+                    "right": "5",
+                    "hold": 10,
+                    "rest": 45,
+                    "repeat": 5,
+                    "pause": 15
+                },
+                {
+                    "title": "Three finger open hand",
+                    "description": "Three fingers fully open hand. Hang on straight arms with shoulders engaged",
+                    "left": "5",
+                    "right": "5",
+                    "hold": 10,
+                    "rest": 45,
+                    "repeat": 5,
+                    "pause": 60
+                },
+                {
+                    "title": "Half crimp",
+                    "description": "Half crimp. Hang on straight arms with shoulders engaged",
+                    "left": "6",
+                    "right": "6",
+                    "hold": 10,
+                    "rest": 45,
+                    "repeat": 5,
+                    "pause": 60
+                },
+                {
+                    "title": "Two fingers RM open hand",
+                    "description": "Ring and middle finger fully open hand. Hang on straight arms with shoulders engaged",
+                    "left": "5",
+                    "right": "5",
+                    "hold": 8,
+                    "rest": 60,
+                    "repeat": 5,
+                    "pause": 60
+                },
+                {
+                    "title": "Two fingers MI open hand",
+                    "description": "Ring and middle finger fully open hand. Hang on straight arms with shoulders engaged",
+                    "left": "5",
+                    "right": "5",
+                    "hold": 7,
+                    "rest": 60,
+                    "repeat": 5,
+                    "pause": 60
+                }
+            ]
         }
     ],
     "bm2000": [
@@ -272,7 +328,7 @@ const DEFAULT_PROGRAMS = {
             "description":  "Properly warming up is very important to avoid injuries",
             "exercises":    [
                 {
-                    "title":        "Jug pull ups",
+                    "title":        "Four fingers pull ups",
                     "description":  "Pull up twice",
                     "left":         5,
                     "right":        5,
@@ -282,7 +338,7 @@ const DEFAULT_PROGRAMS = {
                     "pause":        15,
                 },
                 {
-                    "title":        "Jug hang",
+                    "title":        "Four fingers hang",
                     "description":  "Hang on straight arms",
                     "left":         5,
                     "right":        5,
@@ -292,8 +348,8 @@ const DEFAULT_PROGRAMS = {
                     "pause":        20,
                 },
                 {
-                    "title":        "Four fingers lockoff",
-                    "description":  "Pull up hang with bent arms",
+                    "title":        "Four fingers lock off",
+                    "description":  "Pull up and lock off with bent arms",
                     "left":         5,
                     "right":        5,
                     "hold":         6,
