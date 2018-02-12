@@ -79,7 +79,7 @@ function completedSound() {
 }
 
 function downloadPrograms() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CUSTOM_PROGRAMS, null, "  "));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CUSTOM_PROGRAMS, null, "    "));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     const date = new Date();
@@ -119,7 +119,7 @@ function saveProgramsAsFile() {
                 console.log("Failed file write: " + e.toString());
             };
     
-            fileWriter.write(JSON.stringify(CUSTOM_PROGRAMS, null, "  "));
+            fileWriter.write(JSON.stringify(CUSTOM_PROGRAMS, null, "    "));
         });
     }
 }
