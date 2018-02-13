@@ -1,3 +1,9 @@
+
+1.2.1
+    - New programs "max strength" for Beastmaker 1000 and Beastmaker 2000
+    - Be less picky about file type on import
+    - Fix bug that showed wrong board
+
 1.2.0
     - Support for Beastmaker 2000
     - Enable to switch hangboard

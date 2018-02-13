@@ -188,6 +188,8 @@ async function runProgram(board, program) {
     const rest_pbar = document.getElementById("rest_pbar");
     const pause_pbar = document.getElementById("pause_pbar");
     
+    document.querySelector('#run_content .board_img').src = "images/" + board.image;
+    
     for (let i in program.exercises) {
         let exercise = program.exercises[i];
         if (exercise.pause < 15) {
@@ -583,7 +585,7 @@ function updateEditPage(identifier) {
         left.value = exercise.left;
         img_left.src = BOARDS[SETTINGS.selectedBoardID].left_holds[exercise.left].image ? "images/" + BOARDS[SETTINGS.selectedBoardID].left_holds[exercise.left].image : "";
         left.addEventListener('change', function changeExerciseLeft() {
-            program.exercises[exercise_num].left = this.value;
+            program.exercises[exercise_num].left = parseInt(this.value, 10);
             img_left.src = "images/" + BOARDS[SETTINGS.selectedBoardID].left_holds[this.value].image;
             console.log(`Setting programs[${identifier}].exercises[${exercise_num}].left = ${this.value} (${this.item(this.selectedIndex).text}).`);
             storeProgramsAndSettings();
@@ -601,7 +603,7 @@ function updateEditPage(identifier) {
         right.value = exercise.right;
         img_right.src = BOARDS[SETTINGS.selectedBoardID].right_holds[exercise.right].image ? "images/" + BOARDS[SETTINGS.selectedBoardID].right_holds[exercise.right].image : "";
         right.addEventListener('change', function changeExerciseRight() {
-            program.exercises[exercise_num].right = this.value;
+            program.exercises[exercise_num].right = parseInt(this.value, 10);
             img_right.src = "images/" + BOARDS[SETTINGS.selectedBoardID].right_holds[this.value].image;
             console.log(`Setting programs[${identifier}].exercises[${exercise_num}].right = ${this.value} (${this.item(this.selectedIndex).text}).`);
             storeProgramsAndSettings();
