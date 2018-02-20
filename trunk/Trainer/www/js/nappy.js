@@ -83,7 +83,7 @@ function downloadPrograms() {
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     const date = new Date();
-    const filename = `programs_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
+    const filename = `programs_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate()).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
     downloadAnchorNode.setAttribute("download", filename);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
@@ -91,7 +91,7 @@ function downloadPrograms() {
 
 function saveProgramsAsFile() {
     const date = new Date();
-    const filename = `programs_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate() + 1).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
+    const filename = `programs_${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate()).toString().padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}${date.getMinutes().toString().padStart(2, "0")}.json`;
 
     window.resolveLocalFileSystemURL(
         cordova.file.externalRootDirectory,
@@ -100,10 +100,10 @@ function saveProgramsAsFile() {
                 filename,
                 {create: true, exclusive: false},
                 writeFile,
-                function(e) { console.log('Error', e)}
+                handleSaveError
             );
         },
-        function(e) { console.log('Error', e) }
+        handleSaveError
     );
     
     function writeFile(fileEntry) {
@@ -112,34 +112,78 @@ function saveProgramsAsFile() {
     
             fileWriter.onwriteend = function() {
                 console.log("Successful file write...");
-                // TODO: report success
+                navigator.notification.alert(
+                    `Exported custom programs as '${filename}'.`,
+                    null,
+                    'Export successful',
+                    'OK'
+                );
             };
     
-            fileWriter.onerror = function (e) {
-                console.log("Failed file write: " + e.toString());
-            };
+            fileWriter.onerror = handleSaveError;
     
             fileWriter.write(JSON.stringify(CUSTOM_PROGRAMS, null, "    "));
         });
+    }
+
+    function handleSaveError(e)  {
+        console.log(`Export failed (error code: ${e.code}).`);
+        navigator.notification.alert(
+            `Export failed (error code: ${e.code}).`,
+            null,
+            'Export failed',
+            'OK'
+        );
     }
 }
 
 function uploadPrograms(files) {
     const file = files[0];
     const reader = new FileReader();
+    document.getElementById("fileElem").value = "";
     reader.onload = function(event) {
         try {
             const ct = JSON.parse(event.target.result);
             if (ct.version == DEFAULT_PROGRAMS.version) {
-                CUSTOM_PROGRAMS = ct;
-                console.log(`Imported custom programs from file "${file.name}"`);
-                storeProgramsAndSettings();
-                updateMainPage();
+                if (countPrograms(CUSTOM_PROGRAMS) > 0) {
+                    navigator.notification.confirm(
+                        `Do you want to overwrite your ${countPrograms(CUSTOM_PROGRAMS)} custom programs with ${countPrograms(ct)} programs from file '${file.name}'?`,
+                        function confirmImport(buttonIndex) {
+                            if (buttonIndex == 1) {
+                                doImport(ct);
+                            }
+                        },
+                        'Import programs',
+                        null
+                    );
+                }
+                else {
+                    doImport(ct);
+                }
             }
         }
-        catch(error) {}
+        catch(error) {
+            console.log(error);
+        }
     };
     reader.readAsText(file);
+
+    function doImport(ct) {
+        CUSTOM_PROGRAMS = ct;
+        console.log(`Imported ${countPrograms(ct)} programs from file '${file.name}'`);
+        storeProgramsAndSettings();
+        updateMainPage();
+    }
+
+    function countPrograms(p) {
+        let num = 0;
+        for (const board in p) {
+            if ((board != 'version') && (p.hasOwnProperty(board))) {
+                num += p[board].length;
+            }
+        }
+        return num;
+    }
 }
 
 function storeProgramsAndSettings() {
@@ -349,11 +393,6 @@ function getProgram(identifier) {
 function updateMainPage(identifier) {
     const program_select = document.getElementsByName('program_select')[0];
 
-    // Remove select options
-    while (program_select.firstChild) {
-        program_select.removeChild(program_select.firstChild);
-    }
-    
     let selected_program_identifier = (typeof identifier !== 'undefined')
         ? identifier
         : program_select.options[program_select.selectedIndex]
@@ -362,6 +401,11 @@ function updateMainPage(identifier) {
                 ? "c0"
                 : "d0";
 
+    // Remove select options
+    while (program_select.firstChild) {
+        program_select.removeChild(program_select.firstChild);
+    }
+    
     // Populate select options
     if (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0)) {
         const custom_optgroup = document.createElement('optgroup');

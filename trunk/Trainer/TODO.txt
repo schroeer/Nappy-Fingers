@@ -1,25 +1,6 @@
--   Rework of DEFAULT_TRAININGS und CUSTOM_TRAININGS
+- Programme von Handy und Tablet übernehmen
 
-    DEFAULT_TRAININGS brauchen keine Version
-
-    DEFAULT_TRAININGS können nicht gelöscht werden und nicht bearbeitet,
-    nur geclont (-> CUSTOM_TRAININGS)
-    (dafür Option, sie nicht anzeigen zu lassen)
-
-    Dadurch bei jedem Start DEFAULT_TRAININGS aktuell wie integriert
-
-    Im Storage werden nur CUSTOM_TRAININGS abgelegt und daraus wiederhergestellt
-    (dazu braucht es Versionsnummer)
-
-    Import/Export genauso
-
-    Beide Listen getrennt halten. Ausgewähltes Training mit Buchstaben-Präfix c/d.
-    Z.B. c0: Erstes item aus Liste zum BoardId von CUSTOM_TRAININGS.
-
-    BOARDS als Hash mit id
-
-
--   Check InAppBrowser for DataURL download
+- Select voice in settings
 
 -   Rename "training" to 
         routine     wohl unpassend

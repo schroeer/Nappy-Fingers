@@ -1,3 +1,10 @@
+1.2.2
+    - Modify built-in programs for the Beastmaker 1000 (Warm Up, Just hang, Pocket pull ups)
+    - Add and use cordova-plugin-recentscontrol
+    - Correct date in export filename
+    - Confirmation dialogs on import and export
+    - Fix problem that prevented importing the same file twice after another
+    - Fix problem that selected program was forgotten after return from another page
 
 1.2.1
     - New programs "max strength" for Beastmaker 1000 and Beastmaker 2000
