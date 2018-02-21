@@ -1,5 +1,3 @@
-// phonegap prepare browser & pscp -l schroeer -i "C:\Users\Daniel Schröer\svncode\Gipfelkreuz\private_key.ppk" -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
-
 "use strict";
 
 var DEFAULT_SETTINGS = {
