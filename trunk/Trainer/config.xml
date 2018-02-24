@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="de.danielschroeer.nappyfingers" version="1.2.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="de.danielschroeer.nappyfingers" version="1.2.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Nappy Fingers</name>
     <description>Strong fingers for changing the baby</description>
     <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>
@@ -15,10 +15,6 @@
         <icon density="xxhdpi" src="res/android/xxhdpi.png" />
         <icon density="xxxhdpi" src="res/android/xxxhdpi.png" />
         <preference name="RecentsBackgroundColor" value="#9bcdff" />
-    </platform>
-    <platform name="ios">
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
     </platform>
     <access origin="*" />
     <allow-intent href="http://*/*" />

@@ -271,53 +271,59 @@ const DEFAULT_PROGRAMS = {
             "exercises": [
                 {
                     "title":        "Four fingers open hand",
-                    "description":  "Four fingers open hand. Hang on straight arms with shoulders engaged",
+                    "description":  "Four fingers open hand. Hang on straight arms",
                     "left":         5,
                     "right":        5,
-                    "hold":         10,
-                    "rest":         45,
+                    "hold":         12,
+                    "rest":         120,
                     "repeat":       5,
                     "pause":        15
                 },
                 {
                     "title":        "Three finger open hand",
-                    "description":  "Three fingers fully open hand. Hang on straight arms with shoulders engaged",
-                    "left":         5,
-                    "right":        5,
+                    "description":  "Three fingers open hand. Hang on straight arms",
+                    "left":         11,
+                    "right":        11,
                     "hold":         10,
-                    "rest":         45,
+                    "rest":         150,
                     "repeat":       5,
-                    "pause":        60
+                    "pause":        180
                 },
                 {
                     "title":        "Half crimp",
-                    "description":  "Half crimp. Hang on straight arms with shoulders engaged",
+                    "description":  "Four finger half crimp. Hang on straight arms",
                     "left":         6,
                     "right":        6,
                     "hold":         10,
-                    "rest":         45,
+                    "rest":         150,
                     "repeat":       5,
-                    "pause":        60
+                    "pause":        180
                 },
+            ]
+        },
+        {
+            "title": "Max two finger strength",
+            "description": "Maximum finger strength training for two-finger grips",
+            "exercises": [
                 {
                     "title":        "Two fingers RM open hand",
-                    "description":  "Ring and middle finger fully open hand. Hang on straight arms with shoulders engaged",
+                    "description":  "Ring and middle finger open hand. Hang on straight arms",
                     "left":         5,
                     "right":        5,
-                    "hold":         8,
-                    "rest":         60,
+                    "hold":         10,
+                    "rest":         150,
                     "repeat":       5,
-                    "pause":        60
+                    "pause":        15
                 },
                 {
                     "title":        "Two fingers MI open hand",
-                    "description":  "Ring and middle finger fully open hand. Hang on straight arms with shoulders engaged",
+                    "description":  "Ring and middle finger fully open hand. Hang on straight arms",
                     "left":         5,
                     "right":        5,
-                    "hold":         7,
-                    "rest":         60,
+                    "hold":         10,
+                    "rest":         150,
                     "repeat":       5,
-                    "pause":        60
+                    "pause":        180
                 }
             ]
         }
