@@ -289,7 +289,13 @@ async function runProgram(board, program) {
     }
     speak("Congratulations!");
     console.log("Program completed");
-   
+    navigator.notification.alert(
+        `You have completed program ${program.title}!`,
+        null,
+        'Congratulations',
+        'OK'
+    );
+
     async function runExercise(exercise) {
         const utter_go = new SpeechSynthesisUtterance();
         utter_go.text = "Go!";

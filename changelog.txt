@@ -1,3 +1,8 @@
+1.2.3
+    - Dialog after training run
+    - Better "about" text
+    - Changed max strength programs
+
 1.2.2
     - Modify built-in programs for the Beastmaker 1000 (Warm Up, Just hang, Pocket pull ups)
     - Add and use cordova-plugin-recentscontrol
