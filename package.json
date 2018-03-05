@@ -26,6 +26,6 @@
     "cordova-plugin-recentscontrol": "^1.1.0",
     "cordova-plugin-statusbar": "^2.4.1",
     "cordova-plugin-whitelist": "^1.3.3",
-    "phonegap-plugin-speech-synthesis": "https://github.com/macdonst/SpeechSynthesisPlugin.git"
+    "phonegap-plugin-speech-synthesis": "git+https://github.com/macdonst/SpeechSynthesisPlugin.git"
   }
 }
