@@ -48,6 +48,11 @@ const COUNTER = (function () {
                 window.clearInterval(timer);
                 paused = true;
             }
+        },
+        finish: function finish() {
+            cb(steps - 1);
+            window.clearInterval(timer);
+            resolve();
         }
     }
 })();
@@ -263,7 +268,7 @@ async function runProgram(board, program) {
         await COUNTER.start(
             exercise.pause,
             1000,
-            async function pauseCountdownStep(step) {
+            function pauseCountdownStep(step) {
                 time_counter.textContent = exercise.pause - step;
                 pause_pbar.value = step + 1;
                 
@@ -280,7 +285,7 @@ async function runProgram(board, program) {
                     speak(makePauseString(exercise.pause - step, true));
                 }
                 if (exercise.pause - step <= 5) { // letzte fünf Sekunden der Pause ticken
-                    await ticSound();
+                    ticSound();
                 }
             }
         );
@@ -330,7 +335,7 @@ async function runProgram(board, program) {
                     hold_pbar.value = step + 1;
                 }
             );
-            await completedSound();
+            completedSound();
 
             console.log(`rep ${rep+1}: rest`);
             
@@ -338,12 +343,12 @@ async function runProgram(board, program) {
                 await COUNTER.start(
                     exercise.rest,
                     1000,
-                    async function restCountdownStep(step) {
+                    function restCountdownStep(step) {
                         time_counter.textContent = exercise.rest - step;
                         rest_pbar.value = step + 1;
 
                         if (exercise.rest - step <= 3) {
-                            await ticSound();
+                            ticSound();
                         }
                     }
                 );
