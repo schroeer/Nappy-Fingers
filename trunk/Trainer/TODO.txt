@@ -14,3 +14,5 @@
 phonegap prepare browser & pscp -l schroeer -i "C:\Users\Daniel Schröer\svncode\Gipfelkreuz\private_key.ppk" -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
 cordova build android --release
 cordova run android --release --target Pixel_2_API_27
+
+nodemon -x "cordova prepare browser" -w www
