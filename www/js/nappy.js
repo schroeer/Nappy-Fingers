@@ -330,7 +330,7 @@ async function runProgram(board, program) {
             await COUNTER.start(
                 exercise.hold,
                 1000,
-                function hangCountdownStep(step) {
+                function holdCountdownStep(step) {
                     time_counter.textContent = exercise.hold - step;
                     hold_pbar.value = step + 1;
                 }
@@ -783,7 +783,6 @@ async function handleRouting(event) {
             try {
                 window.plugins.insomnia.keepAwake();
                 await runProgram(BOARDS[SETTINGS.selectedBoardID], program);
-                //navigateTo(""); // TODO: sollte 'back' sein
                 history.back();
             }
             catch (err) {
