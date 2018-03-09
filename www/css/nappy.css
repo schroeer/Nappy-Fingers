@@ -473,12 +473,20 @@ button.button_round[name=edit] {
 }
 
 #edit_content {
-    display: block;
+    display: none;
 }
 
 #about_content {
     display: none;
     padding: 8px;
+}
+
+#hangboard_selector_content {
+    display: none;
+}
+
+#settings_content {
+    display: none;
 }
 
 input {

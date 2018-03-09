@@ -1,9 +1,11 @@
 "use strict";
 
 var DEFAULT_SETTINGS = {
-    'version': 3,
+    'version': 4,
     'selectedBoardID': "bm1000",
-    'showDefaultPrograms': true
+    'showDefaultPrograms': true,
+    'speechOutput': true,
+    'soundOutput': true,
 };
 
 var SETTINGS, CUSTOM_PROGRAMS = {};
@@ -58,27 +60,31 @@ const COUNTER = (function () {
 })();
 
 function ticSound() {
-    soundEffect(
-        400,        //frequency
-        0.02,       //attack
-        0.02,       //decay
-        "sine",     //waveform
-        10,         //volume
-        0,          //pan
-        0,          //wait before playing
-        1,          //pitch bend amount
-        false,      //reverse
-        0,          //random pitch range
-        0,          //dissonance
-        undefined,  //echo: [delay, feedback, filter]
-        undefined   //reverb: [duration, decay, reverse?]
-    );
+    if (SETTINGS['soundOutput']) {
+        soundEffect(
+            400,        //frequency
+            0.02,       //attack
+            0.02,       //decay
+            "sine",     //waveform
+            10,         //volume
+            0,          //pan
+            0,          //wait before playing
+            1,          //pitch bend amount
+            false,      //reverse
+            0,          //random pitch range
+            0,          //dissonance
+            undefined,  //echo: [delay, feedback, filter]
+            undefined   //reverb: [duration, decay, reverse?]
+        );
+    }
 }
 
 function completedSound() {
-    soundEffect( 587.33, 0, 0.2, "square", 1, 0, 0);    //D
-    soundEffect( 880   , 0, 0.2, "square", 1, 0, 0.1);  //A
-    soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);  //High D
+    if (SETTINGS['soundOutput']) {
+        soundEffect( 587.33, 0, 0.2, "square", 1, 0, 0);    //D
+        soundEffect( 880   , 0, 0.2, "square", 1, 0, 0.1);  //A
+        soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);  //High D
+    }
 }
 
 function downloadPrograms() {
@@ -197,13 +203,18 @@ function storeProgramsAndSettings() {
 
 function loadProgramsAndSettings() {
     if (window.localStorage.getItem('settings')) {
-        SETTINGS = JSON.parse(window.localStorage.getItem('settings'));
+        let loaded_settings = JSON.parse(window.localStorage.getItem('settings'));
+        SETTINGS = DEFAULT_SETTINGS;
+        for (let prop in DEFAULT_SETTINGS) {
+            if ((prop != 'version') &&  (loaded_settings.hasOwnProperty(prop))) {
+                SETTINGS[prop] = loaded_settings[prop];
+            }
+        }
         if (SETTINGS.version == DEFAULT_SETTINGS.version) {
             console.log('Restored settings from storage.');
         }
         else {
-            SETTINGS = DEFAULT_SETTINGS;
-            console.log('Stored settings outdated. Using defaults.');
+            console.log('Stored settings outdated. Partially restored.');
         }
     }
     else {
@@ -358,11 +369,16 @@ async function runProgram(board, program) {
     }
     
     function speak(message) {
-        const utterance = new SpeechSynthesisUtterance();
-        utterance.text = message;
-        utterance.lang = 'en-US';
-        console.log(`Speaking "${message}"`);
-        speechSynthesis.speak(utterance);
+        if (SETTINGS['speechOutput']) {
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.text = message;
+            utterance.lang = 'en-US';
+            console.log(`Speaking "${message}"`);
+            speechSynthesis.speak(utterance);
+        }
+        else {
+            console.log(`Suppressing "${message}"`);
+        }
     }
 
     function makePauseString(pause, short = false) {
@@ -762,6 +778,7 @@ async function handleRouting(event) {
     document.getElementById("edit_content").style.display = "none";
     document.getElementById("about_content").style.display = "none";
     document.getElementById("hangboard_selector_content").style.display = "none";
+    document.getElementById("settings_content").style.display = "block";
     switch (new_page) {
         case "":
             updateMainPage();
