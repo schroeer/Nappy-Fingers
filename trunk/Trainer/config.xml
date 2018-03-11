@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="de.danielschroeer.nappyfingers" version="1.2.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="de.danielschroeer.nappyfingers" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Nappy Fingers</name>
     <description>Strong fingers for changing the baby</description>
     <author email="danielschroeeer@gmail.com" href="http://www.danielschroeer.de">Daniel Schröer</author>
@@ -23,13 +23,13 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <engine name="browser" spec="~5.0.3" />
+    <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-plugin-insomnia" spec="~4.3.0" />
-    <plugin name="phonegap-plugin-speech-synthesis" spec="https://github.com/macdonst/SpeechSynthesisPlugin.git" />
+    <plugin name="phonegap-plugin-speech-synthesis" spec="git+https://github.com/macdonst/SpeechSynthesisPlugin.git" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-recentscontrol" spec="^1.1.0" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-    <engine name="browser" spec="~5.0.3" />
-    <engine name="android" spec="^7.0.0" />
 </widget>
