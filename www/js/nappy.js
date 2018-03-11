@@ -6,9 +6,12 @@ var DEFAULT_SETTINGS = {
     'showDefaultPrograms': true,
     'speechOutput': true,
     'soundOutput': true,
+    'voice':    undefined
 };
 
 var SETTINGS, CUSTOM_PROGRAMS = {};
+
+var VOICES = [];
 
 const COUNTER = (function () {
     var count, timer, paused, resolve, reject, steps, interval, cb;
@@ -415,6 +418,80 @@ function getProgram(identifier) {
     return program;
 }
 
+function updateSettingsPage() {
+    let voices = speechSynthesis.getVoices();
+    console.log(`Found ${voices.length} voices`)  ;
+    for (let i = 0; i < voices.length ; i++) {
+        let v = Array.isArray(voices) ? voices[i] : voices.item(i);
+        if (v.lang.startsWith('en')) {
+            // console.log(`name : ${v.name} lang: ${v.lang} localService: ${v.localService} voiceURI: ${v.voiceURI} default: ${v.default}`);
+            VOICES.push(v);
+        }
+    }
+    VOICES.sort(function(a,b) {
+        if (a.lang > b.lang) {
+            return 1;
+          }
+          if (a.lang < b.lang) {
+            return -1;
+          }
+          return 0;
+    });
+
+    const voice_select = document.getElementsByName('voice_select')[0];
+    // Remove voice select options
+    while (voice_select.firstChild) {
+        voice_select.removeChild(voice_select.firstChild);
+    }
+    
+    if (SETTINGS.voice === undefined) {
+        SETTINGS.voice = VOICES[0].voiceURI;
+        storeProgramsAndSettings();
+    }
+    for (let i in VOICES) {
+        const opt = document.createElement('option');
+        opt.setAttribute('value', i);
+        if (SETTINGS.voice === VOICES[i].voiceURI) {
+            opt.defaultSelected = true;
+        }
+        const content = document.createTextNode(`${VOICES[i].name} (${VOICES[i].lang}) (${VOICES[i].voiceURI})`);
+        opt.appendChild(content);
+        voice_select.appendChild(opt);
+    }
+    voice_select.addEventListener('change', function selectVoice() {
+        let v_num = voice_select.options[voice_select.selectedIndex].value;
+        SETTINGS.voice = VOICES[v_num].voiceURI;
+        storeProgramsAndSettings();
+    });
+
+    let checkbox_showDefaultPrograms = document.getElementById('checkbox_showDefaultPrograms');
+    if (SETTINGS.showDefaultPrograms) {
+        checkbox_showDefaultPrograms.setAttribute('checked', 'checked');
+    }
+    checkbox_showDefaultPrograms.addEventListener('change', function setShowDefaultPrograms() {
+        SETTINGS.showDefaultPrograms = this.checked;
+        storeProgramsAndSettings();
+    });
+
+    let checkbox_speechOutput = document.getElementById('checkbox_speechOutput');
+    if (SETTINGS.speechOutput) {
+        checkbox_speechOutput.setAttribute('checked', 'checked');
+    }
+    checkbox_speechOutput.addEventListener('change', function setSpeechOutput() {
+        SETTINGS.speechOutput = this.checked;
+        storeProgramsAndSettings();
+    });
+
+    let checkbox_soundOutput = document.getElementById('checkbox_soundOutput');
+    if (SETTINGS.soundOutput) {
+        checkbox_soundOutput.setAttribute('checked', 'checked');
+    }
+    checkbox_soundOutput.addEventListener('change', function setSoundOutput() {
+        SETTINGS.soundOutput = this.checked;
+        storeProgramsAndSettings();
+    });
+}
+
 function updateMainPage(identifier) {
     const program_select = document.getElementsByName('program_select')[0];
 
@@ -426,12 +503,12 @@ function updateMainPage(identifier) {
                 ? "c0"
                 : "d0";
 
-    // Remove select options
+    // Remove program select options
     while (program_select.firstChild) {
         program_select.removeChild(program_select.firstChild);
     }
     
-    // Populate select options
+    // Populate program select options
     if (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0)) {
         const custom_optgroup = document.createElement('optgroup');
         custom_optgroup.setAttribute('label', 'Your programs'.toUpperCase());
@@ -778,7 +855,7 @@ async function handleRouting(event) {
     document.getElementById("edit_content").style.display = "none";
     document.getElementById("about_content").style.display = "none";
     document.getElementById("hangboard_selector_content").style.display = "none";
-    document.getElementById("settings_content").style.display = "block";
+    document.getElementById("settings_content").style.display = "none";
     switch (new_page) {
         case "":
             updateMainPage();
@@ -818,6 +895,11 @@ async function handleRouting(event) {
             document.getElementById("toolbar_title").innerText = "Hangboard";
             document.getElementById("toolbar_icon_back").style.display = "inline";
             document.getElementById("hangboard_selector_content").style.display = "block";
+            break;
+        case "settings":
+            document.getElementById("toolbar_title").innerText = "Settings";
+            document.getElementById("toolbar_icon_back").style.display = "inline";
+            document.getElementById("settings_content").style.display = "block";
             break;
     }
 }
@@ -885,7 +967,7 @@ function init() {
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(event){
 		TouchMenu.toggle();
 	}, false);
-     document.getElementById('a_export_programs').addEventListener('click', function(event){
+    document.getElementById('a_export_programs').addEventListener('click', function(event){
         event.preventDefault();
         TouchMenu.close();
         exportPrograms();
@@ -904,6 +986,11 @@ function init() {
         event.preventDefault();
         TouchMenu.close();
         navigateTo('switch');
+	}, false);
+    document.getElementById('a_settings').addEventListener('click', function(event){
+        event.preventDefault();
+        TouchMenu.close();
+        navigateTo('settings');
 	}, false);
     document.getElementById('drawer').style.display = "block";
     
@@ -937,6 +1024,9 @@ function init() {
         div.appendChild(label);
         hs.appendChild(div);
     }
+
+    speechSynthesis.onvoiceschanged = updateSettingsPage;
+    updateSettingsPage();
 
     handleRouting();
 }
