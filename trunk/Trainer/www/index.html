@@ -122,18 +122,22 @@
                 <form id="hangboard_select" onsubmit="return false;"></form>
             </div>
             <div id="settings_content">
-                 <form id="form_settings" onsubmit="return false;">
-                     <label for="checkbox_showDefaultPrograms" class="">Show built-in programs</label>
-                     <input id="checkbox_showDefaultPrograms" type="checkbox" />
+                <form id="form_settings" onsubmit="return false;">
+                    <i class="material-icons">visibility</i>
+                    <label for="checkbox_showDefaultPrograms" class="">Show built-in programs</label>
+                    <input id="checkbox_showDefaultPrograms" type="checkbox" />
 
-                     <select class="big_select" name="voice_select"></select>
+                    <i class="material-icons">record_voice_over</i>
+                    <select name="voice_select"></select>
 
-                     <label for="checkbox_speechOutput" class="">Speak instructions</label>
-                     <input id="checkbox_speechOutput" type="checkbox" />
+                    <i class="material-icons">volume_up</i>
+                    <label for="checkbox_speechOutput" class="">Speak instructions</label>
+                    <input id="checkbox_speechOutput" type="checkbox" />
 
-                     <label for="checkbox_soundOutput" class="">Play sounds</label>
-                     <input id="checkbox_soundOutput" type="checkbox" />
-                 </form>
+                    <i class="material-icons">notifications</i>
+                    <label for="checkbox_soundOutput" class="">Play sounds</label>
+                    <input id="checkbox_soundOutput" type="checkbox" />
+                </form>
            </div>
         </div>
         <div id="drawer" class="touch-menu-la">
@@ -145,7 +149,6 @@
                 <a id="a_import_programs" href="#"><i class="material-icons md-dark">file_upload</i>Import custom programs</a>
                 <hr/>
                 <a id="a_settings" href="#"><i class="material-icons md-dark">settings</i>Settings</a>
-                <hr/>
                 <a id="a_about" href="#"><i class="material-icons md-dark">info</i>About</a>
             </div>
             <input type="file" id="fileElem" style="display:none" onchange="uploadPrograms(this.files)">

@@ -247,6 +247,27 @@ function loadProgramsAndSettings() {
     }
 }
 
+function speak(message) {
+    if (SETTINGS['speechOutput']) {
+        let selected_voice;
+        for (let i in VOICES) {
+            if (VOICES[i].voiceURI === SETTINGS.voice) {
+                selected_voice = VOICES[i];
+                break;
+            }
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = message;
+        utterance.lang = 'en-US';
+        utterance.voice = selected_voice;
+        console.log(`Speaking "${message}"`);
+        speechSynthesis.speak(utterance);
+    }
+    else {
+        console.log(`Not speaking "${message}"`);
+    }
+}
+
 async function runProgram(board, program) {
     const exercise_title_div = document.getElementById("exercise_title");
     const exercise_description_div = document.getElementById("exercise_description");
@@ -376,27 +397,6 @@ async function runProgram(board, program) {
         console.log("exercise complete");
     }
     
-    function speak(message) {
-        if (SETTINGS['speechOutput']) {
-            let selected_voice;
-            for (let i in VOICES) {
-                if (VOICES[i].voiceURI === SETTINGS.voice) {
-                    selected_voice = VOICES[i];
-                    break;
-                }
-            }
-            const utterance = new SpeechSynthesisUtterance();
-            utterance.text = message;
-            utterance.lang = 'en-US';
-            utterance.voice = selected_voice;
-            console.log(`Speaking "${message}"`);
-            speechSynthesis.speak(utterance);
-        }
-        else {
-            console.log(`Not speaking "${message}"`);
-        }
-    }
-
     function makePauseString(pause, short = false) {
         const minutes = Math.floor(pause / 60);
         const seconds = pause % 60;
@@ -437,7 +437,7 @@ function updateSettingsPage() {
     console.log(`Found ${voices.length} voices`) ;
     for (let i = 0; i < voices.length ; i++) {
         let v = Array.isArray(voices) ? voices[i] : voices.item(i);
-        if (v.lang.startsWith('en')) {
+        if ((v.lang.startsWith('en')) && (v.localService === true)) {
             // console.log(`name : ${v.name} lang: ${v.lang} localService: ${v.localService} voiceURI: ${v.voiceURI} default: ${v.default}`);
             VOICES.push(v);
         }
@@ -468,7 +468,7 @@ function updateSettingsPage() {
         if (SETTINGS.voice === VOICES[i].voiceURI) {
             opt.defaultSelected = true;
         }
-        const content = document.createTextNode(`${VOICES[i].name} (${VOICES[i].lang}) (${VOICES[i].voiceURI})`);
+        const content = document.createTextNode(`${VOICES[i].name} (${VOICES[i].lang})`);
         opt.appendChild(content);
         voice_select.appendChild(opt);
     }
@@ -476,6 +476,7 @@ function updateSettingsPage() {
         let v_num = voice_select.options[voice_select.selectedIndex].value;
         SETTINGS.voice = VOICES[v_num].voiceURI;
         storeProgramsAndSettings();
+        speak("Nappy Fingers: strong fingers for changing the baby");
     });
 
     let checkbox_showDefaultPrograms = document.getElementById('checkbox_showDefaultPrograms');
@@ -523,6 +524,7 @@ function updateMainPage(identifier) {
     }
     
     // Populate program select options
+    let showDefaultProgramsExceptionally = false;
     if (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID] && (CUSTOM_PROGRAMS[SETTINGS.selectedBoardID].length > 0)) {
         const custom_optgroup = document.createElement('optgroup');
         custom_optgroup.setAttribute('label', 'Your programs'.toUpperCase());
@@ -541,9 +543,9 @@ function updateMainPage(identifier) {
         program_select.appendChild(custom_optgroup);
     }
     else if (!SETTINGS.showDefaultPrograms) {
-        SETTINGS.showDefaultPrograms = true;
+        showDefaultProgramsExceptionally = true;
     }
-    if (SETTINGS.showDefaultPrograms) {
+    if (SETTINGS.showDefaultPrograms || showDefaultProgramsExceptionally) {
         const default_optgroup = document.createElement('optgroup');
         default_optgroup.setAttribute('label', 'Built-in programs'.toUpperCase());
         for (let program_num in DEFAULT_PROGRAMS[SETTINGS.selectedBoardID]) {
