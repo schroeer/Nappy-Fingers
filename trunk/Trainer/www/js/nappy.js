@@ -82,6 +82,12 @@ function ticSound() {
     }
 }
 
+function goSound() {
+    if (SETTINGS['soundOutput']) {
+        soundEffect(300,0.01,0.1,"triangle",20,0,0,0,false,0,0,undefined,[0.7, 0.1, false]);
+    }
+}
+
 function completedSound() {
     if (SETTINGS['soundOutput']) {
         soundEffect( 587.33, 0, 0.2, "square", 1, 0, 0);    //D
@@ -316,10 +322,6 @@ async function runProgram(board, program) {
     );
 
     async function runExercise(exercise) {
-        const utter_go = new SpeechSynthesisUtterance();
-        utter_go.text = "Go!";
-        utter_go.lang = 'en-US';
-
         pause_pbar.style.display = "none";
         hold_pbar.style.display = "inline-block";
         rest_pbar.style.display = "inline-block";
@@ -340,7 +342,10 @@ async function runProgram(board, program) {
             document.getElementById("repeat_counter").textContent = Number(rep) + 1 + "/" + exercise.repeat;
             
             console.log(`rep ${rep+1}: hold`);
-            speechSynthesis.speak(utter_go);
+            if (!SETTINGS.speechOutput) {
+                goSound();
+            }
+            speak("Go!");
             await COUNTER.start(
                 exercise.hold,
                 1000,
@@ -373,14 +378,22 @@ async function runProgram(board, program) {
     
     function speak(message) {
         if (SETTINGS['speechOutput']) {
+            let selected_voice;
+            for (let i in VOICES) {
+                if (VOICES[i].voiceURI === SETTINGS.voice) {
+                    selected_voice = VOICES[i];
+                    break;
+                }
+            }
             const utterance = new SpeechSynthesisUtterance();
             utterance.text = message;
             utterance.lang = 'en-US';
+            utterance.voice = selected_voice;
             console.log(`Speaking "${message}"`);
             speechSynthesis.speak(utterance);
         }
         else {
-            console.log(`Suppressing "${message}"`);
+            console.log(`Not speaking "${message}"`);
         }
     }
 
@@ -419,8 +432,9 @@ function getProgram(identifier) {
 }
 
 function updateSettingsPage() {
+    VOICES = [];
     let voices = speechSynthesis.getVoices();
-    console.log(`Found ${voices.length} voices`)  ;
+    console.log(`Found ${voices.length} voices`) ;
     for (let i = 0; i < voices.length ; i++) {
         let v = Array.isArray(voices) ? voices[i] : voices.item(i);
         if (v.lang.startsWith('en')) {
@@ -444,7 +458,7 @@ function updateSettingsPage() {
         voice_select.removeChild(voice_select.firstChild);
     }
     
-    if (SETTINGS.voice === undefined) {
+    if ((SETTINGS.voice === undefined) && VOICES) {
         SETTINGS.voice = VOICES[0].voiceURI;
         storeProgramsAndSettings();
     }
