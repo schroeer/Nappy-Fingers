@@ -1,3 +1,5 @@
+    - Settings page with various options
+
 1.2.3
     - Dialog after training run
     - Better "about" text
