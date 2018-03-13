@@ -501,6 +501,7 @@ select {
     background-color: transparent;
     border-color: rgba(0,0,0,0.42);
     font-family: 'Roboto', sans-serif;
+    color: var(--text-primary-on-background);
 }
     
 textarea {
@@ -715,4 +716,33 @@ div.hangboard_option label span {
     display: block;
     font-weight: 500;
     padding: 0 0 8px 0;
+}
+
+#form_settings ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+}
+
+#form_settings ul li {
+    padding: 0 16px 0 16px;
+    height: 48px;
+    font-size: 16px;
+    color: var(--text-primary-on-background);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+#form_settings ul li .material-icons {
+    padding: 0 32px 0 0;
+}
+
+#form_settings ul li input[type="checkbox"]{
+    margin: 0 0 0 auto;
+}
+
+#form_settings ul li select {
+    font-size: 16px;
+    width: calc(100% - 88px);
 }
