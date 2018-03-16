@@ -126,25 +126,36 @@
                     <ul>
                         <li>
                             <i class="material-icons md-dark">visibility</i>
-                            <label for="checkbox_showDefaultPrograms" class="">Show built-in programs</label>
-                            <input id="checkbox_showDefaultPrograms" type="checkbox" />
-                        </li>
-                        
-                        <li>
-                            <i class="material-icons md-dark">record_voice_over</i>
-                            <label for="checkbox_speechOutput" class="">Speak instructions</label>
-                            <input id="checkbox_speechOutput" type="checkbox" />
-                        </li>
-
-                        <li>
-                            <i class="material-icons md-dark">record_voice_over</i>
-                            <select name="voice_select"></select>
+                            <label for="checkbox_showDefaultPrograms">Show built-in programs</label>
+                            <div class="matbox">
+                                <input id="checkbox_showDefaultPrograms" type="checkbox" />
+                                <label for="checkbox_showDefaultPrograms"></label>
+                            </div>
                         </li>
 
                         <li>
                             <i class="material-icons md-dark">notifications</i>
-                            <label for="checkbox_soundOutput" class="">Play sounds</label>
-                            <input id="checkbox_soundOutput" type="checkbox" />
+                            <label for="checkbox_soundOutput">Play sounds</label>
+                            <div class="matbox">
+                                <input id="checkbox_soundOutput" type="checkbox" />
+                                <label for="checkbox_soundOutput"></label>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <i class="material-icons md-dark">record_voice_over</i>
+                            <label for="checkbox_speechOutput">Speak instructions</label>
+                            <div class="matbox">
+                                <input id="checkbox_speechOutput" type="checkbox" />
+                                <label for="checkbox_speechOutput"></label>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="selbox">
+                                <label for="select_voice">Voice</label>
+                                <select id="select_voice" name="voice_select"></select>
+                            </div>
                         </li>
                     </ul>
                 </form>

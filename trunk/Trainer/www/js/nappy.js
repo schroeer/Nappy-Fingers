@@ -913,6 +913,7 @@ async function handleRouting(event) {
             document.getElementById("hangboard_selector_content").style.display = "block";
             break;
         case "settings":
+            updateSettingsPage();
             document.getElementById("toolbar_title").innerText = "Settings";
             document.getElementById("toolbar_icon_back").style.display = "inline";
             document.getElementById("settings_content").style.display = "block";
@@ -1042,7 +1043,6 @@ function init() {
     }
 
     speechSynthesis.onvoiceschanged = updateSettingsPage;
-    updateSettingsPage();
 
     handleRouting();
 }
