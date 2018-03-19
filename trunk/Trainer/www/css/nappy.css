@@ -783,6 +783,7 @@ div.hangboard_option label span {
 .selbox {
     position: relative;
     margin: 24px 0 0 0;
+    width: 100%;
 }
 
 .selbox label {

@@ -84,7 +84,7 @@ function ticSound() {
 
 function goSound() {
     if (SETTINGS['soundOutput']) {
-        soundEffect(300,0.01,0.1,"triangle",20,0,0,0,false,0,0,undefined,[0.7, 0.1, false]);
+        soundEffect(300,0.01,0.1,"triangle",10,0,0,0,false,0,0,undefined,[0.7, 0.1, false]);
     }
 }
 
@@ -434,7 +434,6 @@ function getProgram(identifier) {
 function updateSettingsPage() {
     VOICES = [];
     let voices = speechSynthesis.getVoices();
-    console.log(`Found ${voices.length} voices`) ;
     for (let i = 0; i < voices.length ; i++) {
         let v = Array.isArray(voices) ? voices[i] : voices.item(i);
         if ((v.lang.startsWith('en')) && (v.localService === true)) {
@@ -451,6 +450,7 @@ function updateSettingsPage() {
           }
           return 0;
     });
+    console.log(`Found ${VOICES.length} matching voices`) ;
 
     const voice_select = document.getElementById('select_voice');
     // Remove voice select options
