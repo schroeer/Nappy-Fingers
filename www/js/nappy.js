@@ -452,7 +452,7 @@ function updateSettingsPage() {
           return 0;
     });
 
-    const voice_select = document.getElementsByName('voice_select')[0];
+    const voice_select = document.getElementById('select_voice');
     // Remove voice select options
     while (voice_select.firstChild) {
         voice_select.removeChild(voice_select.firstChild);
@@ -472,39 +472,42 @@ function updateSettingsPage() {
         opt.appendChild(content);
         voice_select.appendChild(opt);
     }
-    voice_select.addEventListener('change', function selectVoice() {
+    voice_select.onchange = function selectVoice() {
         let v_num = voice_select.options[voice_select.selectedIndex].value;
         SETTINGS.voice = VOICES[v_num].voiceURI;
         storeProgramsAndSettings();
+        let temp = SETTINGS['speechOutput'];
+        SETTINGS['speechOutput'] = true;
         speak("Nappy Fingers: strong fingers for changing the baby");
-    });
+        SETTINGS['speechOutput'] = temp;
+    };
 
     let checkbox_showDefaultPrograms = document.getElementById('checkbox_showDefaultPrograms');
     if (SETTINGS.showDefaultPrograms) {
         checkbox_showDefaultPrograms.setAttribute('checked', 'checked');
     }
-    checkbox_showDefaultPrograms.addEventListener('change', function setShowDefaultPrograms() {
+    checkbox_showDefaultPrograms.onchange = function setShowDefaultPrograms() {
         SETTINGS.showDefaultPrograms = this.checked;
         storeProgramsAndSettings();
-    });
+    };
 
     let checkbox_speechOutput = document.getElementById('checkbox_speechOutput');
     if (SETTINGS.speechOutput) {
         checkbox_speechOutput.setAttribute('checked', 'checked');
     }
-    checkbox_speechOutput.addEventListener('change', function setSpeechOutput() {
+    checkbox_speechOutput.onchange = function setSpeechOutput() {
         SETTINGS.speechOutput = this.checked;
         storeProgramsAndSettings();
-    });
+    };
 
     let checkbox_soundOutput = document.getElementById('checkbox_soundOutput');
     if (SETTINGS.soundOutput) {
         checkbox_soundOutput.setAttribute('checked', 'checked');
     }
-    checkbox_soundOutput.addEventListener('change', function setSoundOutput() {
+    checkbox_soundOutput.onchange = function setSoundOutput() {
         SETTINGS.soundOutput = this.checked;
         storeProgramsAndSettings();
-    });
+    };
 }
 
 function updateMainPage(identifier) {
