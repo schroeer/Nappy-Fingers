@@ -1,15 +1,3 @@
-- Programme von Handy und Tablet übernehmen
-
-- Select voice in settings
-
--   Rename "training" to 
-        routine     wohl unpassend
-        practice
-        workout     passt schlecht bei z.B. Warm up
-        program     Favorit
-
--   Rename "set" to
-        exercise
 
 phonegap prepare browser & pscp -l schroeer -i "C:\Users\Daniel Schröer\svncode\Gipfelkreuz\private_key.ppk" -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
 cordova build android --release

@@ -84,7 +84,21 @@ function ticSound() {
 
 function goSound() {
     if (SETTINGS['soundOutput']) {
-        soundEffect(300,0.01,0.1,"triangle",10,0,0,0,false,0,0,undefined,[0.7, 0.1, false]);
+        soundEffect(
+            1046.5,     //frequency
+            0,          //attack
+            0.1,        //decay
+            "sine",     //waveform
+            10,         //Volume
+            0,          //pan
+            0,          //wait before playing
+            0,          //pitch bend amount
+            true,       //reverse bend
+            0,          //random pitch range
+            0,          //dissonance
+            undefined,  //echo array: [delay, feedback, filter]
+            undefined   //reverb array: [duration, decay, reverse?]
+        );
     }
 }
 
@@ -125,9 +139,7 @@ function saveProgramsAsFile() {
     );
     
     function writeFile(fileEntry) {
-        // Create a FileWriter object for our FileEntry (log.txt).
         fileEntry.createWriter(function (fileWriter) {
-    
             fileWriter.onwriteend = function() {
                 console.log("Successful file write...");
                 navigator.notification.alert(
@@ -137,9 +149,7 @@ function saveProgramsAsFile() {
                     'OK'
                 );
             };
-    
             fileWriter.onerror = handleSaveError;
-    
             fileWriter.write(JSON.stringify(CUSTOM_PROGRAMS, null, "    "));
         });
     }
