@@ -1,3 +1,5 @@
+o) Nach dem Start nimmt er nicht die richtige Stimme, weil nach dem Start die Stimmen zunächst nicht gefunden werden => VOICES leer
+
 
 phonegap prepare browser & pscp -l schroeer -i "C:\Users\Daniel Schröer\svncode\Gipfelkreuz\private_key.ppk" -r platforms\browser\www\* daimlerstr.de:stella/www/trainer/
 cordova build android --release
