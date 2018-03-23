@@ -631,6 +631,12 @@ div.edit_exercise {
     grid-row: 9 / 10;
 }
 
+#edit_placeholder  img {
+    width: 100%;
+    opacity: 0.1;
+}
+
+
 #drawer {
     display: none
 }
@@ -657,6 +663,7 @@ div.edit_exercise {
     background-image: url(../images/nappy.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
     display: flex;
     -webkit-box-align: end;
     align-items: flex-end;

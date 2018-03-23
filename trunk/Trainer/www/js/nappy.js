@@ -660,7 +660,9 @@ function updateEditPage(identifier) {
     if (document.getElementById('program_edit')) {
         edit_content.removeChild(document.getElementById('program_edit'));
     }
-
+    
+    const placeholder = document.getElementById('edit_placeholder');
+    
     const template_edit = document.getElementById('template_edit');
     const fragment = template_edit.content.cloneNode(true);
 
@@ -696,7 +698,7 @@ function updateEditPage(identifier) {
         updateEditPage(identifier);
     });
 
-    edit_content.appendChild(fragment);
+    edit_content.insertBefore(fragment, placeholder);
     
     const form = document.getElementById('program_edit');
     const template_edit_exercise = document.getElementById('template_edit_exercise');
