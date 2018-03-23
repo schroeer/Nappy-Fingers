@@ -31,7 +31,7 @@ var TouchMenuLA = function (options) {
 
     TouchMenuLA.prototype.setDefaultsOptions = function () {
         for (var key in defaults) {
-            if (!options[key]) {
+            if (!options.hasOwnProperty(key)) {
                 options[key] = defaults[key];
             }
         }

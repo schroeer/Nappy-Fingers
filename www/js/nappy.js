@@ -994,7 +994,8 @@ function init() {
 	var TouchMenu = TouchMenuLA({
 		target: document.getElementById('drawer'),
         width: Math.min(Math.min(screen.availWidth, screen.availHeight) - 56, 280),
-        zIndex: 2 
+        zIndex: 2,
+        handleSize: 0
 	});
 	document.getElementById('toolbar_icon_menu').addEventListener('click', function(event){
 		TouchMenu.toggle();
@@ -1058,6 +1059,7 @@ function init() {
     }
 
     speechSynthesis.onvoiceschanged = updateSettingsPage;
+    updateSettingsPage(); // nötig, um VOICES zu initialisieren
 
     handleRouting();
 }

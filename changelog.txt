@@ -5,6 +5,7 @@
     - Option to mute speech
     - Option to select voice
     - Placeholder on edit page for onscreen keyboard
+    - Drawer handle width set to zero to avoid opening of menu from sub pages
     
 1.2.3
     - Dialog after training run
