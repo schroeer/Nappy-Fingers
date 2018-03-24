@@ -259,6 +259,9 @@ function loadProgramsAndSettings() {
 
 function speak(message) {
     if (SETTINGS['speechOutput']) {
+        if (VOICES.length < 1) {
+            getVoices();
+        }
         let selected_voice;
         for (let i in VOICES) {
             if (VOICES[i].voiceURI === SETTINGS.voice) {
@@ -441,7 +444,7 @@ function getProgram(identifier) {
     return program;
 }
 
-function updateSettingsPage() {
+function getVoices() {
     VOICES = [];
     let voices = speechSynthesis.getVoices();
     for (let i = 0; i < voices.length ; i++) {
@@ -462,16 +465,23 @@ function updateSettingsPage() {
     });
     console.log(`Found ${VOICES.length} matching voices`) ;
 
+    if ((SETTINGS.voice === undefined) && VOICES) {
+        SETTINGS.voice = VOICES[0].voiceURI;
+        storeProgramsAndSettings();
+    }
+}
+
+function updateSettingsPage() {
+    if (VOICES.length < 1) {
+        getVoices();
+    }
+
     const voice_select = document.getElementById('select_voice');
     // Remove voice select options
     while (voice_select.firstChild) {
         voice_select.removeChild(voice_select.firstChild);
     }
     
-    if ((SETTINGS.voice === undefined) && VOICES) {
-        SETTINGS.voice = VOICES[0].voiceURI;
-        storeProgramsAndSettings();
-    }
     for (let i in VOICES) {
         const opt = document.createElement('option');
         opt.setAttribute('value', i);
@@ -1059,7 +1069,6 @@ function init() {
     }
 
     speechSynthesis.onvoiceschanged = updateSettingsPage;
-    updateSettingsPage(); // nötig, um VOICES zu initialisieren
 
     handleRouting();
 }
