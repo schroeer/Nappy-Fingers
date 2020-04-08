@@ -431,6 +431,140 @@ const DEFAULT_PROGRAMS = {
                 }
             ]
         }
+    ],
+    "griptonite": [
+        {
+            "title":        "Warm up",
+            "description":  "Properly warming up is very important to avoid injuries",
+            "exercises":    [
+                {
+                    "title":        "Four fingers pull ups",
+                    "description":  "Pull up twice",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         4,
+                    "rest":         3,
+                    "repeat":       3,
+                    "pause":        15,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         10,
+                    "rest":         5,
+                    "repeat":       5,
+                    "pause":        20,
+                },
+                {
+                    "title":        "Four fingers lock off",
+                    "description":  "Pull up and lock off with bent arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         6,
+                    "rest":         4,
+                    "repeat":       5,
+                    "pause":        30,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         5,
+                    "rest":         3,
+                    "repeat":       5,
+                    "pause":        30,
+                }
+            ]
+        },
+        {
+            "title":        "Hang time",
+            "description":  "Much hang time on good holds",
+            "exercises":    [
+                {
+                    "title":        "Warm up",
+                    "description":  "Hang on straight arms",
+                    "left":         1,
+                    "right":        1,
+                    "hold":         7,
+                    "rest":         4,
+                    "repeat":       7,
+                    "pause":        15,
+                },
+                {
+                    "title":        "Pull up 2x and hang",
+                    "description":  "Pull up twice, then hang on straight arms",
+                    "left":         1,
+                    "right":        1,
+                    "hold":         10,
+                    "rest":         10,
+                    "repeat":       3,
+                    "pause":        120,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         6,
+                    "rest":         4,
+                    "repeat":       4,
+                    "pause":        90,
+                },
+                {
+                    "title":        "Three fingers right side",
+                    "description":  "Pull up once and stay with bent arms",
+                    "left":         1,
+                    "right":        5,
+                    "hold":         5,
+                    "rest":         7,
+                    "repeat":       5,
+                    "pause":        120,
+                },
+                {
+                    "title":        "Three fingers left side",
+                    "description":  "Pull up once and stay with bent arms",
+                    "left":         5,
+                    "right":        1,
+                    "hold":         5,
+                    "rest":         7,
+                    "repeat":       5,
+                    "pause":        120,
+                },
+                {
+                    "title":        "Four fingers pull up",
+                    "description":  "Pull up once, then hang on straight arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         5,
+                    "rest":         4,
+                    "repeat":       5,
+                    "pause":        120,
+                },
+                {
+                    "title":        "Four fingers hang",
+                    "description":  "Hang on straight arms",
+                    "left":         7,
+                    "right":        7,
+                    "hold":         7,
+                    "rest":         4,
+                    "repeat":       7,
+                    "pause":        120,
+                },
+                {
+                    "title":        "Jug hang",
+                    "description":  "Hang on straight arms",
+                    "left":         1,
+                    "right":        1,
+                    "hold":         7,
+                    "rest":         4,
+                    "repeat":       7,
+                    "pause":        120,
+                }
+            ]
+        }
     ]
 };
 
