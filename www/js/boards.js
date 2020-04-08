@@ -238,6 +238,94 @@ const BOARDS = {
                 "image": "bm2000_14.png"
             }
         }
+    },
+    "griptonite": {
+        "name":  "Smartrock Griptonite",
+        "image": "griptonite.png",
+        "left_holds": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
+            "1":    {
+                "name": "jug",
+                "image": "griptonite_lj.png"
+            },
+            "2":    {
+                "name": "sloper",
+                "image": "griptonite_ls.png"
+            },
+            "3":    {
+                "name": "easy two finger pocket",
+                "image": "griptonite_l2p.png"
+            },
+            "4":    {
+                "name": "hard two finger pocket",
+                "image": "griptonite_hl2p.png"
+            },
+            "5":    {
+                "name": "easy three finger pocket",
+                "image": "griptonite_l3p.png"
+            },
+            "6":   {
+                "name": "hard three finger pocket",
+                "image": "griptonite_hl3p.png"
+            },
+            "7":    {
+                "name": "easy four finger pocket",
+                "image": "griptonite_l4p.png"
+            },
+            "8":    {
+                "name": "hard four finger pocket",
+                "image": "griptonite_hl4p.png"
+            },
+            "9":   {
+                "name": "central four finger pocket",
+                "image": "griptonite_m4p.png"
+            }
+        },
+        "right_holds": {
+            "0":    {
+                "name": "no hold",
+                "image": ""
+            },
+            "1":    {
+                "name": "jug",
+                "image": "griptonite_rj.png"
+            },
+            "2":    {
+                "name": "sloper",
+                "image": "griptonite_rs.png"
+            },
+            "3":    {
+                "name": "easy two finger pocket",
+                "image": "griptonite_r2p.png"
+            },
+            "4":    {
+                "name": "hard two finger pocket",
+                "image": "griptonite_hr2p.png"
+            },
+            "5":    {
+                "name": "easy three finger pocket",
+                "image": "griptonite_r3p.png"
+            },
+            "6":   {
+                "name": "hard three finger pocket",
+                "image": "griptonite_hr3p.png"
+            },
+            "7":    {
+                "name": "easy four finger pocket",
+                "image": "griptonite_r4p.png"
+            },
+            "8":    {
+                "name": "hard four finger pocket",
+                "image": "griptonite_hr4p.png"
+            },
+            "9":   {
+                "name": "central four finger pocket",
+                "image": "griptonite_m4p.png"
+            }
+        }
     }
 };
 
